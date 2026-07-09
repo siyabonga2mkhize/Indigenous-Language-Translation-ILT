@@ -1,3 +1,4 @@
+## Reading Time : 10 Min ;-) 
 # 📋 Use Cases for Indigenous Language Phrasebook & Translation Portal
 
 ---
