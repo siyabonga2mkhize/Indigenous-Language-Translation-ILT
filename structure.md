@@ -1,3 +1,4 @@
+## Reading Time : 6 Min ; - ) 
 # Indigenous Language Phrasebook & Translation Portal  
 ## SDLC Phase-by-Phase Structure for Your GitHub Project
 
