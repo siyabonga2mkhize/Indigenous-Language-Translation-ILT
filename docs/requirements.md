@@ -1,4 +1,4 @@
-## Reading Time : 3 Min ; - ) 
+## Reading Time : 3 Min ;-) 
 ## 1. User Roles & User Stories
 
 Based on the handbook, there are **two primary user roles** in the system:
