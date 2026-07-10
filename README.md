@@ -171,7 +171,7 @@ We welcome contributions! Here's how you can get involved:
 
 ### 1. Pick an Issue
 
-Browse our [GitHub Issues](https://github.com/siyabonga2mkhize/Indigenous-Language-Translation-ILT/issues?q=is%3Aissue+state%3Aopen) — look for labels like `good-first-issue` or `help-wanted`.
+Browse our [GitHub Issues](https://github.com/siyabonga2mkhize/Indigenous-Language-Translation-ILT/issues?q=is%3Aissue+state%3Aopen) — look for labels which you see fit and assign yourself
 
 ### 2. Follow the Workflow
 
