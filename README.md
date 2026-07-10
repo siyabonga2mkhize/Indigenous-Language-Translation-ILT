@@ -40,40 +40,32 @@ This README is designed to give you everything you need to understand, contribut
 **Why It Matters:** Every student deserves equal access to information. This platform transforms the campus experience from one of exclusion to one of empowerment.
 
 ---
+##  Repository Structure
 
-## 📂 Project Organisation
-
-```
-📁 Indigenous-Language-Phrasebook/
-│
-├── 📁 docs/                          # All project documentation
-│   ├── 📄 srs.md                     # Software Requirements Specification (v1.0)
-│   ├── 📄 structure.md               # Project workflow & GitHub Project Board guide
-│   ├── 📄 requirements.md            # Functional & non-functional requirements
-│   ├── 📄 use-cases.md               # Detailed use cases for all user roles
-│   ├── 📄 vision.md                  # Project vision statement
-│   ├── 📄 scope.md                   # v1.0 scope (IN/OUT)
-│   ├── 📄 user-stories.md            # User stories from project brief
-│   ├── 📁 diagrams/                  # Visual documentation
-│   │   ├── 📄 Requirements-Diagram.png
-│   │   ├── 📄 ER-Diagram.png
-│   │   └── 📁 use-case-diagrams/     # UML use case diagrams per role
-│   └── 📁 tests/                     # Test plans & verification artifacts
-│
-├── 📁 src/                           # Application source code
-│   ├── 📁 Controllers/
-│   ├── 📁 Views/
-│   ├── 📁 Models/
-│   ├── 📁 Services/
-│   ├── 📁 Data/
-│   └── 📁 Helpers/
-│
-├── 📄 README.md                      # You are here
-├── 📄 .gitignore
-└── 📄 LICENSE                        # MIT License
-```
-
-
+Indigenous-Language-Phrasebook/
+├── docs/                          # All project documentation
+│   ├── srs.md                     # Software Requirements Specification (v1.0)
+│   ├── structure.md               # Project workflow & GitHub Project Board guide
+│   ├── requirements.md            # Functional & non-functional requirements
+│   ├── use-cases.md               # Detailed use cases for all user roles
+│   ├── vision.md                  # Project vision statement
+│   ├── scope.md                   # v1.0 scope (IN/OUT)
+│   ├── user-stories.md            # User stories from project brief
+│   ├── diagrams/                  # Visual documentation
+│   │   ├── Requirements-Diagram.png
+│   │   ├── ER-Diagram.png
+│   │   └── use-case-diagrams/     # UML use case diagrams per role
+│   └── tests/                     # Test plans & verification artifacts
+├── src/                           # Application source code
+│   ├── Controllers/
+│   ├── Views/
+│   ├── Models/
+│   ├── Services/
+│   ├── Data/
+│   └── Helpers/
+├── README.md                      # You are here
+├── .gitignore
+└── LICENSE                        # MIT License
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
@@ -86,8 +78,6 @@ This README is designed to give you everything you need to understand, contribut
 | **Front-End** | Bootstrap 5, Razor Views |
 | **Version Control** | Git + GitHub (public repository) |
 | **Deployment** | Microsoft Azure App Service |
-
----
 
 ## 🔄 How We Work — The SDLC Approach
 
