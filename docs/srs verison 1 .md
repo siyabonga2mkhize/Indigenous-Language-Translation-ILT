@@ -37,8 +37,8 @@
 
 | Name | Date | Reason For Changes | Version |
 |------|------|--------------------|---------|
-| [Your Name] | July 2026 | Initial draft | 0.1 |
-| [Your Name] | July 2026 | Completed all sections | 1.0 |
+|Team | July 2026 | Initial draft | 0.1 |
+| Team | July 2026 | Completed all sections | 1.0 |
 
 ---
 
