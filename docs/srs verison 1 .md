@@ -2,7 +2,7 @@
 ## For Indigenous Language Phrasebook & Translation Portal
 
 **Version 1.0**  
-**Prepared by:** InnoDevs
+**Prepared by:** InnoDevs 
 **Date:** July 2026
 
 ---
