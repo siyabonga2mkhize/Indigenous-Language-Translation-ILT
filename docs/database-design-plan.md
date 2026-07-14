@@ -1,4 +1,3 @@
-```markdown
 # Database Design Planning Document
 ## Indigenous Language Phrasebook & Translation Portal
 
