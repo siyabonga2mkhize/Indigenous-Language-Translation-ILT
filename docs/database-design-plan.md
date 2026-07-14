@@ -1,3 +1,5 @@
+## Reading Time : 10Min ;-) 
+
 # Database Design Planning Document
 ## Indigenous Language Phrasebook & Translation Portal
 
