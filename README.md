@@ -1,7 +1,7 @@
 # Indigenous-Language-Translation-ILT-
 ---
 
-```markdown
+
 # 🌍 Indigenous Language Phrasebook & Translation Portal
 
 > **A community-driven web application breaking down language barriers on university campuses — across all 11 official South African languages.**
@@ -36,6 +36,7 @@ This README is designed to give you everything you need to understand, contribut
 - ✅ **Administrators** review and approve submissions to ensure quality
 
 **Why It Matters:** Every student deserves equal access to information. This platform transforms the campus experience from one of exclusion to one of empowerment.
+```markdown
 
 ---
 ##  Repository Structure
@@ -64,6 +65,8 @@ Indigenous-Language-Phrasebook/
 ├── README.md                      # You are here
 ├── .gitignore
 └── LICENSE                        # MIT License
+
+```
 ## 🛠️ Technology Stack
 
 | Layer | Technology |
@@ -95,9 +98,9 @@ We follow a structured **7-phase Software Development Life Cycle (SDLC)**, track
 
 We use a **GitHub Project Board** with the following columns:
 
-```
+
  To Do → In Progress → Review → Done
-```
+
 
 Each task is tracked as a **GitHub Issue**, labelled for easy filtering:
 
