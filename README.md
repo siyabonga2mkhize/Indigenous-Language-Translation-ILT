@@ -1,6 +1,4 @@
 # Indigenous-Language-Translation-ILT-
-Here's a comprehensive README.md for your repository. It's structured to give contributors a clear understanding of your project, documentation, workflow, and how they can get involved—all in about a 10-minute read.
-
 ---
 
 ```markdown
