@@ -1,3 +1,4 @@
+## Reading Time : 15 min ;-) 
 # Logical ER Diagram – Database Schema Specification
 ## Indigenous Language Phrasebook & Translation Portal
 
