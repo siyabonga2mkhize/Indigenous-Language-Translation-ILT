@@ -1,0 +1,30 @@
+﻿@model IEnumerable<InnoDevsITL.Models.Campus>
+
+@{
+    ViewData["Title"] = "Campuses";
+}
+
+<h2>Campuses</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">Add New Campus</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var campus in Model)
+        {
+            <tr>
+                <td>@campus.Name</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@campus.Id" class="btn btn-sm btn-secondary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@campus.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
