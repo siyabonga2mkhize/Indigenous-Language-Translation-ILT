@@ -35,62 +35,7 @@ Here's the complete **MVC Architecture Layer Definition** for your Indigenous La
 ## 1. Architecture Overview
 
 The application follows a **clean layered architecture** with clear separation of concerns:
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                     PRESENTATION LAYER                          │
-│                         (Views)                                  │
-│                                                                  │
-│  Razor Views → HTML, CSS, JavaScript, Bootstrap 5              │
-│  ViewModels → Data transfer objects for views                  │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      CONTROLLER LAYER                           │
-│                                                                  │
-│  • Handle HTTP requests (GET, POST, etc.)                      │
-│  • Authorize users using [Authorize] attributes                │
-│  • Validate input models                                        │
-│  • Call Service layer                                           │
-│  • Return Views or JSON responses                               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                       SERVICE LAYER                             │
-│                   (Business Logic)                              │
-│                                                                  │
-│  • Implement business rules and workflows                      │
-│  • Orchestrate multiple repositories                            │
-│  • Handle complex operations (approval workflow, etc.)         │
-│  • Apply validation and business constraints                   │
-│  • Map between Domain Models and DTOs/ViewModels               │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      REPOSITORY LAYER                           │
-│                     (Data Access)                               │
-│                                                                  │
-│  • CRUD operations on database                                  │
-│  • Query execution using Entity Framework Core                 │
-│  • Specific queries for search, filtering, etc.                │
-│  • Unit of Work pattern (DbContext)                            │
-└────────────────────────────┬────────────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────────────┐
-│                      DATABASE LAYER                             │
-│                   (SQL Server)                                  │
-│                                                                  │
-│  • Tables, views, stored procedures                            │
-│  • Constraints, indexes                                         │
-│  • Seed data                                                    │
-└─────────────────────────────────────────────────────────────────┘
-```
-
----
+![MVC Diagram](../doc/diagrams/MVC.png)
 
 ## 2. Layer Definitions
 
