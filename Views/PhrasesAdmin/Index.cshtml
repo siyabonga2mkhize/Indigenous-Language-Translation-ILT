@@ -1,0 +1,269 @@
+﻿@model IEnumerable<PhraseBookk.Models.Phrase>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var totalPhrases = Model.Count();
+    var activePhrases = Model.Count(p => p.IsActive);
+}
+
+<div class="container-fluid px-4 mt-4">
+    <!-- Success/Error Messages -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill"></i> @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Welcome Banner -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="p-4 rounded-4 shadow-lg" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div>
+                        <h1 class="display-6 fw-bold text-white">👋 Welcome back, @User.Identity.Name!</h1>
+                        <p class="text-white-50 mb-0">Here's your PhraseBook overview for today.</p>
+                    </div>
+                    <div class="mt-2 mt-md-0">
+                        <span class="badge bg-light text-dark fs-6 p-2">
+                            📅 @DateTime.Now.ToString("dddd, dd MMMM yyyy")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">Pending</h6>
+                            <h2 class="mb-0 text-warning">@ViewBag.PendingCount</h2>
+                        </div>
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-3">
+                            <span class="fs-1">⏳</span>
+                        </div>
+                    </div>
+                    <a asp-controller="TranslationsAdmin" asp-action="Pending" class="btn btn-outline-warning btn-sm w-100 mt-3">
+                        Review Now →
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">Total Phrases</h6>
+                            <h2 class="mb-0 text-success">@totalPhrases</h2>
+                            <small class="text-muted">@activePhrases active</small>
+                        </div>
+                        <div class="bg-success bg-opacity-10 p-3 rounded-3">
+                            <span class="fs-1">📚</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">Translations</h6>
+                            <h2 class="mb-0 text-info">@ViewBag.TotalTranslations</h2>
+                            <small class="text-muted">11 languages</small>
+                        </div>
+                        <div class="bg-info bg-opacity-10 p-3 rounded-3">
+                            <span class="fs-1">🌍</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted text-uppercase fw-bold mb-2">Categories</h6>
+                            <h2 class="mb-0 text-secondary">@ViewBag.TotalCategories</h2>
+                            <small class="text-muted">Available</small>
+                        </div>
+                        <div class="bg-secondary bg-opacity-10 p-3 rounded-3">
+                            <span class="fs-1">🏷️</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>⚡ Quick Actions</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6">
+                            <a asp-controller="Categories" asp-action="Create" class="btn btn-outline-primary w-100 py-3">
+                                ➕ Add Category
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a asp-controller="PhrasesAdmin" asp-action="Create" class="btn btn-outline-success w-100 py-3">
+                                ➕ Add Phrase
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a asp-controller="TranslationsAdmin" asp-action="Pending" class="btn btn-outline-warning w-100 py-3">
+                                📋 Review Pending
+                                @if (ViewBag.PendingCount > 0)
+                                {
+                                    <span class="badge bg-warning text-dark ms-1">@ViewBag.PendingCount</span>
+                                }
+                            </a>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <a asp-controller="Phrases" asp-action="Index" class="btn btn-outline-info w-100 py-3">
+                                🔍 View Site
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row g-3 mb-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>🕐 Recent Activity</strong>
+                </div>
+                <div class="card-body p-0">
+                    @if (ViewBag.RecentActivity != null && ViewBag.RecentActivity.Count > 0)
+                    {
+                        <div class="list-group list-group-flush">
+                            @foreach (var activity in ViewBag.RecentActivity)
+                            {
+                                <div class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@activity</span>
+                                    <span class="badge bg-light text-muted">Just now</span>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted p-3 mb-0">No recent activity</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>📊 Quick Stats</strong>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>📚 Total Phrases</span>
+                        <span class="fw-bold">@totalPhrases</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>🏷️ Categories</span>
+                        <span class="fw-bold">@ViewBag.TotalCategories</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>🌍 Languages</span>
+                        <span class="fw-bold">11</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>👥 Total Users</span>
+                        <span class="fw-bold">@ViewBag.TotalUsers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- All Phrases Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center py-3">
+                    <strong>📝 All Phrases</strong>
+                    <a asp-action="Create" class="btn btn-success btn-sm">+ Add New</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>English Text</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Translations</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.EnglishText</td>
+                                        <td>@item.Category?.Name</td>
+                                        <td>
+                                            @if (item.IsActive)
+                                            {
+                                                <span class="badge bg-success">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Inactive</span>
+                                            }
+                                        </td>
+                                        <td>@(item.Translations?.Count ?? 0)</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning" title="Edit">
+                                                    ✏️
+                                                </a>
+                                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info" title="Details">
+                                                    👁️
+                                                </a>
+                                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger" title="Delete">
+                                                    🗑️
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-lift {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+    }
+</style>
