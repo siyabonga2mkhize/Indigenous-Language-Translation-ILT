@@ -1,14 +1,8 @@
-Here's the complete **MVC Architecture Layer Definition** for your Indigenous Language Phrasebook & Translation Portal. This defines all the controllers, services, repositories, and their responsibilities.
-
----
-
-```markdown
 # MVC Architecture Layers
 ## Indigenous Language Phrasebook & Translation Portal
 
 **Version:** 1.0  
 **Date:** July 2026  
-**Prepared By:** [Your Name]  
 **Project:** Geeked-On Incubation Program – Project 5
 
 ---
@@ -1115,10 +1109,6 @@ builder.Services.AddRazorPages();
 **Document Status:** ✅ Complete
 
 **Last Updated:** July 2026
-
-**Next Steps:** Start implementing the repository and service classes! 🚀
-```
-
 ---
 
 Would you like me to help you with any other layer or start writing any specific service or repository implementation?
