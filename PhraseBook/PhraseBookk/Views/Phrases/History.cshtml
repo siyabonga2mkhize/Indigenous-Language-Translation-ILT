@@ -1,0 +1,48 @@
+﻿@model IEnumerable<PhraseBookk.Models.Phrase>
+@{
+    ViewBag.Title = "Recently Viewed";
+}
+
+<div class="container mt-4">
+    <h2>🕐 Recently Viewed Phrases</h2>
+    <p class="text-muted">Phrases you have recently viewed.</p>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            You haven't viewed any phrases yet. Start searching!
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var phrase in Model)
+            {
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">@phrase.EnglishText</h5>
+                            <p class="text-muted">
+                                <span class="badge bg-info">@phrase.Category?.Name</span>
+                            </p>
+                            <p class="card-text small">
+                                Translations: @(phrase.Translations?.Count(t => t.Status == ContentStatus.Approved) ?? 0)
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a asp-controller="Phrases" asp-action="Details" asp-route-id="@phrase.Id" class="btn btn-sm btn-outline-primary w-100">
+                                View Again →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+
+    <div class="mt-4">
+        <a asp-controller="Phrases" asp-action="Index" class="btn btn-secondary">
+            ← Back to Search
+        </a>
+    </div>
+</div>
