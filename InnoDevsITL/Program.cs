@@ -26,6 +26,19 @@ options.SignIn.RequireConfirmedPhoneNumber = false;
     .AddEntityFrameworkStores<InnoDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddScoped<InnoDbContext>();
+builder.Services.AddScoped<InnoDevsITL.Data.Repositories.Interfaces.IPhraseRepository, InnoDevsITL.Data.Repositories.Implementations.PhraseRepository>();
+builder.Services.AddScoped<InnoDevsITL.Data.Repositories.Interfaces.ITranslationRepository, InnoDevsITL.Data.Repositories.Implementations.TranslationRepository>();
+builder.Services.AddScoped<InnoDevsITL.Data.Repositories.Interfaces.ICategoryRepository, InnoDevsITL.Data.Repositories.Implementations.CategoryRepository>();
+builder.Services.AddScoped<InnoDevsITL.Data.Repositories.Interfaces.IFavouriteRepository, InnoDevsITL.Data.Repositories.Implementations.FavouriteRepository>();
+builder.Services.AddScoped<InnoDevsITL.Data.Repositories.Interfaces.ISubmissionRepository, InnoDevsITL.Data.Repositories.Implementations.SubmissionRepository>();
+
+builder.Services.AddScoped<InnoDevsITL.Services.Interfaces.IPhraseService, InnoDevsITL.Services.Implementations.PhraseService>();
+builder.Services.AddScoped<InnoDevsITL.Services.Interfaces.ITranslationService, InnoDevsITL.Services.Implementations.TranslationService>();
+builder.Services.AddScoped<InnoDevsITL.Services.Interfaces.ICategoryService, InnoDevsITL.Services.Implementations.CategoryService>();
+builder.Services.AddScoped<InnoDevsITL.Services.Interfaces.IFavouriteService, InnoDevsITL.Services.Implementations.FavouriteService>();
+builder.Services.AddScoped<InnoDevsITL.Services.Interfaces.ISubmissionService, InnoDevsITL.Services.Implementations.SubmissionService>();
+
 var app = builder.Build();
 
 //Seeding for login in different roles

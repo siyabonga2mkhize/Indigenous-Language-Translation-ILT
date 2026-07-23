@@ -30,6 +30,9 @@
 
 The application follows a **clean layered architecture** with clear separation of concerns:
 ![MVC Diagram](../doc/diagrams/MVC.png)
+<img src="docs/diagrams/MVC.png" alt="MVC Diagram" width="500"/>
+![MVC Diagram](docs/diagrams/MVC.png)
+
 
 ## 2. Layer Definitions
 
