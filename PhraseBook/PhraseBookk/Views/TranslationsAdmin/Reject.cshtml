@@ -1,0 +1,53 @@
+﻿@model PhraseBookk.Models.Translation
+@{
+    ViewData["Title"] = "Reject Translation";
+}
+
+<div class="container mt-4">
+    <h2>Reject Translation</h2>
+
+    <div class="alert alert-warning">
+        <h4>Are you sure you want to reject this translation?</h4>
+        <p>This will mark the translation as <strong>Rejected</strong> and it will not appear in search results.</p>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header bg-warning">
+            <strong>Translation Details</strong>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Phrase</dt>
+                <dd class="col-sm-9">@Model.Phrase?.EnglishText</dd>
+
+                <dt class="col-sm-3">Language</dt>
+                <dd class="col-sm-9"><span class="badge bg-info">@Model.Language.ToString()</span></dd>
+
+                <dt class="col-sm-3">Translation</dt>
+                <dd class="col-sm-9">@Model.TranslatedText</dd>
+
+                <dt class="col-sm-3">Submitted By</dt>
+                <dd class="col-sm-9">@(Model.SubmittedBy?.FullName ?? "Unknown User")</dd>
+
+                <dt class="col-sm-3">Submitted Date</dt>
+                <dd class="col-sm-9">@Model.CreatedDate.ToString("dd MMM yyyy HH:mm")</dd>
+            </dl>
+        </div>
+    </div>
+
+    <form asp-action="Reject" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label for="reason" class="form-label">Rejection Reason (Optional)</label>
+            <textarea id="reason" name="reason" class="form-control" rows="3" placeholder="Provide a reason for rejection (e.g., inaccurate translation, grammar issues...)"></textarea>
+            <small class="text-muted">This will be visible to the student who submitted this translation.</small>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-danger">Confirm Rejection</button>
+            <a asp-action="Pending" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

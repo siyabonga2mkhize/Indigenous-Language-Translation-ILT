@@ -1,0 +1,236 @@
+﻿@model PhraseBookk.Models.Phrase
+@{
+    ViewBag.Title = "Phrase Details";
+    var isFavourited = ViewBag.IsFavourited ?? false;
+}
+
+<div class="container mt-4">
+    <h2>Phrase Details</h2>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title">@Model.EnglishText</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Category:</strong> @Model.Category?.Name</p>
+
+            <!-- ✅ NEW: Map Button -->
+            @if (!string.IsNullOrEmpty(Model.Category?.Latitude) && !string.IsNullOrEmpty(Model.Category?.Longitude))
+            {
+                <p>
+                    <strong>📍 Location:</strong>
+                    <a href="https://www.google.com/maps?q=@Model.Category.Latitude,@Model.Category.Longitude"
+                       target="_blank"
+                       class="btn btn-sm btn-outline-info">
+                        📍 View on Map
+                    </a>
+                    <span class="text-muted small ms-2">@Model.Category.MapLocationName</span>
+                </p>
+            }
+
+            <p><strong>Status:</strong> @(Model.IsActive ? "Active" : "Inactive")</p>
+            <p><strong>Created:</strong> @Model.CreatedDate.ToString("dd MMM yyyy")</p>
+        </div>
+    </div>
+
+    <h3 class="mt-4">Translations</h3>
+
+    @if (Model.Translations != null && Model.Translations.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Language</th>
+                    <th>Translation</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Approved))
+                {
+                    <tr>
+                        <td><span class="badge bg-info">@trans.Language.ToString()</span></td>
+                        <td>@trans.TranslatedText</td>
+                        <td><span class="badge bg-success">Approved</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="speakText('@trans.TranslatedText', '@trans.Language.ToString()')" title="Listen">🔊</button>
+                            <button class="btn btn-sm btn-outline-primary" onclick="copyToClipboard('@trans.TranslatedText')" title="Copy">📋</button>
+                        </td>
+                    </tr>
+                }
+                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Pending))
+                {
+                    <tr>
+                        <td><span class="badge bg-warning">@trans.Language.ToString()</span></td>
+                        <td>@trans.TranslatedText</td>
+                        <td><span class="badge bg-warning">Pending</span></td>
+                        <td></td>
+                    </tr>
+                }
+                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Rejected))
+                {
+                    <tr>
+                        <td><span class="badge bg-danger">@trans.Language.ToString()</span></td>
+                        <td>@trans.TranslatedText</td>
+                        <td><span class="badge bg-danger">Rejected</span></td>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">No translations available for this phrase.</div>
+    }
+
+    <div class="mt-3 d-flex flex-wrap gap-2">
+        <a asp-controller="Phrases" asp-action="Index" class="btn btn-secondary">
+            ← Back to Search
+        </a>
+
+        @if (User?.Identity?.IsAuthenticated == true)
+        {
+            <a asp-action="SubmitTranslation" asp-route-id="@Model.Id" class="btn btn-success">
+                ✏️ Suggest Translation
+            </a>
+
+            <button type="button" id="favouriteBtn" class="btn @(isFavourited ? "btn-danger" : "btn-outline-danger")" onclick="toggleFavourite(@Model.Id)">
+                <span id="favouriteIcon">@(isFavourited ? "❤️" : "🤍")</span>
+                <span id="favouriteText">@(isFavourited ? " Favourited" : " Favourite")</span>
+            </button>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary">
+                🔑 Login to Suggest
+            </a>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showToast('success', '📋 Copied to clipboard!');
+            }).catch(function() {
+                var textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('success', '📋 Copied to clipboard!');
+            });
+        }
+
+        function speakText(text, language) {
+            if (!('speechSynthesis' in window)) {
+                alert('Sorry, your browser does not support text-to-speech.');
+                return;
+            }
+            window.speechSynthesis.cancel();
+            var utterance = new SpeechSynthesisUtterance(text);
+            var langMap = {
+                'en': 'en-US', 'af': 'af-ZA', 'zu': 'zu-ZA', 'xh': 'xh-ZA',
+                'st': 'st-ZA', 'nso': 'nso-ZA', 'tn': 'tn-ZA', 'ts': 'ts-ZA',
+                'ss': 'ss-ZA', 've': 've-ZA', 'nr': 'nr-ZA'
+            };
+            utterance.lang = langMap[language] || 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function toggleFavourite(phraseId) {
+            var btn = document.getElementById('favouriteBtn');
+            var icon = document.getElementById('favouriteIcon');
+            var text = document.getElementById('favouriteText');
+            btn.disabled = true;
+            var token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+            if (!token) {
+                showToast('danger', 'Security token not found. Please refresh the page.');
+                btn.disabled = false;
+                return;
+            }
+            fetch('/Favourites/Toggle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'RequestVerificationToken': token
+                },
+                body: 'phraseId=' + phraseId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.action === 'added') {
+                        icon.textContent = '❤️';
+                        btn.className = 'btn btn-danger';
+                        text.textContent = ' Favourited';
+                        showToast('success', '✅ ' + data.message);
+                    } else {
+                        icon.textContent = '🤍';
+                        btn.className = 'btn btn-outline-danger';
+                        text.textContent = ' Favourite';
+                        showToast('info', '🗑️ ' + data.message);
+                    }
+                } else {
+                    showToast('danger', '❌ ' + (data.message || 'An error occurred.'));
+                }
+                btn.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showToast('danger', '❌ An error occurred. Please try again.');
+                btn.disabled = false;
+            });
+        }
+
+        function showToast(type, message) {
+            var container = document.getElementById('toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'toast-container';
+                container.style.position = 'fixed';
+                container.style.top = '20px';
+                container.style.right = '20px';
+                container.style.zIndex = '9999';
+                container.style.maxWidth = '400px';
+                document.body.appendChild(container);
+            }
+            var toast = document.createElement('div');
+            toast.className = 'alert alert-' + type + ' alert-dismissible fade show';
+            toast.style.marginTop = '10px';
+            toast.style.padding = '12px 20px';
+            toast.style.borderRadius = '8px';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            toast.style.animation = 'slideInRight 0.3s ease';
+            toast.innerHTML = message +
+                '<button type="button" class="btn-close" data-bs-dismiss="alert" onclick="this.parentElement.remove()" style="margin-left:10px;"></button>';
+            container.appendChild(toast);
+            setTimeout(function() {
+                if (toast.parentElement) {
+                    toast.style.opacity = '0';
+                    toast.style.transition = 'opacity 0.3s ease';
+                    setTimeout(function() {
+                        if (toast.parentElement) {
+                            toast.remove();
+                        }
+                    }, 300);
+                }
+            }, 4000);
+        }
+    </script>
+}

@@ -1,0 +1,64 @@
+﻿@{
+    ViewData["Title"] = "Export Phrasebook";
+    var categories = ViewBag.Categories as List<PhraseBookk.Models.Category>;
+}
+
+<div class="container mt-4">
+    <h1>📄 Export Phrasebook</h1>
+    <p class="text-muted">Download all approved phrases as a professionally formatted PDF handbook.</p>
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <strong>📄 Export Options</strong>
+        </div>
+        <div class="card-body">
+            <form asp-action="Phrasebook" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="categoryId" class="form-label fw-bold">Filter by Category</label>
+                            <select id="categoryId" name="categoryId" class="form-select">
+                                <option value="">All Categories</option>
+                                @if (categories != null)
+                                {
+                                    foreach (var category in categories)
+                                    {
+                                        <option value="@category.Id">@category.Name</option>
+                                    }
+                                }
+                            </select>
+                            <small class="text-muted">Select a category to filter phrases, or leave as "All Categories".</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            📄 Generate PDF
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-light">
+            <strong>📋 What's Included</strong>
+        </div>
+        <div class="card-body">
+            <ul class="list-unstyled">
+                <li>✅ <strong>DUT Logo</strong> - Professional branding on cover page</li>
+                <li>✅ <strong>Cover Page</strong> - Title, date, and total phrase count</li>
+                <li>✅ <strong>Phrases Grouped by Category</strong> - All active phrases organized by category</li>
+                <li>✅ <strong>English Text</strong> - Each phrase displayed in English</li>
+                <li>✅ <strong>All Approved Translations</strong> - Translations for each phrase in all languages</li>
+                <li>✅ <strong>Professional Formatting</strong> - Clean, readable PDF layout with page numbers</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="PhrasesAdmin" asp-action="Index" class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>

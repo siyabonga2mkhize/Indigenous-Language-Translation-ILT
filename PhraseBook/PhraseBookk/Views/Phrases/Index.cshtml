@@ -1,0 +1,329 @@
+﻿@model PhraseBookk.ViewModels.PhraseSearchViewModel
+@{
+    ViewBag.Title = "Search Campus Phrasebook";
+}
+
+<div class="container mt-4">
+    <h2>Search Campus Phrasebook</h2>
+    <p class="text-muted">Search for campus phrases in all 11 official South African languages.</p>
+
+    <!-- Search Form -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form asp-controller="Phrases" asp-action="Index" method="get" id="searchForm">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="keyword" class="form-label">Search Keyword</label>
+                            <input type="text" id="keyword" name="keyword" class="form-control"
+                                   placeholder="e.g., registration, clinic, book" value="@Model.SearchKeyword"
+                                   autocomplete="off" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="categoryId" class="form-label">Filter by Category</label>
+                            <select id="categoryId" name="categoryId" class="form-select">
+                                <option value="">All Categories</option>
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <option value="@category.Id" selected="@(category.Id == Model.CategoryId)">@category.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group mt-4 pt-1">
+                            <button type="submit" class="btn btn-primary w-100">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Results -->
+    @if (!string.IsNullOrWhiteSpace(Model.SearchKeyword))
+    {
+        <h3>Results for "@Model.SearchKeyword"</h3>
+        <p>Found <strong>@Model.Results.Count</strong> matching phrases.</p>
+
+        if (Model.Results.Any())
+        {
+            @foreach (var result in Model.Results)
+            {
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <strong>@result.EnglishText</strong>
+                        <span class="badge bg-secondary float-end">@result.CategoryName</span>
+                    </div>
+                    <div class="card-body">
+                        @if (result.MatchedTranslations.Any())
+                        {
+                            <ul class="list-unstyled">
+                                @foreach (var match in result.MatchedTranslations)
+                                {
+                                    <li class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-info">@match.LanguageName</span>
+                                        @Html.Raw(match.HighlightedText)
+                                        <!-- 🔊 Audio Button -->
+                                        <button class="btn btn-sm btn-outline-secondary"
+                                                onclick="speakText('@match.TranslatedText', '@match.LanguageName.ToLower()')"
+                                                title="Listen to pronunciation">
+                                            🔊
+                                        </button>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p><em>No matching translations found.</em></p>
+                        }
+                        <a asp-controller="Phrases" asp-action="Details" asp-route-id="@result.PhraseId" class="btn btn-sm btn-outline-primary">
+                            View Full Phrase
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-warning">
+                <strong>No results found.</strong> Try a different keyword or category.
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <strong>Welcome!</strong> Enter a keyword above to start searching for campus phrases in your preferred language.
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <style>
+        .ui-autocomplete {
+            max-height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: none;
+            padding: 4px 0;
+            font-family: inherit;
+            z-index: 9999;
+        }
+
+        .ui-menu-item {
+            padding: 0;
+        }
+
+        .ui-menu-item-wrapper {
+            padding: 10px 16px;
+            font-size: 1rem;
+            border-bottom: 1px solid #f1f3f5;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+            .ui-menu-item-wrapper:hover {
+                background: #f0f4ff;
+            }
+
+            .ui-menu-item-wrapper .highlight {
+                font-weight: 700;
+                color: #003057;
+            }
+
+        .ui-state-active .ui-menu-item-wrapper {
+            background: #e6edf6 !important;
+            border: none !important;
+            margin: 0 !important;
+        }
+
+        .ui-helper-hidden-accessible {
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #003057;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+    <!-- Autocomplete JavaScript -->
+    <script>
+        $(function() {
+            function debounce(func, wait) {
+                var timeout;
+                return function() {
+                    var context = this, args = arguments;
+                    clearTimeout(timeout);
+                    timeout = setTimeout(function() {
+                        func.apply(context, args);
+                    }, wait);
+                };
+            }
+
+            var searchInput = $("#keyword");
+
+            searchInput.autocomplete({
+                source: function(request, response) {
+                    var spinner = $('<span class="loading-spinner"></span>');
+                    searchInput.after(spinner);
+
+                    $.ajax({
+                        url: '@Url.Action("Autocomplete", "Phrases")',
+                        dataType: "json",
+                        data: { term: request.term },
+                        success: function(data) {
+                            spinner.remove();
+                            var items = $.map(data, function(item) {
+                                return { label: item, value: item };
+                            });
+                            response(items);
+                        },
+                        error: function() {
+                            spinner.remove();
+                            response([]);
+                        }
+                    });
+                },
+                minLength: 2,
+                delay: 300,
+                select: function(event, ui) {
+                    searchInput.val(ui.item.value);
+                    $(this).closest("form").submit();
+                },
+                _renderItem: function(ul, item) {
+                    var term = this.term || "";
+                    var label = item.label;
+                    var index = label.toLowerCase().indexOf(term.toLowerCase());
+                    var highlighted = label;
+                    if (index !== -1) {
+                        var before = label.substring(0, index);
+                        var match = label.substring(index, index + term.length);
+                        var after = label.substring(index + term.length);
+                        highlighted = before + '<span class="highlight">' + match + '</span>' + after;
+                    }
+                    return $("<li>")
+                        .append('<div class="ui-menu-item-wrapper">' + highlighted + '</div>')
+                        .appendTo(ul);
+                }
+            });
+
+            searchInput.on("blur", function() {
+                setTimeout(function() {
+                    $(".ui-autocomplete").hide();
+                }, 200);
+            });
+
+            searchInput.on("keydown", function(e) {
+                if (e.key === "Escape") {
+                    $(".ui-autocomplete").hide();
+                }
+            });
+        });
+    </script>
+
+    <!-- ===== HYBRID TTS: Azure + Browser Fallback ===== -->
+    <script>
+        function speakText(text, language) {
+            var langMap = {
+                'en': 'en-US', 'af': 'af-ZA', 'zu': 'zu-ZA', 'xh': 'xh-ZA',
+                'st': 'st-ZA', 'nso': 'nso-ZA', 'tn': 'tn-ZA', 'ts': 'ts-ZA',
+                'ss': 'ss-ZA', 've': 've-ZA', 'nr': 'nr-ZA'
+            };
+
+            var azureLang = langMap[language] || 'en-US';
+            var btn = event?.target || document.activeElement;
+            var originalText = btn.innerText;
+            btn.innerText = '⏳ Loading...';
+            btn.disabled = true;
+
+            fetch('/Audio/GetAudio', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `text=${encodeURIComponent(text)}&language=${azureLang}`
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Azure TTS failed');
+                return response.blob();
+            })
+            .then(blob => {
+                var url = URL.createObjectURL(blob);
+                var audio = new Audio(url);
+                audio.play();
+                audio.onended = function() { URL.revokeObjectURL(url); };
+                btn.innerText = originalText;
+                btn.disabled = false;
+            })
+            .catch(function(error) {
+                console.warn('Azure TTS failed, falling back to browser TTS:', error);
+                fallbackSpeakText(text, language, btn, originalText);
+            });
+        }
+
+        function fallbackSpeakText(text, language, btn, originalText) {
+            if (!('speechSynthesis' in window)) {
+                btn.innerText = originalText;
+                btn.disabled = false;
+                showToast('warning', 'Your browser does not support text-to-speech.');
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            var langMap = {
+                'en': 'en-US', 'af': 'af-ZA', 'zu': 'zu-ZA', 'xh': 'xh-ZA',
+                'st': 'st-ZA', 'nso': 'nso-ZA', 'tn': 'tn-ZA', 'ts': 'ts-ZA',
+                'ss': 'ss-ZA', 've': 've-ZA', 'nr': 'nr-ZA'
+            };
+            var targetLang = langMap[language] || 'en-US';
+
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = targetLang;
+            utterance.rate = 0.85;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            var voices = window.speechSynthesis.getVoices();
+            var matchingVoices = voices.filter(function(voice) {
+                return voice.lang.startsWith(targetLang.split('-')[0]);
+            });
+            var preferredVoices = matchingVoices.filter(function(voice) {
+                return voice.lang === targetLang && voice.localService === true;
+            });
+
+            if (preferredVoices.length > 0) {
+                utterance.voice = preferredVoices[0];
+            } else if (matchingVoices.length > 0) {
+                utterance.voice = matchingVoices[0];
+            }
+
+            window.speechSynthesis.speak(utterance);
+
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    </script>
+}

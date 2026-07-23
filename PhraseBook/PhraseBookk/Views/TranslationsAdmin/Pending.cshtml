@@ -1,0 +1,106 @@
+﻿@model IEnumerable<PhraseBookk.Models.Translation>
+@{
+    ViewData["Title"] = "Pending Translations";
+}
+
+<div class="container mt-4">
+    <h2>Pending Translations</h2>
+    <p class="text-muted">Review and approve translation suggestions from students.</p>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            <strong>No pending translations!</strong> All translations have been reviewed.
+        </div>
+    }
+    else
+    {
+        <form asp-action="BulkApprove" method="post">
+            <div class="mb-3">
+                <button type="submit" class="btn btn-success">
+                    Bulk Approve Selected
+                </button>
+                <span class="text-muted ms-2">Select multiple translations to approve at once.</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 40px;">
+                                <input type="checkbox" id="selectAll" onchange="toggleCheckboxes(this)" />
+                            </th>
+                            <th>Phrase</th>
+                            <th>Language</th>
+                            <th>Translation</th>
+                            <th>Submitted By</th>
+                            <th>Submitted Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="selectedIds" value="@item.Id" class="translation-checkbox" />
+                                </td>
+                                <td>
+                                    <strong>@item.Phrase?.EnglishText</strong>
+                                    <br />
+                                    <small class="text-muted">Category: @item.Phrase?.Category?.Name</small>
+                                </td>
+                                <td><span class="badge bg-info">@item.Language.ToString()</span></td>
+                                <td>@item.TranslatedText</td>
+                                <td>@(item.SubmittedBy?.FullName ?? "Unknown User")</td>
+                                <td>@item.CreatedDate.ToString("dd MMM yyyy HH:mm")</td>
+                                <td>
+                                    <a asp-action="Approve" asp-route-id="@item.Id" class="btn btn-sm btn-success" onclick="return confirm('Approve this translation?')">
+                                        Approve
+                                    </a>
+                                    <a asp-action="Reject" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                                        Reject
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                        Details
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </form>
+    }
+
+    <div>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleCheckboxes(selectAll) {
+            var checkboxes = document.getElementsByClassName('translation-checkbox');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = selectAll.checked;
+            }
+        }
+    </script>
+}
