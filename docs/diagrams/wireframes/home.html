@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <!-- Header -->
+  <header id="header" class="border-b border-gray-300 px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-400 rounded"></div>
+      <span class="font-semibold text-lg tracking-tight">Indigenous Phrasebook Portal</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+      <a href="#" class="hover:text-gray-900">Home</a>
+      <a href="#" class="hover:text-gray-900">Browse</a>
+      <a href="#" class="hover:text-gray-900">About</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button class="border border-gray-400 text-sm px-4 py-1.5 rounded hover:bg-gray-100">Log In</button>
+      <button class="bg-gray-900 text-white text-sm px-4 py-1.5 rounded hover:bg-gray-700">Register</button>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="bg-gray-100 px-8 py-16 h-[420px] flex flex-col items-center justify-center text-center border-b border-gray-300">
+    <p class="text-xs uppercase tracking-widest text-gray-500 mb-3">Preserving Culture Through Language</p>
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Explore Indigenous Languages &amp; Phrases</h1>
+    <p class="text-gray-500 text-base max-w-xl mb-8">Search, discover, and contribute to a growing library of indigenous language translations and cultural phrases.</p>
+    <!-- Search Bar -->
+    <div class="flex w-full max-w-xl gap-2">
+      <div class="flex-1 border border-gray-400 rounded flex items-center px-4 py-2.5 bg-white gap-2 text-gray-400">
+        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+        <span class="text-sm">Search phrases, words, or translations…</span>
+      </div>
+      <div class="border border-gray-400 rounded bg-white px-3 py-2.5 text-sm text-gray-500 flex items-center gap-1">
+        <span>Language</span>
+        <i class="fa-solid fa-chevron-down text-xs"></i>
+      </div>
+      <button class="bg-gray-900 text-white px-5 py-2.5 rounded text-sm">Search</button>
+    </div>
+  </section>
+
+  <!-- Stats Bar -->
+  <section id="stats" class="border-b border-gray-200 px-8 py-5 flex flex-wrap justify-center gap-12 text-center bg-white">
+    <div>
+      <p class="text-2xl font-bold text-gray-900">1,240</p>
+      <p class="text-xs text-gray-500 mt-0.5">Phrases</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-gray-900">14</p>
+      <p class="text-xs text-gray-500 mt-0.5">Languages</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-gray-900">320</p>
+      <p class="text-xs text-gray-500 mt-0.5">Contributors</p>
+    </div>
+    <div>
+      <p class="text-2xl font-bold text-gray-900">86</p>
+      <p class="text-xs text-gray-500 mt-0.5">Categories</p>
+    </div>
+  </section>
+
+  <!-- Browse by Category -->
+  <section id="categories" class="px-8 py-12 border-b border-gray-200">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-xl font-semibold mb-1">Browse by Category</h2>
+      <p class="text-sm text-gray-500 mb-6">Explore phrases organised by topic</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-house text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Greetings</span>
+          <span class="text-xs text-gray-400">48 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-utensils text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Food & Nature</span>
+          <span class="text-xs text-gray-400">62 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-people-group text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Family & Kinship</span>
+          <span class="text-xs text-gray-400">35 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-star text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Ceremonies</span>
+          <span class="text-xs text-gray-400">27 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-map text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Places</span>
+          <span class="text-xs text-gray-400">41 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-clock text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Time & Numbers</span>
+          <span class="text-xs text-gray-400">30 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-heart text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">Emotions</span>
+          <span class="text-xs text-gray-400">22 phrases</span>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex flex-col items-center gap-2 hover:bg-gray-50 cursor-pointer">
+          <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+            <i class="fa-solid fa-ellipsis text-gray-500"></i>
+          </div>
+          <span class="text-sm font-medium">View All</span>
+          <span class="text-xs text-gray-400">86 categories</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Phrases -->
+  <section id="featured-phrases" class="px-8 py-12 border-b border-gray-200 bg-gray-50">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-xl font-semibold">Featured Phrases</h2>
+          <p class="text-sm text-gray-500 mt-0.5">Recently added and popular contributions</p>
+        </div>
+        <a href="#" class="text-sm text-gray-600 underline underline-offset-2">View all phrases →</a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <!-- Card 1 -->
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+            <span class="text-xs text-gray-400">Yoruba</span>
+          </div>
+          <p class="font-semibold text-gray-800 text-base mb-1">Ẹ káàárọ̀</p>
+          <p class="text-sm text-gray-500 mb-3">Good morning (formal)</p>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span><i class="fa-solid fa-volume-high mr-1"></i>Audio available</span>
+            <span><i class="fa-regular fa-heart mr-1"></i>24 saves</span>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Family</span>
+            <span class="text-xs text-gray-400">Zulu</span>
+          </div>
+          <p class="font-semibold text-gray-800 text-base mb-1">Umama</p>
+          <p class="text-sm text-gray-500 mb-3">Mother / Mum</p>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span><i class="fa-solid fa-volume-xmark mr-1"></i>No audio</span>
+            <span><i class="fa-regular fa-heart mr-1"></i>18 saves</span>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Nature</span>
+            <span class="text-xs text-gray-400">Māori</span>
+          </div>
+          <p class="font-semibold text-gray-800 text-base mb-1">Ngahere</p>
+          <p class="text-sm text-gray-500 mb-3">Forest / Bush</p>
+          <div class="flex items-center justify-between text-xs text-gray-400">
+            <span><i class="fa-solid fa-volume-high mr-1"></i>Audio available</span>
+            <span><i class="fa-regular fa-heart mr-1"></i>31 saves</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta" class="px-8 py-12 text-center bg-white border-b border-gray-200">
+    <div class="max-w-lg mx-auto">
+      <h2 class="text-xl font-semibold mb-2">Contribute a Translation</h2>
+      <p class="text-sm text-gray-500 mb-6">Help preserve indigenous languages by submitting your own translations. All submissions are reviewed before publishing.</p>
+      <button class="bg-gray-900 text-white px-6 py-2.5 rounded text-sm mr-3">Submit a Phrase</button>
+      <button class="border border-gray-400 px-6 py-2.5 rounded text-sm">Learn More</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer" class="border-t border-gray-300 px-8 py-6 flex flex-wrap items-center justify-between text-xs text-gray-400 gap-4">
+    <span>© 2026 Indigenous Phrasebook Portal</span>
+    <div class="flex gap-5">
+      <a href="#" class="hover:text-gray-600">Privacy</a>
+      <a href="#" class="hover:text-gray-600">Terms</a>
+      <a href="#" class="hover:text-gray-600">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
