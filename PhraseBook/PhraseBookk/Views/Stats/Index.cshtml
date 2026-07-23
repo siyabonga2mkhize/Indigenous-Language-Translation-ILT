@@ -1,0 +1,223 @@
+﻿@using System.Linq
+@{
+    ViewData["Title"] = "Usage Statistics";
+}
+
+<div class="container mt-4">
+    <h1>📊 Usage Statistics</h1>
+    <p class="text-muted">Insights into how students are using the PhraseBook.</p>
+
+    <!-- Summary Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-primary">@ViewBag.TotalSearches</div>
+                    <p class="text-muted">🔍 Total Searches</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-success">@ViewBag.TotalViews</div>
+                    <p class="text-muted">👁️ Total Views</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-info">@ViewBag.DistinctLanguages</div>
+                    <p class="text-muted">🌍 Languages Used</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <div class="display-4 text-warning">@ViewBag.DistinctCategories</div>
+                    <p class="text-muted">🏷️ Categories Used</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>🌍 Most Searched Languages</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="languageChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>🏷️ Most Popular Categories</strong>
+                </div>
+                <div class="card-body">
+                    <canvas id="categoryChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Keywords -->
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>🔥 Top 10 Searched Keywords</strong>
+                </div>
+                <div class="card-body">
+                    @if (ViewBag.KeywordStats != null && ViewBag.KeywordStats.Count > 0)
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in ViewBag.KeywordStats)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>"@item.Keyword"</span>
+                                    <span class="badge bg-primary rounded-pill">@item.Count</span>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No keyword data yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white border-0 py-3">
+                    <strong>📌 Quick Insights</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>Total Searches:</strong> @ViewBag.TotalSearches</p>
+                    <p>
+                        <strong>Most Searched Language:</strong>
+                        @if (ViewBag.LanguageStats != null && ViewBag.LanguageStats.Count > 0)
+                        {
+                            var topLang = ViewBag.LanguageStats[0];
+                            <span>@topLang.Language (@topLang.Count searches)</span>
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </p>
+                    <p>
+                        <strong>Most Popular Category:</strong>
+                        @if (ViewBag.CategoryStats != null && ViewBag.CategoryStats.Count > 0)
+                        {
+                            var topCat = ViewBag.CategoryStats[0];
+                            var catName = ViewBag.CategoryDict != null && ViewBag.CategoryDict.ContainsKey(topCat.CategoryId)
+                            ? ViewBag.CategoryDict[topCat.CategoryId]
+                            : "Unknown";
+                            <span>@catName (@topCat.Count searches)</span>
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </p>
+                    <p>
+                        <strong>Most Searched Keyword:</strong>
+                        @if (ViewBag.KeywordStats != null && ViewBag.KeywordStats.Count > 0)
+                        {
+                            var topKeyword = ViewBag.KeywordStats[0];
+                            <span>"@topKeyword.Keyword" (@topKeyword.Count searches)</span>
+                        }
+                        else
+                        {
+                            <span>N/A</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Language Chart
+        var langCtx = document.getElementById('languageChart').getContext('2d');
+        var langData = @Html.Raw(Json.Serialize(ViewBag.LanguageStats));
+        var langLabels = langData.map(function(item) { return item.language; });
+        var langCounts = langData.map(function(item) { return item.count; });
+
+        new Chart(langCtx, {
+            type: 'bar',
+            data: {
+                labels: langLabels,
+                datasets: [{
+                    label: 'Searches',
+                    data: langCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Category Chart
+        var catCtx = document.getElementById('categoryChart').getContext('2d');
+        var catData = @Html.Raw(Json.Serialize(ViewBag.CategoryStats));
+        var catDict = @Html.Raw(Json.Serialize(ViewBag.CategoryDict));
+        var catLabels = catData.map(function(item) {
+            return catDict && catDict[item.categoryId] ? catDict[item.categoryId] : 'Unknown';
+        });
+        var catCounts = catData.map(function(item) { return item.count; });
+
+        new Chart(catCtx, {
+            type: 'bar',
+            data: {
+                labels: catLabels,
+                datasets: [{
+                    label: 'Searches',
+                    data: catCounts,
+                    backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+    });
+</script>

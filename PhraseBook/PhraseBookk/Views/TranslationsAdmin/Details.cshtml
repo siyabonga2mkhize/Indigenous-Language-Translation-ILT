@@ -1,0 +1,72 @@
+﻿@model PhraseBookk.Models.Translation
+@{
+    ViewData["Title"] = "Translation Details";
+}
+
+<div class="container mt-4">
+    <h2>Translation Details</h2>
+
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="card-title">@Model.Language.ToString() Translation</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Phrase</dt>
+                <dd class="col-sm-9">@Model.Phrase?.EnglishText</dd>
+
+                <dt class="col-sm-3">Category</dt>
+                <dd class="col-sm-9">@Model.Phrase?.Category?.Name</dd>
+
+                <dt class="col-sm-3">Language</dt>
+                <dd class="col-sm-9"><span class="badge bg-info">@Model.Language.ToString()</span></dd>
+
+                <dt class="col-sm-3">Translation</dt>
+                <dd class="col-sm-9">@Model.TranslatedText</dd>
+
+                <dt class="col-sm-3">Status</dt>
+                <dd class="col-sm-9">
+                    @switch (Model.Status)
+                    {
+                        case ContentStatus.Pending:
+                            <span class="badge bg-warning">Pending</span>
+                            break;
+                        case ContentStatus.Approved:
+                            <span class="badge bg-success">Approved</span>
+                            break;
+                        case ContentStatus.Rejected:
+                            <span class="badge bg-danger">Rejected</span>
+                            break;
+                    }
+                </dd>
+
+                @if (Model.Status == ContentStatus.Rejected && !string.IsNullOrEmpty(Model.AdminReviewComment))
+                {
+                    <dt class="col-sm-3">Rejection Reason</dt>
+                    <dd class="col-sm-9">@Model.AdminReviewComment</dd>
+                }
+
+                <dt class="col-sm-3">Submitted By</dt>
+                <dd class="col-sm-9">@(Model.SubmittedBy?.FullName ?? "Unknown User")</dd>
+
+                <dt class="col-sm-3">Submitted Date</dt>
+                <dd class="col-sm-9">@Model.CreatedDate.ToString("dd MMM yyyy HH:mm")</dd>
+
+                @if (Model.ReviewedDate.HasValue)
+                {
+                    <dt class="col-sm-3">Reviewed Date</dt>
+                    <dd class="col-sm-9">@Model.ReviewedDate?.ToString("dd MMM yyyy HH:mm")</dd>
+                }
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        @if (Model.Status == ContentStatus.Pending)
+        {
+            <a asp-action="Approve" asp-route-id="@Model.Id" class="btn btn-success" onclick="return confirm('Approve this translation?')">Approve</a>
+            <a asp-action="Reject" asp-route-id="@Model.Id" class="btn btn-danger">Reject</a>
+        }
+        <a asp-action="Pending" class="btn btn-secondary">Back to Pending</a>
+    </div>
+</div>

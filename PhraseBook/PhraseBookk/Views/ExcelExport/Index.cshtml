@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Excel Export";
+}
+
+<div class="container mt-4">
+    <h1>📊 Excel Export</h1>
+    <p class="text-muted">Export data to Excel spreadsheets for analysis and reporting.</p>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <strong>📋 Export Phrases</strong>
+                </div>
+                <div class="card-body">
+                    <p>Export all active phrases with their translations and categories.</p>
+                    <ul>
+                        <li>Sheet 1: Phrases (English, Category, Status, Translation Count)</li>
+                        <li>Sheet 2: Translations (Phrase, Language, Translation, Status)</li>
+                        <li>Sheet 3: Statistics (Total counts)</li>
+                    </ul>
+                    <form asp-action="ExportPhrases" method="post">
+                        <button type="submit" class="btn btn-primary w-100">
+                            📋 Export Phrases
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <strong>📈 Export Statistics</strong>
+                </div>
+                <div class="card-body">
+                    <p>Export usage statistics for analysis.</p>
+                    <ul>
+                        <li>Most searched languages</li>
+                        <li>Most popular categories</li>
+                        <li>Search counts</li>
+                    </ul>
+                    <form asp-action="ExportStats" method="post">
+                        <button type="submit" class="btn btn-success w-100">
+                            📈 Export Statistics
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="PhrasesAdmin" asp-action="Index" class="btn btn-secondary">
+            ← Back to Dashboard
+        </a>
+    </div>
+</div>
