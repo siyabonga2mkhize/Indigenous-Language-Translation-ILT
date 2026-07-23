@@ -87,7 +87,7 @@ We follow a structured **7-phase Software Development Life Cycle (SDLC)**, track
 | Phase | Focus | Status |
 |-------|-------|--------|
 | **Phase 1** | Project Initiation & Requirements Analysis | ✔ 
-| **Phase 2** | System Design (ERD, Architecture, Wireframes) ✔ |
+| **Phase 2** | System Design (ERD, Architecture, Wireframes)  |✔
 | **Phase 3** | Environment Setup & Project Scaffolding |✔
 | **Phase 4** | Core Feature Development (Student Side) |✔
 | **Phase 5** | Admin Features & Reporting |✔
