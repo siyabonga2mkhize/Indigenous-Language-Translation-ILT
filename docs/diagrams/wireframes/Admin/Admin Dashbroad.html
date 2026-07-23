@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+<div class="flex">
+
+  <!-- Sidebar -->
+  <aside id="admin-sidebar" class="w-56 bg-white border-r border-gray-300 flex-shrink-0 flex flex-col min-h-[900px]">
+    <div class="px-5 py-4 border-b border-gray-200 flex items-center gap-2">
+      <div class="w-7 h-7 bg-gray-400 rounded"></div>
+      <span class="font-semibold text-sm">Admin Panel</span>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-0.5 text-sm">
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded bg-gray-100 font-medium text-gray-900">
+        <i class="fa-solid fa-gauge-high w-4 text-xs"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-clock-rotate-left w-4 text-xs"></i> Pending
+        <span class="ml-auto bg-gray-200 text-gray-700 text-xs rounded-full px-1.5 py-0.5">8</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-book-open w-4 text-xs"></i> Phrases
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-tags w-4 text-xs"></i> Categories
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-language w-4 text-xs"></i> Languages
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-users w-4 text-xs"></i> Users
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-chart-bar w-4 text-xs"></i> Statistics
+      </a>
+    </nav>
+    <div class="px-3 py-4 border-t border-gray-200">
+      <div class="flex items-center gap-2 px-3">
+        <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=99" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <p class="text-xs font-medium text-gray-700">Admin User</p>
+          <p class="text-xs text-gray-400">Super Admin</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar -->
+    <div id="topbar" class="bg-white border-b border-gray-300 px-6 py-3 flex items-center justify-between">
+      <h1 class="font-semibold text-gray-800">Dashboard Overview</h1>
+      <div class="flex items-center gap-3">
+        <div class="border border-gray-300 rounded px-3 py-1.5 flex items-center gap-2 text-sm text-gray-500 bg-white">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          <span>Search admin…</span>
+        </div>
+        <button class="relative text-gray-500 hover:text-gray-800">
+          <i class="fa-solid fa-bell text-sm"></i>
+          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-gray-800 text-white text-xs rounded-full flex items-center justify-center">3</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="content" class="p-6 space-y-6">
+
+      <!-- KPI Cards -->
+      <section id="kpis" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Total Phrases</p>
+          <p class="text-3xl font-bold text-gray-900">1,240</p>
+          <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-arrow-up text-xs"></i> +18 this week</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Pending Review</p>
+          <p class="text-3xl font-bold text-gray-900">8</p>
+          <p class="text-xs text-gray-400 mt-1">Awaiting action</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Registered Users</p>
+          <p class="text-3xl font-bold text-gray-900">320</p>
+          <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-arrow-up text-xs"></i> +12 this month</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Languages</p>
+          <p class="text-3xl font-bold text-gray-900">14</p>
+          <p class="text-xs text-gray-400 mt-1">Active in system</p>
+        </div>
+      </section>
+
+      <!-- Charts Row -->
+      <section id="charts" class="grid grid-cols-2 gap-4">
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Submissions Over Time</p>
+          <div class="h-40 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-sm">
+            [ Bar / Line Chart Placeholder ]
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Monthly phrase submissions — Jan to Jun 2026</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Phrases by Language</p>
+          <div class="h-40 bg-gray-100 rounded flex items-center justify-center text-gray-400 text-sm">
+            [ Pie / Donut Chart Placeholder ]
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Distribution across 14 languages</p>
+        </div>
+      </section>
+
+      <!-- Recent Activity + Pending -->
+      <section id="bottom-row" class="grid grid-cols-2 gap-4">
+
+        <!-- Recent Activity -->
+        <div id="recent-activity" class="bg-white border border-gray-300 rounded p-5">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-sm font-semibold text-gray-700">Recent Activity</p>
+            <a href="#" class="text-xs text-gray-400 underline">View all</a>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=11" class="w-full h-full" />
+              </div>
+              <div>
+                <p class="text-gray-700"><strong>Kolade A.</strong> submitted a phrase</p>
+                <p class="text-xs text-gray-400">2 hours ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=22" class="w-full h-full" />
+              </div>
+              <div>
+                <p class="text-gray-700"><strong>Admin</strong> approved "Umama" (Zulu)</p>
+                <p class="text-xs text-gray-400">5 hours ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=33" class="w-full h-full" />
+              </div>
+              <div>
+                <p class="text-gray-700"><strong>Fatima O.</strong> registered</p>
+                <p class="text-xs text-gray-400">1 day ago</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden flex-shrink-0">
+                <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=44" class="w-full h-full" />
+              </div>
+              <div>
+                <p class="text-gray-700"><strong>Admin</strong> rejected "Unknown phrase"</p>
+                <p class="text-xs text-gray-400">2 days ago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pending Queue Preview -->
+        <div id="pending-preview" class="bg-white border border-gray-300 rounded p-5">
+          <div class="flex items-center justify-between mb-4">
+            <p class="text-sm font-semibold text-gray-700">Pending Submissions</p>
+            <a href="#" class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-50">Review all</a>
+          </div>
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center justify-between border border-gray-100 rounded p-3">
+              <div>
+                <p class="font-medium text-gray-800">Ata mārie</p>
+                <p class="text-xs text-gray-400">Māori · Greetings · by Wiremu T.</p>
+              </div>
+              <div class="flex gap-2 text-xs">
+                <button class="border border-gray-300 rounded px-2 py-0.5 hover:bg-gray-50 text-gray-600">Review</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between border border-gray-100 rounded p-3">
+              <div>
+                <p class="font-medium text-gray-800">Dáng gíidang</p>
+                <p class="text-xs text-gray-400">Haida · Greetings · by Skaana K.</p>
+              </div>
+              <div class="flex gap-2 text-xs">
+                <button class="border border-gray-300 rounded px-2 py-0.5 hover:bg-gray-50 text-gray-600">Review</button>
+              </div>
+            </div>
+            <div class="flex items-center justify-between border border-gray-100 rounded p-3">
+              <div>
+                <p class="font-medium text-gray-800">Yá'át'ééh</p>
+                <p class="text-xs text-gray-400">Navajo · Greetings · by James M.</p>
+              </div>
+              <div class="flex gap-2 text-xs">
+                <button class="border border-gray-300 rounded px-2 py-0.5 hover:bg-gray-50 text-gray-600">Review</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

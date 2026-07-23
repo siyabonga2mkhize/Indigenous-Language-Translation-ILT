@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phrase Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <!-- Header -->
+  <header id="header" class="border-b border-gray-300 px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-400 rounded"></div>
+      <span class="font-semibold text-lg tracking-tight">Indigenous Phrasebook Portal</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+      <a href="#" class="hover:text-gray-900">Home</a>
+      <a href="#" class="hover:text-gray-900">Browse</a>
+      <a href="#" class="hover:text-gray-900">About</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+        <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=42" class="w-full h-full object-cover" />
+      </div>
+      <span class="text-sm text-gray-700">Anika R.</span>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav id="breadcrumb" class="px-8 py-3 text-xs text-gray-400 border-b border-gray-100 bg-gray-50">
+    <span>Home</span> <span class="mx-1">/</span>
+    <span>Browse</span> <span class="mx-1">/</span>
+    <span>Greetings</span> <span class="mx-1">/</span>
+    <span class="text-gray-700 font-medium">Ẹ káàárọ̀</span>
+  </nav>
+
+  <!-- Main -->
+  <main id="main" class="max-w-4xl mx-auto px-8 py-10 flex gap-10">
+
+    <!-- Left: Phrase Content -->
+    <div id="phrase-content" class="flex-1">
+
+      <!-- Title Block -->
+      <div class="border border-gray-300 rounded p-6 mb-6 bg-gray-50">
+        <div class="flex items-start justify-between mb-3">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Yoruba</span>
+            </div>
+            <h1 class="text-3xl font-bold text-gray-900">Ẹ káàárọ̀</h1>
+          </div>
+          <div class="flex gap-2 mt-1">
+            <button class="border border-gray-300 rounded p-2 text-gray-500 hover:bg-gray-200">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="border border-gray-300 rounded p-2 text-gray-500 hover:bg-gray-200">
+              <i class="fa-solid fa-share-nodes"></i>
+            </button>
+          </div>
+        </div>
+        <p class="text-gray-500 text-base mb-1">Good morning <span class="text-gray-400 text-sm">(formal)</span></p>
+        <p class="text-xs text-gray-400">Added by <strong class="text-gray-600">Kolade A.</strong> · 14 Mar 2026</p>
+      </div>
+
+      <!-- Audio Player -->
+      <div id="audio" class="border border-gray-300 rounded p-4 mb-6 flex items-center gap-4 bg-white">
+        <button class="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-play text-sm"></i>
+        </button>
+        <div class="flex-1">
+          <div class="h-2 bg-gray-200 rounded-full">
+            <div class="h-2 bg-gray-500 rounded-full w-1/3"></div>
+          </div>
+          <div class="flex justify-between text-xs text-gray-400 mt-1">
+            <span>0:04</span>
+            <span>0:11</span>
+          </div>
+        </div>
+        <span class="text-xs text-gray-400">Pronunciation audio</span>
+      </div>
+
+      <!-- Details Grid -->
+      <div id="details" class="border border-gray-300 rounded p-5 mb-6 bg-white">
+        <h2 class="font-semibold text-sm mb-4">Phrase Details</h2>
+        <div class="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Source Language</p>
+            <p class="text-gray-800">Yoruba</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Target Language</p>
+            <p class="text-gray-800">English</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Category</p>
+            <p class="text-gray-800">Greetings</p>
+          </div>
+          <div>
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Usage Context</p>
+            <p class="text-gray-800">Formal morning greeting</p>
+          </div>
+          <div class="col-span-2">
+            <p class="text-xs text-gray-400 uppercase tracking-wide mb-1">Cultural Notes</p>
+            <p class="text-gray-800 leading-relaxed">Typically used to greet elders or people of higher social standing in Yoruba communities. The "Ẹ" prefix marks formality and respect.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alternate Translations -->
+      <div id="alt-translations" class="border border-gray-300 rounded p-5 mb-6 bg-white">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold text-sm">Alternate Translations</h2>
+          <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">
+            <i class="fa-solid fa-plus mr-1"></i> Submit yours
+          </button>
+        </div>
+        <div class="space-y-3">
+          <div class="flex items-start justify-between border-b border-gray-100 pb-3">
+            <div>
+              <p class="text-sm font-medium text-gray-800">"E kaaro" <span class="text-gray-400 font-normal">(informal romanisation)</span></p>
+              <p class="text-xs text-gray-400 mt-0.5">Submitted by <strong>Taiwo B.</strong> · 2 Apr 2026</p>
+            </div>
+            <div class="flex gap-2 text-xs text-gray-400 ml-4 flex-shrink-0">
+              <button class="border border-gray-200 rounded px-2 py-0.5 hover:bg-gray-50"><i class="fa-solid fa-thumbs-up mr-1"></i>12</button>
+              <button class="border border-gray-200 rounded px-2 py-0.5 hover:bg-gray-50"><i class="fa-solid fa-thumbs-down mr-1"></i>1</button>
+            </div>
+          </div>
+          <div class="flex items-start justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-800">"Morning greeting" <span class="text-gray-400 font-normal">(literal gloss)</span></p>
+              <p class="text-xs text-gray-400 mt-0.5">Submitted by <strong>Fatima O.</strong> · 28 Mar 2026</p>
+            </div>
+            <div class="flex gap-2 text-xs text-gray-400 ml-4 flex-shrink-0">
+              <button class="border border-gray-200 rounded px-2 py-0.5 hover:bg-gray-50"><i class="fa-solid fa-thumbs-up mr-1"></i>5</button>
+              <button class="border border-gray-200 rounded px-2 py-0.5 hover:bg-gray-50"><i class="fa-solid fa-thumbs-down mr-1"></i>0</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Related Phrases -->
+      <div id="related" class="border border-gray-300 rounded p-5 bg-white">
+        <h2 class="font-semibold text-sm mb-4">Related Phrases</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 cursor-pointer">
+            <p class="text-sm font-medium text-gray-800">Ẹ káàlẹ̀</p>
+            <p class="text-xs text-gray-500">Good evening</p>
+          </div>
+          <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 cursor-pointer">
+            <p class="text-sm font-medium text-gray-800">E kaasan</p>
+            <p class="text-xs text-gray-500">Good afternoon</p>
+          </div>
+          <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 cursor-pointer">
+            <p class="text-sm font-medium text-gray-800">Bawo ni</p>
+            <p class="text-xs text-gray-500">How are you</p>
+          </div>
+          <div class="border border-gray-200 rounded p-3 hover:bg-gray-50 cursor-pointer">
+            <p class="text-sm font-medium text-gray-800">O dabo</p>
+            <p class="text-xs text-gray-500">Goodbye</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <aside id="sidebar" class="w-56 flex-shrink-0 space-y-5">
+      <!-- Save to favourites -->
+      <div class="border border-gray-300 rounded p-4">
+        <button class="w-full bg-gray-900 text-white text-sm py-2 rounded mb-2 flex items-center justify-center gap-2">
+          <i class="fa-regular fa-heart"></i> Save to Favourites
+        </button>
+        <p class="text-xs text-gray-400 text-center">24 people saved this</p>
+      </div>
+
+      <!-- Phrase Stats -->
+      <div class="border border-gray-300 rounded p-4 space-y-3">
+        <p class="text-xs font-semibold text-gray-600 uppercase tracking-wide">Phrase Stats</p>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-500">Views</span>
+          <span class="font-medium text-gray-800">1,084</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-500">Saves</span>
+          <span class="font-medium text-gray-800">24</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-500">Translations</span>
+          <span class="font-medium text-gray-800">2</span>
+        </div>
+        <div class="flex justify-between text-sm">
+          <span class="text-gray-500">Status</span>
+          <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-600">Approved</span>
+        </div>
+      </div>
+
+      <!-- Report -->
+      <div class="border border-gray-200 rounded p-4">
+        <p class="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2">Actions</p>
+        <button class="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-2">
+          <i class="fa-solid fa-flag text-xs"></i> Report an issue
+        </button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="border-t border-gray-300 px-8 py-6 flex flex-wrap items-center justify-between text-xs text-gray-400 gap-4 mt-4">
+    <span>© 2026 Indigenous Phrasebook Portal</span>
+    <div class="flex gap-5">
+      <a href="#" class="hover:text-gray-600">Privacy</a>
+      <a href="#" class="hover:text-gray-600">Terms</a>
+      <a href="#" class="hover:text-gray-600">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
