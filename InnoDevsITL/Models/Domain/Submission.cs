@@ -21,4 +21,6 @@ namespace InnoDevsITL.Models
 
         public int PhraseId { get; set; }
         public Phrase Phrase { get; set; }
+
     }
+}
