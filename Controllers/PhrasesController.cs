@@ -156,7 +156,7 @@ namespace PhraseBookk.Controllers
             return Json(results);
         }
 
-        // GET: Phrases/Details/5
+        // GET: Phrases/Details/5 (UPDATED with History tracking)
         public async Task<IActionResult> Details(int id)
         {
             var phrase = await _context.Phrases
@@ -169,6 +169,7 @@ namespace PhraseBookk.Controllers
                 return NotFound();
             }
 
+            // Log view statistics
             var stat = new UsageStat
             {
                 LanguageSelected = LanguageCode.en,
@@ -181,6 +182,28 @@ namespace PhraseBookk.Controllers
             _context.UsageStats.Add(stat);
             await _context.SaveChangesAsync();
 
+            // Track recent views (for student history)
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
+                if (!string.IsNullOrEmpty(userId))
+                {
+                    var recentList = HttpContext.Session.GetString("RecentViews");
+                    var recentIds = string.IsNullOrEmpty(recentList)
+                        ? new List<int>()
+                        : JsonSerializer.Deserialize<List<int>>(recentList);
+                    if (recentIds != null)
+                    {
+                        recentIds.Remove(id);
+                        recentIds.Insert(0, id);
+                        if (recentIds.Count > 10)
+                            recentIds.RemoveAt(recentIds.Count - 1);
+                        HttpContext.Session.SetString("RecentViews", JsonSerializer.Serialize(recentIds));
+                    }
+                }
+            }
+
+            // Check if phrase is favourited
             if (User.Identity?.IsAuthenticated == true)
             {
                 var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
