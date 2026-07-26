@@ -1,0 +1,44 @@
+﻿@model PhraseBookk.Models.Phrase
+@{
+    ViewData["Title"] = "Phrase Details";
+}
+
+<h1>Phrase Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">English Text</dt>
+        <dd class="col-sm-10">@Model.EnglishText</dd>
+
+        <dt class="col-sm-2">Category</dt>
+        <dd class="col-sm-10">@Model.Category?.Name</dd>
+
+        <dt class="col-sm-2">Is Active</dt>
+        <dd class="col-sm-10">@(Model.IsActive ? "Yes" : "No")</dd>
+
+        <dt class="col-sm-2">Created Date</dt>
+        <dd class="col-sm-10">@Model.CreatedDate.ToString("dd MMM yyyy")</dd>
+
+        <dt class="col-sm-2">Translations</dt>
+        <dd class="col-sm-10">
+            @if (Model.Translations != null && Model.Translations.Any())
+            {
+                <ul>
+                    @foreach (var trans in Model.Translations)
+                    {
+                        <li>@trans.Language: @trans.TranslatedText (@trans.Status)</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>No translations</span>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>
