@@ -7,6 +7,26 @@
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrases\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrasesadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrasesadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\controllers\\phrasescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:controllers\\phrasescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrases\\submittranslation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrases\\submittranslation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrases\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrases\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -31,20 +51,12 @@
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\controllers\\audiocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:controllers\\audiocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\phrasebookk.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:phrasebookk.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\controllers\\phrasesadmincontroller1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -81,10 +93,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrases\\history.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrases\\history.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\controllers\\phrasescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:controllers\\phrasescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -150,10 +158,6 @@
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\translationsadmin\\pending.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrases\\submittranslation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrases\\submittranslation.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\viewmodels\\translationsubmissionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:viewmodels\\translationsubmissionviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -198,10 +202,6 @@
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrasesadmin\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\phrasesadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\phrasesadmin\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|c:\\users\\akhona\\source\\repos\\phrasebookk\\views\\categories\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{8CBF2822-93AC-42CE-9FA8-ABE5AAC70650}|PhraseBookk.csproj|solutionrelative:views\\categories\\delete.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -233,41 +233,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Phrases\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Index.cshtml",
-              "RelativeToolTip": "Views\\Phrases\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-20T11:15:27.545Z",
+              "DocumentIndex": 3,
+              "Title": "PhrasesController.cs",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\PhrasesController.cs",
+              "RelativeDocumentMoniker": "Controllers\\PhrasesController.cs",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\PhrasesController.cs",
+              "RelativeToolTip": "Controllers\\PhrasesController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T11:09:49.001Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Details.cshtml",
-              "RelativeDocumentMoniker": "Views\\Phrases\\Details.cshtml",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Details.cshtml",
-              "RelativeToolTip": "Views\\Phrases\\Details.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYBAAABAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "SubmitTranslation.cshtml",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\SubmitTranslation.cshtml",
+              "RelativeDocumentMoniker": "Views\\Phrases\\SubmitTranslation.cshtml",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\SubmitTranslation.cshtml",
+              "RelativeToolTip": "Views\\Phrases\\SubmitTranslation.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-20T11:18:32.13Z",
+              "WhenOpened": "2026-07-20T16:27:16.036Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "AzureTtsService.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Services\\AzureTtsService.cs",
               "RelativeDocumentMoniker": "Services\\AzureTtsService.cs",
@@ -279,7 +275,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "AudioController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\AudioController.cs",
               "RelativeDocumentMoniker": "Controllers\\AudioController.cs",
@@ -291,7 +287,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "IAudioService.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Services\\IAudioService.cs",
               "RelativeDocumentMoniker": "Services\\IAudioService.cs",
@@ -303,19 +299,75 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
               "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\appsettings.json",
               "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-20T11:00:25.111Z"
+              "WhenOpened": "2026-07-20T11:00:25.111Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Create.cshtml",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Create.cshtml",
+              "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Create.cshtml",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Create.cshtml",
+              "RelativeToolTip": "Views\\PhrasesAdmin\\Create.cshtml",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAACgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-20T14:17:51.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Phrases\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Index.cshtml",
+              "RelativeToolTip": "Views\\Phrases\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-20T11:15:27.545Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-21T11:34:20.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "Details.cshtml",
+              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Details.cshtml",
+              "RelativeDocumentMoniker": "Views\\Phrases\\Details.cshtml",
+              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\Details.cshtml",
+              "RelativeToolTip": "Views\\Phrases\\Details.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-07-20T11:18:32.13Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "Models\\ApplicationUser.cs",
@@ -327,7 +379,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 13,
               "Title": "PhraseBookk.csproj",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\PhraseBookk.csproj",
               "RelativeDocumentMoniker": "PhraseBookk.csproj",
@@ -339,7 +391,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Categories\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Categories\\Index.cshtml",
@@ -351,7 +403,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -363,19 +415,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-21T11:34:20.505Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 14,
               "Title": "PhrasesAdminController1.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\PhrasesAdminController1.cs",
               "RelativeDocumentMoniker": "Controllers\\PhrasesAdminController1.cs",
@@ -387,7 +427,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 15,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Categories\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\Categories\\Details.cshtml",
@@ -399,7 +439,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 16,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Categories\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\Categories\\Edit.cshtml",
@@ -411,7 +451,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 17,
               "Title": "Create.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Categories\\Create.cshtml",
               "RelativeDocumentMoniker": "Views\\Categories\\Create.cshtml",
@@ -423,7 +463,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "Catogories.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\Catogories.cs",
               "RelativeDocumentMoniker": "Controllers\\Catogories.cs",
@@ -435,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\ExcelExport\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\ExcelExport\\Index.cshtml",
@@ -459,7 +499,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 21,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
@@ -471,7 +511,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 20,
               "Title": "Category.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\Category.cs",
               "RelativeDocumentMoniker": "Models\\Category.cs",
@@ -483,7 +523,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 22,
               "Title": "History.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\History.cshtml",
               "RelativeDocumentMoniker": "Views\\Phrases\\History.cshtml",
@@ -495,19 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "PhrasesController.cs",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\PhrasesController.cs",
-              "RelativeDocumentMoniker": "Controllers\\PhrasesController.cs",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\PhrasesController.cs",
-              "RelativeToolTip": "Controllers\\PhrasesController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGEBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-20T11:09:49.001Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
@@ -519,7 +547,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "readme.txt",
               "DocumentMoniker": "C:\\Users\\Akhona\\.nuget\\packages\\epplus\\8.6.2\\readme.txt",
               "RelativeDocumentMoniker": "..\\..\\..\\.nuget\\packages\\epplus\\8.6.2\\readme.txt",
@@ -531,7 +559,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "ExcelExportController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\ExcelExportController.cs",
               "RelativeDocumentMoniker": "Controllers\\ExcelExportController.cs",
@@ -543,7 +571,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "ExportController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\ExportController.cs",
               "RelativeDocumentMoniker": "Controllers\\ExportController.cs",
@@ -555,7 +583,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Export\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Export\\Index.cshtml",
@@ -567,7 +595,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "FavouritesController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\FavouritesController.cs",
               "RelativeDocumentMoniker": "Controllers\\FavouritesController.cs",
@@ -579,7 +607,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "PhraseSearchViewModels.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\ViewModels\\PhraseSearchViewModels.cs",
               "RelativeDocumentMoniker": "ViewModels\\PhraseSearchViewModels.cs",
@@ -591,7 +619,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "MySubmissions.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\MySubmissions.cshtml",
               "RelativeDocumentMoniker": "Views\\Phrases\\MySubmissions.cshtml",
@@ -603,7 +631,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Stats\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Stats\\Index.cshtml",
@@ -615,7 +643,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Views\\_ViewStart.cshtml",
@@ -627,7 +655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "StatsController.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\StatsController.cs",
               "RelativeDocumentMoniker": "Controllers\\StatsController.cs",
@@ -639,7 +667,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Favourites\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Favourites\\Index.cshtml",
@@ -651,7 +679,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Index.cshtml",
@@ -663,7 +691,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 41,
               "Title": "Phrase.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\Phrase.cs",
               "RelativeDocumentMoniker": "Models\\Phrase.cs",
@@ -675,7 +703,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 44,
               "Title": "Translation.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\Translation.cs",
               "RelativeDocumentMoniker": "Models\\Translation.cs",
@@ -687,7 +715,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 45,
               "Title": "Favorite.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\Favorite.cs",
               "RelativeDocumentMoniker": "Models\\Favorite.cs",
@@ -699,7 +727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "Pending.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\TranslationsAdmin\\Pending.cshtml",
               "RelativeDocumentMoniker": "Views\\TranslationsAdmin\\Pending.cshtml",
@@ -711,7 +739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "Reject.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\TranslationsAdmin\\Reject.cshtml",
               "RelativeDocumentMoniker": "Views\\TranslationsAdmin\\Reject.cshtml",
@@ -723,7 +751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\TranslationsAdmin\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\TranslationsAdmin\\Details.cshtml",
@@ -735,7 +763,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "TranslationSubmissionViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\ViewModels\\TranslationSubmissionViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\TranslationSubmissionViewModel.cs",
@@ -747,19 +775,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
-              "Title": "SubmitTranslation.cshtml",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\SubmitTranslation.cshtml",
-              "RelativeDocumentMoniker": "Views\\Phrases\\SubmitTranslation.cshtml",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\Phrases\\SubmitTranslation.cshtml",
-              "RelativeToolTip": "Views\\Phrases\\SubmitTranslation.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-20T16:27:16.036Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 43,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -771,7 +787,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 42,
               "Title": "DbInitializer.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Data\\DbInitializer.cs",
               "RelativeDocumentMoniker": "Data\\DbInitializer.cs",
@@ -783,7 +799,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 40,
               "Title": "UsageStat.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Models\\UsageStat.cs",
               "RelativeDocumentMoniker": "Models\\UsageStat.cs",
@@ -795,7 +811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 48,
               "Title": "Delete.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Delete.cshtml",
               "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Delete.cshtml",
@@ -807,7 +823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 47,
               "Title": "Details.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Details.cshtml",
               "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Details.cshtml",
@@ -819,7 +835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 49,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Edit.cshtml",
               "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Edit.cshtml",
@@ -831,7 +847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 46,
               "Title": "TranslationsAdmin.cs",
               "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Controllers\\TranslationsAdmin.cs",
               "RelativeDocumentMoniker": "Controllers\\TranslationsAdmin.cs",
@@ -840,18 +856,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAFEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-20T14:37:26.599Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Create.cshtml",
-              "RelativeDocumentMoniker": "Views\\PhrasesAdmin\\Create.cshtml",
-              "ToolTip": "C:\\Users\\Akhona\\source\\repos\\PhraseBookk\\Views\\PhrasesAdmin\\Create.cshtml",
-              "RelativeToolTip": "Views\\PhrasesAdmin\\Create.cshtml",
-              "ViewState": "AgIAACgAAAAAAAAAAAAAACgAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-20T14:17:51.25Z"
             },
             {
               "$type": "Document",
