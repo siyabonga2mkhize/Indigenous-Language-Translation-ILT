@@ -32,6 +32,210 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Account/VerifyEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQWNjb3VudFxWZXJpZnlFbWFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Campuses/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQ2FtcHVzZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Campuses/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQ2FtcHVzZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Campuses/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQ2FtcHVzZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Campuses/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcQ2FtcHVzZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Faculties/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcRmFjdWx0aWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Faculties/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcRmFjdWx0aWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Faculties/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcRmFjdWx0aWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Faculties/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcRmFjdWx0aWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Shared/_AccountLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU2hhcmVkXF9BY2NvdW50TGF5b3V0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Student/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU3R1ZGVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xBcmVhc1xJZGVudGl0eVxQYWdlc1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Categories/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xDYXRlZ29yaWVzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Categories/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xDYXRlZ29yaWVzXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Categories/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xDYXRlZ29yaWVzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Categories/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xDYXRlZ29yaWVzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Categories/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xDYXRlZ29yaWVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/ExcelExport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xFeGNlbEV4cG9ydFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Export/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xFeHBvcnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Favourites/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xGYXZvdXJpdGVzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xIb21lXFByaXZhY3kuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/PhrasesAdmin/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzQWRtaW5cQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/PhrasesAdmin/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzQWRtaW5cRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/PhrasesAdmin/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzQWRtaW5cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/PhrasesAdmin/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzQWRtaW5cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/PhrasesAdmin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Phrases/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Phrases/History.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzXEhpc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Phrases/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Phrases/MySubmissions.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzXE15U3VibWlzc2lvbnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Phrases/SubmitTranslation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xQaHJhc2VzXFN1Ym1pdFRyYW5zbGF0aW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xTaGFyZWRcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Stats/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xTdGF0c1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/TranslationsAdmin/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xUcmFuc2xhdGlvbnNBZG1pblxEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/TranslationsAdmin/Pending.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xUcmFuc2xhdGlvbnNBZG1pblxQZW5kaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/TranslationsAdmin/Reject.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xUcmFuc2xhdGlvbnNBZG1pblxSZWplY3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Akhona/source/repos/PhraseBookk/Views/Categories/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmllc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -143,6 +347,14 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/Akhona/source/repos/PhraseBookk/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Akhona/source/repos/PhraseBookk/InnoDevsITL/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = SW5ub0RldnNJVExcVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-xs5br2u55t
+
+[C:/Users/Akhona/source/repos/PhraseBookk/PhraseBook/PhraseBookk/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGhyYXNlQm9va1xQaHJhc2VCb29ra1xWaWV3c1xTaGFyZWRcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-nki4pwoaqn
 
 [C:/Users/Akhona/source/repos/PhraseBookk/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
