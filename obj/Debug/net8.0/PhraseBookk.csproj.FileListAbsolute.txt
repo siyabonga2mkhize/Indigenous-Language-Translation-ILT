@@ -339,3 +339,4 @@ C:\Users\Akhona\source\repos\PhraseBookk\obj\Debug\net8.0\refint\PhraseBookk.dll
 C:\Users\Akhona\source\repos\PhraseBookk\obj\Debug\net8.0\PhraseBookk.pdb
 C:\Users\Akhona\source\repos\PhraseBookk\obj\Debug\net8.0\PhraseBookk.genruntimeconfig.cache
 C:\Users\Akhona\source\repos\PhraseBookk\obj\Debug\net8.0\ref\PhraseBookk.dll
+C:\Users\Akhona\source\repos\PhraseBookk\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

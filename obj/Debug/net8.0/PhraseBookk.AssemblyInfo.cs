@@ -16,7 +16,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PhraseBookk")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5e158141afef689f1ea65f5ccdb279ab6edd07e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3c716ac7ff4eebf50ef14ab1afe0fd328f963bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("PhraseBookk")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PhraseBookk")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
