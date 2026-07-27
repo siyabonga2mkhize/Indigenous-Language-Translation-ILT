@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-white text-gray-900 font-sans">
+
+  <!-- Header -->
+  <header id="header" class="border-b border-gray-300 px-8 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-400 rounded"></div>
+      <span class="font-semibold text-lg tracking-tight">Indigenous Phrasebook Portal</span>
+    </div>
+    <nav class="hidden md:flex items-center gap-6 text-sm text-gray-600">
+      <a href="#" class="hover:text-gray-900">Home</a>
+      <a href="#" class="font-semibold text-gray-900 underline underline-offset-2">Browse</a>
+      <a href="#" class="hover:text-gray-900">About</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 bg-gray-200 rounded-full overflow-hidden">
+        <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=42" class="w-full h-full object-cover" />
+      </div>
+      <span class="text-sm text-gray-700">Anika R.</span>
+      <i class="fa-solid fa-chevron-down text-xs text-gray-400"></i>
+    </div>
+  </header>
+
+  <!-- Search Bar Row -->
+  <section id="search-bar" class="border-b border-gray-200 px-8 py-4 bg-gray-50">
+    <div class="max-w-5xl mx-auto flex gap-3 flex-wrap">
+      <div class="flex-1 min-w-[200px] border border-gray-400 rounded flex items-center px-4 py-2.5 bg-white gap-2 text-gray-500">
+        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+        <span class="text-sm">good morning</span>
+      </div>
+      <div class="border border-gray-400 rounded bg-white px-3 py-2.5 text-sm text-gray-500 flex items-center gap-1">
+        <span>Language: All</span>
+        <i class="fa-solid fa-chevron-down text-xs"></i>
+      </div>
+      <div class="border border-gray-400 rounded bg-white px-3 py-2.5 text-sm text-gray-500 flex items-center gap-1">
+        <span>Category: All</span>
+        <i class="fa-solid fa-chevron-down text-xs"></i>
+      </div>
+      <button class="bg-gray-900 text-white px-5 py-2.5 rounded text-sm">Search</button>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main" class="max-w-5xl mx-auto px-8 py-8 flex gap-8">
+
+    <!-- Sidebar Filters -->
+    <aside id="filters" class="w-56 flex-shrink-0">
+      <h3 class="font-semibold text-sm mb-4">Filters</h3>
+
+      <div class="mb-5">
+        <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Language</p>
+        <div class="space-y-2 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" checked /> All Languages
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Yoruba
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Zulu
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Māori
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Navajo
+          </label>
+          <a href="#" class="text-xs text-gray-500 underline block mt-1">Show more…</a>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Category</p>
+        <div class="space-y-2 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" checked /> All Categories
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Greetings
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Food & Nature
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="accent-gray-700" /> Family
+          </label>
+        </div>
+      </div>
+
+      <div class="mb-5">
+        <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Has Audio</p>
+        <div class="space-y-2 text-sm">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="audio" class="accent-gray-700" checked /> Any
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" name="audio" class="accent-gray-700" /> Audio only
+          </label>
+        </div>
+      </div>
+
+      <button class="w-full border border-gray-300 text-sm py-2 rounded hover:bg-gray-100 mt-2">Clear Filters</button>
+    </aside>
+
+    <!-- Results -->
+    <div id="results" class="flex-1">
+      <div class="flex items-center justify-between mb-4">
+        <p class="text-sm text-gray-500">Showing <strong class="text-gray-900">24 results</strong> for <em>"good morning"</em></p>
+        <div class="flex items-center gap-2 text-sm text-gray-500">
+          <span>Sort:</span>
+          <div class="border border-gray-300 rounded px-2 py-1 flex items-center gap-1">
+            <span>Relevance</span>
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Cards -->
+      <div class="space-y-3">
+        <!-- Item -->
+        <div class="border border-gray-300 rounded p-4 flex items-start justify-between hover:bg-gray-50">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs text-gray-400">Yoruba</span>
+            </div>
+            <p class="font-semibold text-gray-800">Ẹ káàárọ̀</p>
+            <p class="text-sm text-gray-500">Good morning (formal)</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-volume-high mr-1"></i>Audio available</p>
+          </div>
+          <div class="flex flex-col items-end gap-2 ml-4">
+            <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">View</button>
+            <button class="text-xs text-gray-400 hover:text-gray-700"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex items-start justify-between hover:bg-gray-50">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs text-gray-400">Māori</span>
+            </div>
+            <p class="font-semibold text-gray-800">Ata mārie</p>
+            <p class="text-sm text-gray-500">Good morning</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-volume-xmark mr-1"></i>No audio</p>
+          </div>
+          <div class="flex flex-col items-end gap-2 ml-4">
+            <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">View</button>
+            <button class="text-xs text-gray-400 hover:text-gray-700"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex items-start justify-between hover:bg-gray-50">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs text-gray-400">Navajo</span>
+            </div>
+            <p class="font-semibold text-gray-800">Yá'át'ééh abíní</p>
+            <p class="text-sm text-gray-500">Good morning</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-volume-high mr-1"></i>Audio available</p>
+          </div>
+          <div class="flex flex-col items-end gap-2 ml-4">
+            <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">View</button>
+            <button class="text-xs text-gray-400 hover:text-gray-700"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex items-start justify-between hover:bg-gray-50">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs text-gray-400">Zulu</span>
+            </div>
+            <p class="font-semibold text-gray-800">Sawubona ekuseni</p>
+            <p class="text-sm text-gray-500">Good morning (lit. "we see you this morning")</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-volume-xmark mr-1"></i>No audio</p>
+          </div>
+          <div class="flex flex-col items-end gap-2 ml-4">
+            <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">View</button>
+            <button class="text-xs text-gray-400 hover:text-gray-700"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        </div>
+        <div class="border border-gray-300 rounded p-4 flex items-start justify-between hover:bg-gray-50">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-xs border border-gray-300 rounded px-2 py-0.5 text-gray-500">Greetings</span>
+              <span class="text-xs text-gray-400">Haida</span>
+            </div>
+            <p class="font-semibold text-gray-800">Dáng gíidang</p>
+            <p class="text-sm text-gray-500">Good morning</p>
+            <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-volume-high mr-1"></i>Audio available</p>
+          </div>
+          <div class="flex flex-col items-end gap-2 ml-4">
+            <button class="text-xs border border-gray-300 rounded px-3 py-1 hover:bg-gray-100">View</button>
+            <button class="text-xs text-gray-400 hover:text-gray-700"><i class="fa-regular fa-heart"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="pagination" class="flex items-center justify-center gap-2 mt-8 text-sm">
+        <button class="border border-gray-300 rounded px-3 py-1.5 text-gray-400"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+        <button class="border border-gray-900 bg-gray-900 text-white rounded px-3 py-1.5">1</button>
+        <button class="border border-gray-300 rounded px-3 py-1.5 text-gray-600">2</button>
+        <button class="border border-gray-300 rounded px-3 py-1.5 text-gray-600">3</button>
+        <span class="text-gray-400">…</span>
+        <button class="border border-gray-300 rounded px-3 py-1.5 text-gray-600">8</button>
+        <button class="border border-gray-300 rounded px-3 py-1.5 text-gray-600"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="footer" class="border-t border-gray-300 px-8 py-6 flex flex-wrap items-center justify-between text-xs text-gray-400 gap-4 mt-4">
+    <span>© 2026 Indigenous Phrasebook Portal</span>
+    <div class="flex gap-5">
+      <a href="#" class="hover:text-gray-600">Privacy</a>
+      <a href="#" class="hover:text-gray-600">Terms</a>
+      <a href="#" class="hover:text-gray-600">Contact</a>
+    </div>
+  </footer>
+
+</body>
+</html>
