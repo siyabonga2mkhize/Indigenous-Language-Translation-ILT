@@ -29,6 +29,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAudioService, AzureTtsService>();
+builder.Services.AddScoped<IQRCodeService, QRCodeService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
