@@ -15,8 +15,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 {
-
-
     options.SignIn.RequireConfirmedAccount = false;
     options.Password.RequireDigit = false;
     options.Password.RequireLowercase = false;
@@ -67,29 +65,9 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// ========== REDIRECT UNAUTHENTICATED USERS TO LOGIN ==========
-app.Use(async (context, next) =>
-{
-    // Skip redirect for static files and Identity pages (Login/Register)
-    if (context.Request.Path.StartsWithSegments("/lib") ||
-        context.Request.Path.StartsWithSegments("/css") ||
-        context.Request.Path.StartsWithSegments("/js") ||
-        context.Request.Path.StartsWithSegments("/images") ||
-        context.Request.Path.StartsWithSegments("/Identity/Account"))
-    {
-        await next();
-        return;
-    }
-
-    // If user is not authenticated, redirect to Login page
-    if (!context.User.Identity?.IsAuthenticated == true)
-    {
-        context.Response.Redirect("/Identity/Account/Login");
-        return;
-    }
-
-    await next();
-});
+// ============================================================
+// REMOVED: Unauthenticated redirect to Login
+// Students can now browse the Home page and Search without logging in.
 // ============================================================
 
 // Redirect admin users to dashboard

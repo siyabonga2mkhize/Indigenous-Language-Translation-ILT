@@ -24,10 +24,22 @@
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="PhraseId" />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- ===== LANGUAGE DROPDOWN WITH FULL NAMES ===== -->
                 <div class="form-group mb-3">
-                    <label asp-for="Language" class="control-label fw-bold"></label>
-                    <select asp-for="Language" class="form-select" asp-items="Html.GetEnumSelectList<PhraseBookk.Models.LanguageCode>()">
-                        <option value="">-- Select language --</option>
+                    <label asp-for="Language" class="control-label fw-bold">Select Language</label>
+                    <select asp-for="Language" class="form-select" id="languageSelect">
+                        <option value="">-- Select Language --</option>
+                        <option value="en">English</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="zu">isiZulu</option>
+                        <option value="xh">isiXhosa</option>
+                        <option value="st">Sesotho</option>
+                        <option value="nso">Sepedi</option>
+                        <option value="tn">Setswana</option>
+                        <option value="ts">Xitsonga</option>
+                        <option value="ss">siSwati</option>
+                        <option value="ve">Tshivenda</option>
+                        <option value="nr">isiNdebele</option>
                     </select>
                     <span asp-validation-for="Language" class="text-danger"></span>
                 </div>
