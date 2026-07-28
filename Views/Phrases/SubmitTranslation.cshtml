@@ -2,18 +2,15 @@
 @{
     ViewData["Title"] = "Suggest Translation";
 }
-
 <div class="container mt-4">
-    <h2>Suggest a Translation</h2>
+    <h2>Suggest a translation</h2>
     <p class="text-muted">Submit a translation for the phrase below in your preferred language.</p>
-
     <div class="card mb-4">
-        <div class="card-header bg-info text-white">
+        <div class="card-header" style="background: var(--indigo-dark, #1e1b4b); color: #fff;">
             <strong>@Model.PhraseEnglishText</strong>
-            <span class="badge bg-light text-dark float-end">@Model.PhraseCategoryName</span>
+            <span class="badge float-end" style="background: var(--amber, #d97706); color: #fff;">@Model.PhraseCategoryName</span>
         </div>
     </div>
-
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,38 +18,46 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     }
-
     <div class="row">
         <div class="col-md-6">
             <form asp-action="SubmitTranslation" method="post">
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="PhraseId" />
-
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <!-- ===== LANGUAGE DROPDOWN WITH FULL NAMES ===== -->
 
+                <!-- ===== LANGUAGE DROPDOWN WITH FULL NAMES ===== -->
                 <div class="form-group mb-3">
-                    <label asp-for="Language" class="control-label fw-bold"></label>
-                    <select asp-for="Language" class="form-select" asp-items="Html.GetEnumSelectList<PhraseBookk.Models.LanguageCode>()">
+                    <label asp-for="Language" class="control-label fw-bold">Select Language</label>
+                    <select asp-for="Language" class="form-select" id="languageSelect">
                         <option value="">-- Select Language --</option>
+                        <option value="en">English</option>
+                        <option value="af">Afrikaans</option>
+                        <option value="zu">isiZulu</option>
+                        <option value="xh">isiXhosa</option>
+                        <option value="st">Sesotho</option>
+                        <option value="nso">Sepedi</option>
+                        <option value="tn">Setswana</option>
+                        <option value="ts">Xitsonga</option>
+                        <option value="ss">siSwati</option>
+                        <option value="ve">Tshivenda</option>
+                        <option value="nr">isiNdebele</option>
                     </select>
                     <span asp-validation-for="Language" class="text-danger"></span>
                 </div>
-
                 <div class="form-group mb-3">
                     <label asp-for="TranslatedText" class="control-label fw-bold"></label>
                     <textarea asp-for="TranslatedText" class="form-control" rows="4" placeholder="Enter your translation here..."></textarea>
                     <span asp-validation-for="TranslatedText" class="text-danger"></span>
                 </div>
-
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Submit Translation</button>
+                    <button type="submit" class="btn btn-primary">Submit translation</button>
                     <a asp-action="Details" asp-route-id="@Model.PhraseId" class="btn btn-secondary">Cancel</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

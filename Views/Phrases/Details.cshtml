@@ -5,7 +5,7 @@
 }
 
 <div class="container mt-4">
-    <h2>Phrase Details</h2>
+    <h2>Phrase details</h2>
 
     @if (TempData["SuccessMessage"] != null)
     {
@@ -16,8 +16,8 @@
     }
 
     <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h3 class="card-title">@Model.EnglishText</h3>
+        <div class="card-header" style="background: var(--indigo-dark, #1e1b4b); color: #fff;">
+            <h3 class="card-title mb-0">@Model.EnglishText</h3>
         </div>
         <div class="card-body">
             <p><strong>Category:</strong> @Model.Category?.Name</p>
@@ -30,7 +30,7 @@
                     <a href="https://www.google.com/maps?q=@Model.Category.Latitude,@Model.Category.Longitude"
                        target="_blank"
                        class="btn btn-sm btn-outline-info">
-                        📍 View on Map
+                        View on map
                     </a>
                     <span class="text-muted small ms-2">@Model.Category.MapLocationName</span>
                 </p>
@@ -58,7 +58,7 @@
                 @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Approved))
                 {
                     <tr>
-                        <td><span class="badge bg-info">@trans.Language.ToString()</span></td>
+                        <td><span class="badge" data-lang="@trans.Language.ToString()">@trans.Language.ToString()</span></td>
                         <td>@trans.TranslatedText</td>
                         <td><span class="badge bg-success">Approved</span></td>
                         <td>
@@ -103,13 +103,13 @@
 
     <div class="mt-3 d-flex flex-wrap gap-2">
         <a asp-controller="Phrases" asp-action="Index" class="btn btn-secondary">
-            ← Back to Search
+            ← Back to search
         </a>
 
         @if (User?.Identity?.IsAuthenticated == true)
         {
             <a asp-action="SubmitTranslation" asp-route-id="@Model.Id" class="btn btn-success">
-                ✏️ Suggest Translation
+                ✏️ Suggest translation
             </a>
 
             <button type="button" id="favouriteBtn" class="btn @(isFavourited ? "btn-danger" : "btn-outline-danger")" onclick="toggleFavourite(@Model.Id)">
@@ -120,7 +120,7 @@
         else
         {
             <a asp-area="Identity" asp-page="/Account/Login" class="btn btn-outline-primary">
-                🔑 Login to Suggest
+                🔑 Login to suggest
             </a>
         }
     </div>

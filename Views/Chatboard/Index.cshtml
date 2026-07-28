@@ -1,0 +1,61 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Sneaker Factory Support";
+}
+<div class="container mt-4" style="max-width: 600px;">
+    <h2>Ask Sneaker Bot 🤖</h2>
+    <div class="card mb-3">
+        <div id="chatHistory" class="card-body" style="height: 300px; overflow-y: auto; background-color: #f8f9fa;">
+            <p class="text-muted">Ask a question below</p>
+        </div>
+    </div>
+
+    <form id="chatForm">
+        <div class="input-group mb-3">
+            <input type="text" id="userQuestion" class="form-control" placeholder="Type your question..." required />
+            <button class="btn btn-primary" type="submit">Send</button>
+        </div>
+    </form>
+</div>
+
+<script class="javascript">
+    document.getElementById('chatForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const input = document.getElementById('userQuestion');
+        const question = input.value;
+        const chatHistory = document.getElementById('chatHistory');
+
+        if (!question) return;
+
+        // Display User Question
+        chatHistory.innerHTML += `<p><strong>You:</strong> ${question}</p>`;
+        input.value = '';
+
+        try {
+            // Call the ChatController Ask action
+            const formData = new FormData();
+            formData.append('userQuestion', question);
+
+            const response = await fetch('/Chatboard/Ask', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+
+
+            // Display Bot Response
+            const botReply = data.response || "No reply received from bot.";
+            chatHistory.innerHTML += `<p><strong>Bot:</strong> ${botReply}</p>`;
+
+        }
+        catch
+        {
+            chatHistory.innerHTML += `<p class="text-danger"><strong>Bot:</strong> Failed to get response from server.</p>`;
+        }
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    });
+</script>

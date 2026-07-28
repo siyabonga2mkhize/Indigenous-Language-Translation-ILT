@@ -28,6 +28,46 @@ namespace PhraseBookk.Controllers
                 Results = new List<PhraseResultViewModel>()
             };
 
+            // ===== NEW: Category selected but no keyword → show all phrases in that category =====
+            if (string.IsNullOrWhiteSpace(keyword) && categoryId.HasValue && categoryId.Value > 0)
+            {
+                var phrases = await _context.Phrases
+                    .Include(p => p.Category)
+                    .Include(p => p.Translations)
+                    .Where(p => p.IsActive && p.CategoryId == categoryId.Value)
+                    .ToListAsync();
+
+                foreach (var phrase in phrases)
+                {
+                    var result = new PhraseResultViewModel
+                    {
+                        PhraseId = phrase.Id,
+                        EnglishText = phrase.EnglishText,
+                        CategoryName = phrase.Category?.Name ?? "Uncategorized",
+                        CategoryId = phrase.CategoryId,
+                        MatchedTranslations = new List<MatchedTranslation>()
+                    };
+
+                    var approvedTranslations = phrase.Translations?.Where(t => t.Status == ContentStatus.Approved);
+                    if (approvedTranslations != null)
+                    {
+                        foreach (var trans in approvedTranslations)
+                        {
+                            result.MatchedTranslations.Add(new MatchedTranslation
+                            {
+                                LanguageName = trans.Language.ToString(),
+                                TranslatedText = trans.TranslatedText,
+                                HighlightedText = trans.TranslatedText
+                            });
+                        }
+                    }
+                    viewModel.Results.Add(result);
+                }
+
+                return View(viewModel);
+            }
+
+            // ===== Existing search logic =====
             if (!string.IsNullOrWhiteSpace(keyword))
             {
                 var translationMatches = await _context.Translations
@@ -156,7 +196,7 @@ namespace PhraseBookk.Controllers
             return Json(results);
         }
 
-        // ==================== DETAILS (with History tracking) ====================
+        // GET: Phrases/Details/5 (UPDATED with History tracking)
         public async Task<IActionResult> Details(int id)
         {
             var phrase = await _context.Phrases
@@ -319,6 +359,7 @@ namespace PhraseBookk.Controllers
             return RedirectToAction("Details", new { id = model.PhraseId });
         }
 
+        // ==================== STUDENT SUBMISSIONS ====================
         [Authorize]
         public async Task<IActionResult> MySubmissions(string? statusFilter)
         {
