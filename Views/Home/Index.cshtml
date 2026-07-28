@@ -38,11 +38,22 @@
                 {
                     foreach (var cat in ViewBag.Categories)
                     {
+                        // Assign unique icon based on category name
+                        var icon = cat.Name switch
+                        {
+                            "Registration" => "🎓",
+                            "Accommodation" => "🏠",
+                            "Health Services" => "🏥",
+                            "Library" => "📚",
+                            "Academic Support" => "📖",
+                            _ => "📁"
+                        };
+
                         <div class="col-md-2 col-4">
                             <a asp-controller="Phrases" asp-action="Index" asp-route-categoryId="@cat.Id" class="text-decoration-none">
-                                <div class="card h-100 text-center p-2 shadow-sm">
+                                <div class="card h-100 text-center p-2 shadow-sm category-card">
                                     <div class="card-body">
-                                        <span style="font-size: 2rem; color: var(--indigo, #4338ca);">📁</span>
+                                        <span style="font-size: 2.5rem;">@icon</span>
                                         <p class="small fw-bold mt-1 mb-0">@cat.Name</p>
                                         @if (!string.IsNullOrEmpty(cat.Latitude))
                                         {
@@ -188,6 +199,20 @@
     }
 
 </div>
+
+<style>
+    .category-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 12px;
+        border: 1px solid #f0f0f0;
+    }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: #003057;
+        }
+</style>
 
 <!--For Voice Input Search-->
 @section Scripts {
