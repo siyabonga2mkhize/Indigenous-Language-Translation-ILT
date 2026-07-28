@@ -1,3 +1,4 @@
+HEAD
 html {
   font-size: 14px;
 }
@@ -19,4 +20,162 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+=======
+:root {
+    --indigo-dark: #1e1b4b;
+    --indigo: #4338ca;
+    --indigo-light: #6366f1;
+    --amber: #d97706;
+    --amber-light: #f59e0b;
+    --slate: #475569;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+    background: #f8f9fb;
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Baloo 2', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+    background: var(--indigo-dark) !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+    .navbar-brand, .navbar .nav-link {
+        color: #fff !important;
+        font-weight: 700;
+    }
+
+        .navbar .nav-link:hover {
+            color: var(--amber-light) !important;
+        }
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+    .card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 22px rgba(0,0,0,0.1);
+    }
+
+/* Buttons */
+.btn-primary {
+    background: var(--indigo);
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 0.5rem 1.4rem;
+}
+
+    .btn-primary:hover {
+        background: var(--indigo-light);
+    }
+
+.btn-outline-primary {
+    color: var(--indigo);
+    border-color: var(--indigo);
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+    .btn-outline-primary:hover {
+        background: var(--indigo);
+        border-color: var(--indigo);
+    }
+
+.btn-outline-secondary, .btn-outline-success {
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.btn-outline-success {
+    color: var(--amber);
+    border-color: var(--amber);
+}
+
+    .btn-outline-success:hover {
+        background: var(--amber);
+        border-color: var(--amber);
+        color: #fff;
+    }
+
+/* Language badges - rotate through a small, bold set (not one-per-language rainbow) */
+.badge {
+    border-radius: 8px;
+    padding: 0.4em 0.9em;
+    font-weight: 700;
+    color: #fff;
+}
+
+    .badge[data-lang="English"] {
+        background: var(--indigo);
+    }
+
+    .badge[data-lang="Afrikaans"] {
+        background: var(--slate);
+    }
+
+    .badge[data-lang="Zulu"] {
+        background: var(--amber);
+    }
+
+    .badge[data-lang="Xhosa"] {
+        background: var(--indigo-light);
+    }
+
+    .badge[data-lang="Sotho"] {
+        background: #0f766e;
+    }
+
+    .badge[data-lang="NorthernSotho"] {
+        background: var(--slate);
+    }
+
+    .badge[data-lang="Tswana"] {
+        background: var(--amber);
+    }
+
+    .badge[data-lang="Tsonga"] {
+        background: var(--indigo);
+    }
+
+    .badge[data-lang="Swati"] {
+        background: var(--indigo-light);
+    }
+
+    .badge[data-lang="Venda"] {
+        background: #0f766e;
+    }
+
+    .badge[data-lang="Ndebele"] {
+        background: var(--slate);
+    }
+
+/* Phrase of the Day - amber highlight */
+.border-warning {
+    border: none !important;
+    background: #fffbeb;
+    border-radius: 14px;
+}
+
+.card-header.bg-warning {
+    background: linear-gradient(90deg, var(--amber), var(--amber-light)) !important;
+    border-radius: 14px 14px 0 0 !important;
+    color: #fff !important;
+}
+
+/* Hero heading */
+.display-4 {
+    color: var(--indigo-dark);
+    font-weight: 700;
 }
