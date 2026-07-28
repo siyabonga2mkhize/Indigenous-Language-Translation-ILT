@@ -2,11 +2,9 @@
 @{
     ViewBag.Title = "Recently Viewed";
 }
-
 <div class="container mt-4">
-    <h2>🕐 Recently Viewed Phrases</h2>
+    <h2>Recently viewed phrases</h2>
     <p class="text-muted">Phrases you have recently viewed.</p>
-
     @if (!Model.Any())
     {
         <div class="alert alert-info">
@@ -23,7 +21,7 @@
                         <div class="card-body">
                             <h5 class="card-title">@phrase.EnglishText</h5>
                             <p class="text-muted">
-                                <span class="badge bg-info">@phrase.Category?.Name</span>
+                                <span class="badge" data-lang="@phrase.Category?.Name">@phrase.Category?.Name</span>
                             </p>
                             <p class="card-text small">
                                 Translations: @(phrase.Translations?.Count(t => t.Status == ContentStatus.Approved) ?? 0)
@@ -31,7 +29,7 @@
                         </div>
                         <div class="card-footer bg-transparent">
                             <a asp-controller="Phrases" asp-action="Details" asp-route-id="@phrase.Id" class="btn btn-sm btn-outline-primary w-100">
-                                View Again →
+                                View again →
                             </a>
                         </div>
                     </div>
@@ -39,10 +37,9 @@
             }
         </div>
     }
-
     <div class="mt-4">
         <a asp-controller="Phrases" asp-action="Index" class="btn btn-secondary">
-            ← Back to Search
+            ← Back to search
         </a>
     </div>
 </div>
