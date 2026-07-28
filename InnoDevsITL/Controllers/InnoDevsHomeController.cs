@@ -5,7 +5,9 @@ using System.Diagnostics;
 
 namespace InnoDevsITL.Controllers
 {
-    public class HomeController : Controller
+    //  Renamed the class and added a route prefix to avoid conflicts
+        [Route("inno")]  // Now it responds to /inno instead of /
+        public class InnoDevsHomeController : Controller
     {
         public IActionResult Index()
         {
