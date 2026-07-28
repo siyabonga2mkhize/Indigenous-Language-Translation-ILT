@@ -1,33 +1,50 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using InnoDevsITL.Data.Repositories.Interfaces;
+using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InnoDevsITL.Services.Implementations
 {
     public class FavouriteService : IFavouriteService
     {
-        private readonly IFavouriteRepository _favouriteRepository;
+        private readonly InnoDbContext _context;
 
-        public FavouriteService(IFavouriteRepository favouriteRepository)
+        public FavouriteService(InnoDbContext context)
         {
-            _favouriteRepository = favouriteRepository;
+            _context = context;
         }
 
-        public Task<Favourite> AddFavouriteAsync(Favourite favourite)
+        public async Task<IEnumerable<Favourite>> GetFavouritesByUserAsync(string userId)
         {
-            return _favouriteRepository.AddAsync(favourite);
+            return await _context.Favourites
+                .Include(f => f.Phrase)
+                .Include(f => f.Phrase.Category)
+                .Where(f => f.UserId == userId)
+                .ToListAsync();
         }
 
-        public Task<IEnumerable<Favourite>> GetFavouritesByUserAsync(string userId)
+        public async Task<Favourite> AddFavouriteAsync(Favourite favourite)
         {
-            return _favouriteRepository.GetByUserAsync(userId);
+            _context.Favourites.Add(favourite);
+            await _context.SaveChangesAsync();
+            return favourite;
         }
 
-        public Task<bool> RemoveFavouriteAsync(int id)
+        public async Task<bool> RemoveFavouriteAsync(int id)
         {
-            return _favouriteRepository.RemoveAsync(id);
+            var favourite = await _context.Favourites.FindAsync(id);
+            if (favourite == null)
+                return false;
+
+            _context.Favourites.Remove(favourite);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> IsFavouriteAsync(string userId, int phraseId)
+        {
+            return await _context.Favourites
+                .AnyAsync(f => f.UserId == userId && f.PhraseId == phraseId);
         }
     }
 }

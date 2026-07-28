@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore;
 namespace InnoDevsITL.Data
 {
     public class InnoDbContext : IdentityDbContext<Users>
-
     {
-        public InnoDbContext(DbContextOptions options) : base(options)
+        public InnoDbContext(DbContextOptions<InnoDbContext> options) 
+            : base(options)
         {
-
         }
 
         public DbSet<Faculty> Faculties { get; set; }

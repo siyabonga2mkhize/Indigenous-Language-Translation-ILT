@@ -1,8 +1,7 @@
 ﻿using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore; // IMPORTANT: Add this!
 
 namespace InnoDevsITL.Controllers
 {
@@ -14,19 +13,20 @@ namespace InnoDevsITL.Controllers
         {
             this.dbContext = dbContext;
         }
-        
+
         public async Task<IActionResult> Index()
         {
             var faculties = await dbContext.Faculties.ToListAsync();
             return View(faculties);
         }
+
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create (Faculty faculty)
+        public async Task<IActionResult> Create(Faculty faculty)
         {
             if (ModelState.IsValid)
             {
@@ -37,12 +37,10 @@ namespace InnoDevsITL.Controllers
             return View(faculty);
         }
 
-        //EDIT:POST
-
         public async Task<IActionResult> Edit(int Id)
         {
             var faculty = await dbContext.Faculties.FindAsync(Id);
-            if(faculty == null)
+            if (faculty == null)
             {
                 return NotFound();
             }
@@ -52,7 +50,7 @@ namespace InnoDevsITL.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int Id, Faculty faculty)
         {
-            if(Id != faculty.Id)
+            if (Id != faculty.Id)
             {
                 return NotFound();
             }
@@ -66,24 +64,21 @@ namespace InnoDevsITL.Controllers
             return View(faculty);
         }
 
-        //DELWTW: 
-
         public async Task<IActionResult> Delete(int Id)
         {
-           var faculty = await dbContext.Faculties.FindAsync(Id);
-           if(faculty == null)
+            var faculty = await dbContext.Faculties.FindAsync(Id);
+            if (faculty == null)
             {
                 return NotFound();
             }
             return View(faculty);
         }
 
-
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int Id)
         {
             var faculty = await dbContext.Faculties.FindAsync(Id);
-            
+
             if (faculty == null)
             {
                 return NotFound();

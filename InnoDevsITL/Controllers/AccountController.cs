@@ -1,16 +1,16 @@
-﻿using InnoDevsITL.Models;
+﻿//using static System.Runtime.InteropServices.JavaScript.JSType;
+using InnoDevsITL.Data;
+using InnoDevsITL.Models;
 using InnoDevsITL.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;//Access DB
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using InnoDevsITL.Data;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace InnoDevsITL.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly SignInManager <Users> signInManager;
+        private readonly SignInManager<Users> signInManager;
         private readonly UserManager<Users> userManager;
         private readonly InnoDbContext dbContext;
 
@@ -36,15 +36,18 @@ namespace InnoDevsITL.Controllers
                 if (result.Succeeded)
                 {
                     var user = await userManager.FindByEmailAsync(model.Email);
-                    if(await userManager.IsInRoleAsync(user, "Admin"))
+                    if (user != null) // Add null check
                     {
-                        return RedirectToAction("Index", "Admin");
+                        if (await userManager.IsInRoleAsync(user, "Admin"))
+                        {
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        else if (await userManager.IsInRoleAsync(user, "Student"))
+                        {
+                            return RedirectToAction("Index", "Student");
+                        }
                     }
-                    else if(await userManager.IsInRoleAsync(user, "Student"))
-                    {
-                        return RedirectToAction("Index", "Student");
-                    }
-                   
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -78,7 +81,7 @@ namespace InnoDevsITL.Controllers
                     PhoneNumber = model.PhoneNumber,
                     PhysicalAddress = model.PhysicalAddress,
                     FacultyId = model.FacultyId,
-                    CampusId = model.CampusId   
+                    CampusId = model.CampusId
                 };
 
                 var result = await userManager.CreateAsync(users, model.Password);
@@ -90,13 +93,13 @@ namespace InnoDevsITL.Controllers
                 }
                 else
                 {
-                    foreach(var error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error.Description);
                     }
                     return View(model);
                 }
-                
+
             }
             return View(model);
         }
@@ -108,7 +111,7 @@ namespace InnoDevsITL.Controllers
 
 
         [HttpPost]
-        public async Task <IActionResult> VerifyEmail(VerifyEmailViewModel model)
+        public async Task<IActionResult> VerifyEmail(VerifyEmailViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +135,7 @@ namespace InnoDevsITL.Controllers
             {
                 return RedirectToAction("VerifyEmail", "Account");
             }
-            return View(new ChangePasswordViewModel { Email= username});
+            return View(new ChangePasswordViewModel { Email = username });
         }
 
         [HttpPost]
@@ -141,7 +144,7 @@ namespace InnoDevsITL.Controllers
             if (ModelState.IsValid)
             {
                 var user = await userManager.FindByNameAsync(model.Email);
-                if(user != null)
+                if (user != null)
                 {
                     var result = await userManager.RemovePasswordAsync(user);
                     if (result.Succeeded)
@@ -152,7 +155,7 @@ namespace InnoDevsITL.Controllers
 
                     else
                     {
-                        foreach(var error in result.Errors)
+                        foreach (var error in result.Errors)
                         {
                             ModelState.AddModelError("", error.Description);
                         }
@@ -178,6 +181,6 @@ namespace InnoDevsITL.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-            
+
     }
 }

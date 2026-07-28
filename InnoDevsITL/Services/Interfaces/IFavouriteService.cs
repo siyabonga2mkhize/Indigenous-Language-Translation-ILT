@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using InnoDevsITL.Models;
 
 namespace InnoDevsITL.Services.Interfaces
@@ -9,5 +7,6 @@ namespace InnoDevsITL.Services.Interfaces
         Task<IEnumerable<Favourite>> GetFavouritesByUserAsync(string userId);
         Task<Favourite> AddFavouriteAsync(Favourite favourite);
         Task<bool> RemoveFavouriteAsync(int id);
+        Task<bool> IsFavouriteAsync(string userId, int phraseId);
     }
 }

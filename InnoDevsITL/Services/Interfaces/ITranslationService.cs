@@ -1,14 +1,18 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using InnoDevsITL.Models;
 
-namespace InnoDevsITL.Services.Interfaces
+namespace InnoDevsITL.Services.Interfaces  // This should be the namespace
 {
     public interface ITranslationService
     {
-        Task<IEnumerable<Translation>> GetByPhraseIdAsync(int phraseId);
+        // Database operations
+        Task<IEnumerable<Translation>> GetTranslationsByPhraseIdAsync(int phraseId);
+        Task<Translation> GetTranslationByIdAsync(int id);
         Task<Translation> CreateTranslationAsync(Translation translation);
-        Task<Translation> ApproveTranslationAsync(int id, string reviewedBy);
+        Task<Translation> UpdateTranslationAsync(Translation translation);
         Task<bool> DeleteTranslationAsync(int id);
+
+        // Translation API operations
+        Task<string> TranslateTextAsync(string text, string targetLanguage, string sourceLanguage = "en");
+        Task<IEnumerable<string>> GetSupportedLanguagesAsync();
     }
 }

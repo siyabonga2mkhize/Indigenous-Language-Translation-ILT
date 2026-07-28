@@ -1,43 +1,78 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using InnoDevsITL.Data.Repositories.Interfaces;
+using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InnoDevsITL.Services.Implementations
 {
     public class PhraseService : IPhraseService
     {
-        private readonly IPhraseRepository _phraseRepository;
+        private readonly InnoDbContext _context;
 
-        public PhraseService(IPhraseRepository phraseRepository)
+        public PhraseService(InnoDbContext context)
         {
-            _phraseRepository = phraseRepository;
+            _context = context;
         }
 
-        public Task<Phrase> CreatePhraseAsync(Phrase phrase)
+        public async Task<IEnumerable<Phrase>> SearchPhrasesAsync(string searchTerm, int? categoryId)
         {
-            return _phraseRepository.AddAsync(phrase);
+            var query = _context.Phrases
+                .Include(p => p.Category)
+                .Include(p => p.Translations)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                query = query.Where(p => p.EnglishText.Contains(searchTerm) || p.Language.Contains(searchTerm));
+            }
+
+            if (categoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
-        public Task<bool> DeletePhraseAsync(int id)
+        public async Task<Phrase> GetPhraseByIdAsync(int id)
         {
-            return _phraseRepository.DeleteAsync(id);
+            return await _context.Phrases
+                .Include(p => p.Category)
+                .Include(p => p.Translations)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<IEnumerable<Phrase>> SearchAsync(string searchTerm, int? categoryId)
+        public async Task<Phrase> CreatePhraseAsync(Phrase phrase)
         {
-            return _phraseRepository.SearchAsync(searchTerm, categoryId);
+            _context.Phrases.Add(phrase);
+            await _context.SaveChangesAsync();
+            return phrase;
         }
 
-        public Task<Phrase> GetByIdAsync(int id)
+        public async Task<Phrase> UpdatePhraseAsync(Phrase phrase)
         {
-            return _phraseRepository.GetByIdAsync(id);
+            _context.Phrases.Update(phrase);
+            await _context.SaveChangesAsync();
+            return phrase;
         }
 
-        public Task<Phrase> UpdatePhraseAsync(Phrase phrase)
+        public async Task<bool> DeletePhraseAsync(int id)
         {
-            return _phraseRepository.UpdateAsync(phrase);
+            var phrase = await _context.Phrases.FindAsync(id);
+            if (phrase == null)
+                return false;
+
+            _context.Phrases.Remove(phrase);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<Phrase>> GetPhrasesByCategoryAsync(int categoryId)
+        {
+            return await _context.Phrases
+                .Include(p => p.Translations)
+                .Where(p => p.CategoryId == categoryId)
+                .ToListAsync();
         }
     }
 }

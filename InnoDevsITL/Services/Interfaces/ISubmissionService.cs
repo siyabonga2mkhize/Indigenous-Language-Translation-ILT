@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using InnoDevsITL.Models;
 
 namespace InnoDevsITL.Services.Interfaces
@@ -7,7 +5,11 @@ namespace InnoDevsITL.Services.Interfaces
     public interface ISubmissionService
     {
         Task<IEnumerable<Submission>> GetPendingSubmissionsAsync();
-        Task<Submission> SubmitAsync(Submission submission);
-        Task<Submission> ReviewSubmissionAsync(int id, bool approve, string reviewedBy);
+        Task<Submission> GetSubmissionByIdAsync(int id);
+        Task<Submission> CreateSubmissionAsync(Submission submission);
+        Task<Submission> UpdateSubmissionAsync(Submission submission);
+        Task<bool> ApproveSubmissionAsync(int id, string reviewerId);
+        Task<bool> RejectSubmissionAsync(int id);
+        Task<IEnumerable<Submission>> GetSubmissionsByUserAsync(string userId);
     }
 }

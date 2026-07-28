@@ -1,44 +1,96 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using InnoDevsITL.Data.Repositories.Interfaces;
+using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InnoDevsITL.Services.Implementations
 {
     public class SubmissionService : ISubmissionService
     {
-        private readonly ISubmissionRepository _submissionRepository;
+        private readonly InnoDbContext _context;
 
-        public SubmissionService(ISubmissionRepository submissionRepository)
+        public SubmissionService(InnoDbContext context)
         {
-            _submissionRepository = submissionRepository;
+            _context = context;
         }
 
-        public Task<Submission> SubmitAsync(Submission submission)
+        public async Task<IEnumerable<Submission>> GetPendingSubmissionsAsync()
         {
-            return _submissionRepository.AddAsync(submission);
+            return await _context.Submissions
+                .Include(s => s.Phrase)
+                .Include(s => s.Phrase.Category)
+                .Where(s => !s.IsApproved)
+                .OrderBy(s => s.SubmittedAt)
+                .ToListAsync();
         }
 
-        public Task<Submission> ReviewSubmissionAsync(int id, bool approve, string reviewedBy)
+        public async Task<Submission> GetSubmissionByIdAsync(int id)
         {
-            return _submissionRepository.GetByIdAsync(id).ContinueWith(task =>
+            return await _context.Submissions
+                .Include(s => s.Phrase)
+                .Include(s => s.Phrase.Category)
+                .FirstOrDefaultAsync(s => s.Id == id);
+        }
+
+        public async Task<Submission> CreateSubmissionAsync(Submission submission)
+        {
+            _context.Submissions.Add(submission);
+            await _context.SaveChangesAsync();
+            return submission;
+        }
+
+        public async Task<Submission> UpdateSubmissionAsync(Submission submission)
+        {
+            _context.Submissions.Update(submission);
+            await _context.SaveChangesAsync();
+            return submission;
+        }
+
+        public async Task<bool> ApproveSubmissionAsync(int id, string reviewerId)
+        {
+            var submission = await GetSubmissionByIdAsync(id);
+            if (submission == null)
+                return false;
+
+            submission.IsApproved = true;
+            submission.ReviewedBy = reviewerId;
+
+            if (submission.Phrase != null)
             {
-                var submission = task.Result;
-                if (submission == null)
-                {
-                    return null;
-                }
+                submission.Phrase.IsActive = true;
+            }
 
-                submission.IsApproved = approve;
-                submission.ReviewedBy = reviewedBy;
-                return _submissionRepository.UpdateAsync(submission);
-            }).Unwrap();
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<IEnumerable<Submission>> GetPendingSubmissionsAsync()
+        public async Task<bool> RejectSubmissionAsync(int id)
         {
-            return _submissionRepository.GetPendingAsync();
+            var submission = await _context.Submissions
+                .Include(s => s.Phrase)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (submission == null)
+                return false;
+
+            if (submission.Phrase != null)
+            {
+                _context.Phrases.Remove(submission.Phrase);
+            }
+
+            _context.Submissions.Remove(submission);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<Submission>> GetSubmissionsByUserAsync(string userId)
+        {
+            return await _context.Submissions
+                .Include(s => s.Phrase)
+                .Include(s => s.Phrase.Category)
+                .Where(s => s.UserId == userId)
+                .OrderByDescending(s => s.SubmittedAt)
+                .ToListAsync();
         }
     }
 }

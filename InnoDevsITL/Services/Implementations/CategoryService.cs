@@ -1,43 +1,61 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using InnoDevsITL.Data.Repositories.Interfaces;
+using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace InnoDevsITL.Services.Implementations
 {
     public class CategoryService : ICategoryService
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly InnoDbContext _context;
 
-        public CategoryService(ICategoryRepository categoryRepository)
+        public CategoryService(InnoDbContext context)
         {
-            _categoryRepository = categoryRepository;
+            _context = context;
         }
 
-        public Task<Category> CreateCategoryAsync(Category category)
+        // Match interface exactly: GetAllCategoriesAsync
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            return _categoryRepository.AddAsync(category);
+            return await _context.Categories.ToListAsync();
         }
 
-        public Task<bool> DeleteCategoryAsync(int id)
+        // Match interface exactly: GetCategoryByIdAsync
+        public async Task<Category> GetCategoryByIdAsync(int id)
         {
-            return _categoryRepository.DeleteAsync(id);
+            return await _context.Categories.FindAsync(id);
         }
 
-        public Task<IEnumerable<Category>> GetAllAsync()
+        public async Task<Category> CreateCategoryAsync(Category category)
         {
-            return _categoryRepository.GetAllAsync();
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+            return category;
         }
 
-        public Task<Category> GetByIdAsync(int id)
+        public async Task<Category> UpdateCategoryAsync(Category category)
         {
-            return _categoryRepository.GetByIdAsync(id);
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
+            return category;
         }
 
-        public Task<Category> UpdateCategoryAsync(Category category)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
-            return _categoryRepository.UpdateAsync(category);
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+                return false;
+
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<Category>> GetCategoriesWithPhrasesAsync()
+        {
+            return await _context.Categories
+                .Include(c => c.Phrases)
+                .ToListAsync();
         }
     }
 }
