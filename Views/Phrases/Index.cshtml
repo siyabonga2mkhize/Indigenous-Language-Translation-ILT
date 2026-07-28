@@ -19,7 +19,7 @@
                                 <input type="text" id="keyword" name="keyword" class="form-control"
                                        placeholder="e.g., registration, clinic, book" value="@Model.SearchKeyword"
                                        autocomplete="off" />
-                                <!--New Voice Input Search button-->
+                                <!-- Voice Input Search button -->
                                 <button type="button" id="voiceSearchBtn" class="btn btn-outline-secondary" title="Search by voice">
                                     🎤
                                 </button>
@@ -49,9 +49,18 @@
     </div>
 
     <!-- Results -->
-    @if (!string.IsNullOrWhiteSpace(Model.SearchKeyword))
+    @if (!string.IsNullOrWhiteSpace(Model.SearchKeyword) || (Model.CategoryId.HasValue && Model.CategoryId.Value > 0))
     {
-        <h3>Results for "@Model.SearchKeyword"</h3>
+        if (!string.IsNullOrWhiteSpace(Model.SearchKeyword))
+        {
+            <h3>Results for "@Model.SearchKeyword"</h3>
+        }
+        else if (Model.CategoryId.HasValue && Model.CategoryId.Value > 0)
+        {
+            var categoryName = Model.Categories.FirstOrDefault(c => c.Id == Model.CategoryId)?.Name ?? "Selected Category";
+            <h3>Phrases in "@categoryName"</h3>
+        }
+
         <p>Found <strong>@Model.Results.Count</strong> matching phrases.</p>
 
         if (Model.Results.Any())
@@ -103,7 +112,7 @@
     else
     {
         <div class="alert alert-info">
-            <strong>Welcome!</strong> Enter a keyword above to start searching for campus phrases in your preferred language.
+            <strong>Welcome!</strong> Enter a keyword above to start searching for campus phrases in your preferred language. Or click a category to browse.
         </div>
     }
 </div>
@@ -266,7 +275,7 @@
             }
 
             var recognition = new SpeechRecognition();
-            recognition.lang = 'en-US'; // English gives the most reliable results
+            recognition.lang = 'en-US';
             recognition.interimResults = false;
             recognition.maxAlternatives = 1;
 
