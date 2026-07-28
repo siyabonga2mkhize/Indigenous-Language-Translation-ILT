@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.FontAwesomeConfig = {
+          autoReplaceSvg: 'nest'
+        };
+      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Statistics</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+<div class="flex">
+
+  <!-- Sidebar -->
+  <aside id="admin-sidebar" class="w-56 bg-white border-r border-gray-300 flex-shrink-0 flex flex-col min-h-[900px]">
+    <div class="px-5 py-4 border-b border-gray-200 flex items-center gap-2">
+      <div class="w-7 h-7 bg-gray-400 rounded"></div>
+      <span class="font-semibold text-sm">Admin Panel</span>
+    </div>
+    <nav class="flex-1 px-3 py-4 space-y-0.5 text-sm">
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-gauge-high w-4 text-xs"></i> Dashboard
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-clock-rotate-left w-4 text-xs"></i> Pending
+        <span class="ml-auto bg-gray-200 text-gray-700 text-xs rounded-full px-1.5 py-0.5">8</span>
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-book-open w-4 text-xs"></i> Phrases
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-tags w-4 text-xs"></i> Categories
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-language w-4 text-xs"></i> Languages
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded hover:bg-gray-50 text-gray-600">
+        <i class="fa-solid fa-users w-4 text-xs"></i> Users
+      </a>
+      <a href="#" class="flex items-center gap-3 px-3 py-2 rounded bg-gray-100 font-medium text-gray-900">
+        <i class="fa-solid fa-chart-bar w-4 text-xs"></i> Statistics
+      </a>
+    </nav>
+    <div class="px-3 py-4 border-t border-gray-200">
+      <div class="flex items-center gap-2 px-3">
+        <div class="w-7 h-7 bg-gray-200 rounded-full overflow-hidden">
+          <img src="https://api.dicebear.com/7.x/notionists/svg?scale=200&seed=99" class="w-full h-full object-cover" />
+        </div>
+        <div>
+          <p class="text-xs font-medium text-gray-700">Admin User</p>
+          <p class="text-xs text-gray-400">Super Admin</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar -->
+    <div id="topbar" class="bg-white border-b border-gray-300 px-6 py-3 flex items-center justify-between">
+      <h1 class="font-semibold text-gray-800">Statistics &amp; Reports</h1>
+      <div class="flex items-center gap-3">
+        <div class="border border-gray-300 rounded px-3 py-1.5 flex items-center gap-2 text-sm text-gray-500">
+          <i class="fa-solid fa-calendar text-xs"></i>
+          <span>Jan 2026 – Jun 2026</span>
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </div>
+        <button class="border border-gray-300 text-sm px-4 py-1.5 rounded hover:bg-gray-50 flex items-center gap-1">
+          <i class="fa-solid fa-download text-xs"></i> Export Report
+        </button>
+      </div>
+    </div>
+
+    <div id="content" class="p-6 space-y-6">
+
+      <!-- KPI Summary Row -->
+      <section id="kpis" class="grid grid-cols-4 gap-4">
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Total Page Views</p>
+          <p class="text-3xl font-bold text-gray-900">48,210</p>
+          <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-arrow-up text-xs"></i> +8% vs last period</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Unique Searches</p>
+          <p class="text-3xl font-bold text-gray-900">12,540</p>
+          <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-arrow-up text-xs"></i> +14%</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">New Users</p>
+          <p class="text-3xl font-bold text-gray-900">120</p>
+          <p class="text-xs text-gray-400 mt-1"><i class="fa-solid fa-arrow-down text-xs"></i> -3% vs last period</p>
+        </div>
+        <div class="bg-white border border-gray-300 rounded p-4">
+          <p class="text-xs text-gray-500 mb-1">Submissions Approved</p>
+          <p class="text-3xl font-bold text-gray-900">94</p>
+          <p class="text-xs text-gray-400 mt-1">of 110 total · 85% rate</p>
+        </div>
+      </section>
+
+      <!-- Charts Row 1 -->
+      <section id="charts-row-1" class="grid grid-cols-2 gap-4">
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <div class="flex items-center justify-between mb-3">
+            <p class="text-sm font-semibold text-gray-700">Monthly Submissions</p>
+            <div class="flex gap-1 text-xs">
+              <button class="border border-gray-300 rounded px-2 py-1 bg-gray-900 text-white">Bar</button>
+              <button class="border border-gray-300 rounded px-2 py-1 text-gray-500">Line</button>
+            </div>
+          </div>
+          <div class="h-44 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-400 text-sm gap-1">
+            <i class="fa-solid fa-chart-column text-2xl"></i>
+            <span>Bar Chart — Submissions per Month</span>
+          </div>
+          <div class="flex gap-4 mt-3 text-xs text-gray-500">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-700 rounded-sm inline-block"></span> Approved</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-300 rounded-sm inline-block"></span> Rejected</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-400 rounded-sm inline-block"></span> Pending</span>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Search Trends</p>
+          <div class="h-44 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-400 text-sm gap-1">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
+            <span>Line Chart — Daily Search Volume</span>
+          </div>
+          <p class="text-xs text-gray-400 mt-2">Peak: 520 searches on 5 Mar 2026</p>
+        </div>
+      </section>
+
+      <!-- Charts Row 2 -->
+      <section id="charts-row-2" class="grid grid-cols-3 gap-4">
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Phrases by Language</p>
+          <div class="h-36 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-400 text-sm gap-1">
+            <i class="fa-solid fa-chart-pie text-2xl"></i>
+            <span>Donut Chart</span>
+          </div>
+          <div class="mt-3 space-y-1.5 text-xs text-gray-500">
+            <div class="flex justify-between">
+              <span><span class="w-2 h-2 bg-gray-700 rounded-full inline-block mr-1"></span>Yoruba</span><span>28%</span>
+            </div>
+            <div class="flex justify-between">
+              <span><span class="w-2 h-2 bg-gray-400 rounded-full inline-block mr-1"></span>Māori</span><span>22%</span>
+            </div>
+            <div class="flex justify-between">
+              <span><span class="w-2 h-2 bg-gray-300 rounded-full inline-block mr-1"></span>Zulu</span><span>18%</span>
+            </div>
+            <div class="flex justify-between">
+              <span><span class="w-2 h-2 bg-gray-200 rounded-full inline-block mr-1"></span>Others</span><span>32%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">Top Categories</p>
+          <div class="h-36 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-400 text-sm gap-1">
+            <i class="fa-solid fa-chart-bar text-2xl"></i>
+            <span>Horizontal Bar Chart</span>
+          </div>
+          <div class="mt-3 space-y-1.5 text-xs text-gray-500">
+            <div class="flex justify-between"><span>Greetings</span><span>48</span></div>
+            <div class="flex justify-between"><span>Food & Nature</span><span>62</span></div>
+            <div class="flex justify-between"><span>Family</span><span>35</span></div>
+            <div class="flex justify-between"><span>Places</span><span>41</span></div>
+          </div>
+        </div>
+
+        <div class="bg-white border border-gray-300 rounded p-5">
+          <p class="text-sm font-semibold text-gray-700 mb-3">User Registrations</p>
+          <div class="h-36 bg-gray-100 rounded flex flex-col items-center justify-center text-gray-400 text-sm gap-1">
+            <i class="fa-solid fa-chart-area text-2xl"></i>
+            <span>Area Chart — Monthly</span>
+          </div>
+          <div class="mt-3 space-y-1.5 text-xs text-gray-500">
+            <div class="flex justify-between"><span>This period</span><span>120</span></div>
+            <div class="flex justify-between"><span>Last period</span><span>124</span></div>
+            <div class="flex justify-between"><span>Growth</span><span>-3.2%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Most Viewed Phrases Table -->
+      <section id="top-phrases" class="bg-white border border-gray-300 rounded p-5">
+        <div class="flex items-center justify-between mb-4">
+          <p class="text-sm font-semibold text-gray-700">Most Viewed Phrases</p>
+          <a href="#" class="text-xs text-gray-400 underline">View full report</a>
+        </div>
+        <div class="space-y-2 text-sm">
+          <div class="grid grid-cols-12 gap-2 text-xs text-gray-400 uppercase font-semibold border-b border-gray-100 pb-2">
+            <div class="col-span-1">#</div>
+            <div class="col-span-4">Phrase</div>
+            <div class="col-span-2">Language</div>
+            <div class="col-span-2">Views</div>
+            <div class="col-span-2">Saves</div>
+            <div class="col-span-1">Audio</div>
+          </div>
+          <div class="grid grid-cols-12 gap-2 py-2 border-b border-gray-50 items-center">
+            <div class="col-span-1 text-gray-400 text-xs font-medium">1</div>
+            <div class="col-span-4"><p class="font-medium text-gray-800">Ẹ káàárọ̀</p><p class="text-xs text-gray-400">Good morning</p></div>
+            <div class="col-span-2 text-gray-500 text-xs">Yoruba</div>
+            <div class="col-span-2 text-gray-800 font-medium">1,084</div>
+            <div class="col-span-2 text-gray-500">24</div>
+            <div class="col-span-1 text-xs text-gray-400"><i class="fa-solid fa-check"></i></div>
+          </div>
+          <div class="grid grid-cols-12 gap-2 py-2 border-b border-gray-50 items-center">
+            <div class="col-span-1 text-gray-400 text-xs font-medium">2</div>
+            <div class="col-span-4"><p class="font-medium text-gray-800">Ngahere</p><p class="text-xs text-gray-400">Forest / Bush</p></div>
+            <div class="col-span-2 text-gray-500 text-xs">Māori</div>
+            <div class="col-span-2 text-gray-800 font-medium">876</div>
+            <div class="col-span-2 text-gray-500">31</div>
+            <div class="col-span-1 text-xs text-gray-400"><i class="fa-solid fa-check"></i></div>
+          </div>
+          <div class="grid grid-cols-12 gap-2 py-2 border-b border-gray-50 items-center">
+            <div class="col-span-1 text-gray-400 text-xs font-medium">3</div>
+            <div class="col-span-4"><p class="font-medium text-gray-800">Yá'át'ééh abíní</p><p class="text-xs text-gray-400">Good morning</p></div>
+            <div class="col-span-2 text-gray-500 text-xs">Navajo</div>
+            <div class="col-span-2 text-gray-800 font-medium">741</div>
+            <div class="col-span-2 text-gray-500">19</div>
+            <div class="col-span-1 text-xs text-gray-400"><i class="fa-solid fa-check"></i></div>
+          </div>
+          <div class="grid grid-cols-12 gap-2 py-2 items-center">
+            <div class="col-span-1 text-gray-400 text-xs font-medium">4</div>
+            <div class="col-span-4"><p class="font-medium text-gray-800">Umama</p><p class="text-xs text-gray-400">Mother / Mum</p></div>
+            <div class="col-span-2 text-gray-500 text-xs">Zulu</div>
+            <div class="col-span-2 text-gray-800 font-medium">683</div>
+            <div class="col-span-2 text-gray-500">18</div>
+            <div class="col-span-1 text-xs text-gray-400"><i class="fa-solid fa-xmark"></i></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -156,7 +156,7 @@ namespace PhraseBookk.Controllers
             return Json(results);
         }
 
-        // ==================== DETAILS (with History tracking) ====================
+        // GET: Phrases/Details/5 (UPDATED with History tracking)
         public async Task<IActionResult> Details(int id)
         {
             var phrase = await _context.Phrases
@@ -319,6 +319,7 @@ namespace PhraseBookk.Controllers
             return RedirectToAction("Details", new { id = model.PhraseId });
         }
 
+        // ==================== STUDENT SUBMISSIONS ====================
         [Authorize]
         public async Task<IActionResult> MySubmissions(string? statusFilter)
         {
