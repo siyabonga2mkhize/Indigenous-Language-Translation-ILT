@@ -15,9 +15,15 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="keyword" class="form-label">Search Keyword</label>
-                            <input type="text" id="keyword" name="keyword" class="form-control"
-                                   placeholder="e.g., registration, clinic, book" value="@Model.SearchKeyword"
-                                   autocomplete="off" />
+                            <div class="input-group">
+                                <input type="text" id="keyword" name="keyword" class="form-control"
+                                       placeholder="e.g., registration, clinic, book" value="@Model.SearchKeyword"
+                                       autocomplete="off" />
+                                <!--New Voice Input Search button-->
+                                <button type="button" id="voiceSearchBtn" class="btn btn-outline-secondary" title="Search by voice">
+                                    🎤
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -243,6 +249,54 @@
                 }
             });
         });
+    </script>
+
+    <!-- ===== VOICE SEARCH (Speech-to-Text) ===== -->
+    <script>
+        (function () {
+            var micBtn = document.getElementById('voiceSearchBtn');
+            var keywordInput = document.getElementById('keyword');
+
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            if (!SpeechRecognition) {
+                micBtn.disabled = true;
+                micBtn.title = "Voice search isn't supported in this browser";
+                return;
+            }
+
+            var recognition = new SpeechRecognition();
+            recognition.lang = 'en-US'; // English gives the most reliable results
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            var isListening = false;
+
+            micBtn.addEventListener('click', function () {
+                if (isListening) return;
+                isListening = true;
+                micBtn.innerText = '🔴';
+                micBtn.disabled = true;
+                recognition.start();
+            });
+
+            recognition.onresult = function (event) {
+                var spokenText = event.results[0][0].transcript;
+                keywordInput.value = spokenText;
+                $(keywordInput).closest('form').submit();
+            };
+
+            recognition.onerror = function (event) {
+                console.warn('Voice search error:', event.error);
+                alert("Sorry, I couldn't catch that. Please try again or type your search.");
+            };
+
+            recognition.onend = function () {
+                isListening = false;
+                micBtn.innerText = '🎤';
+                micBtn.disabled = false;
+            };
+        })();
     </script>
 
     <!-- ===== HYBRID TTS: Azure + Browser Fallback ===== -->
