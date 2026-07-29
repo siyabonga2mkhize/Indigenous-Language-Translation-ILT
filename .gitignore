@@ -1,8 +1,4 @@
-HEAD
-﻿bin/
-
 bin/
- origin/main
 obj/
 .vs/
 *.user
@@ -12,8 +8,4 @@ packages/
 .vscode/
 .DS_Store
 *.env
- HEAD
 appsettings.Development.json
-
-appsettings.Development.json
- origin/main
