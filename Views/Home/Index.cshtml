@@ -29,6 +29,40 @@
         </div>
     </div>
 
+    <!-- QR Code Scanner -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-info">
+                <div class="card-header bg-info text-white">
+                    <strong>📱 QR Code Scanner</strong>
+                </div>
+                <div class="card-body">
+                    <button type="button" class="btn btn-info btn-sm w-100 mb-3" id="startScannerBtn">
+                        <span id="scannerBtnIcon">▶️</span> <span id="scannerBtnText">Start Scanner</span>
+                    </button>
+
+                    <div id="qrScanner" style="display: none;" class="mb-3">
+                        <div id="html5QrCodeContainer" style="width: 100%; max-width: 400px; margin: 0 auto;"></div>
+                        <button type="button" class="btn btn-outline-secondary btn-sm w-100 mt-2" id="stopScannerBtn">
+                            ⏹️ Stop Scanner
+                        </button>
+                    </div>
+
+                    <div id="scanResult" style="display: none;" class="alert alert-success alert-dismissible fade show">
+                        <strong>✅ QR Code Scanned!</strong>
+                        <p class="mb-0">Redirecting to category: <span id="resultCategoryName"></span></p>
+                    </div>
+
+                    <div id="scanError" style="display: none;" class="alert alert-danger alert-dismissible fade show"></div>
+
+                    <small class="text-muted">
+                        Point your device's camera at a category QR code to navigate directly to phrases in that category.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Category Cards -->
     <div class="row mt-4">
         <div class="col-12">
@@ -200,6 +234,124 @@
 
 </div>
 
+<<<<<<< HEAD:PhraseBook/PhraseBookk/Views/Home/Index.cshtml
+<!-- QR Code Scanner Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js"></script>
+<script type="text/javascript">
+    let html5QrcodeScanner = null;
+
+    document.getElementById('startScannerBtn').addEventListener('click', function () {
+        initializeScanner();
+    });
+
+    document.getElementById('stopScannerBtn').addEventListener('click', function () {
+        stopScanner();
+    });
+
+    function initializeScanner() {
+        const scannerElement = document.getElementById('qrScanner');
+        const startBtn = document.getElementById('startScannerBtn');
+        const scannerBtnIcon = document.getElementById('scannerBtnIcon');
+        const scannerBtnText = document.getElementById('scannerBtnText');
+
+        if (scannerElement.style.display === 'none') {
+            scannerElement.style.display = 'block';
+            startBtn.classList.add('disabled');
+            scannerBtnIcon.textContent = '⏸️';
+            scannerBtnText.textContent = 'Scanner Active';
+
+            html5QrcodeScanner = new Html5QrcodeScanner(
+                "html5QrCodeContainer",
+                {
+                    fps: 10,
+                    qrbox: { width: 250, height: 250 },
+                    aspectRatio: 1.0
+                },
+                false
+            );
+
+            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+        }
+    }
+
+    function stopScanner() {
+        if (html5QrcodeScanner) {
+            html5QrcodeScanner.clear().catch(error => {
+                console.log('QR Code Scanner stop error', error);
+            });
+        }
+
+        const scannerElement = document.getElementById('qrScanner');
+        const startBtn = document.getElementById('startScannerBtn');
+        const scannerBtnIcon = document.getElementById('scannerBtnIcon');
+        const scannerBtnText = document.getElementById('scannerBtnText');
+
+        scannerElement.style.display = 'none';
+        startBtn.classList.remove('disabled');
+        scannerBtnIcon.textContent = '▶️';
+        scannerBtnText.textContent = 'Start Scanner';
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+
+        stopScanner();
+
+        // Send the QR code data to the server
+        fetch('@Url.Action("ProcessQRCode", "Home")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: decodedText })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Show success message
+                    document.getElementById('resultCategoryName').textContent = data.categoryName;
+                    document.getElementById('scanResult').style.display = 'block';
+
+                    // Redirect to the category after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '@Url.Action("Index", "Phrases")' + '?categoryId=' + data.categoryId;
+                    }, 2000);
+                } else {
+                    showError(data.message || 'Invalid QR code. Please try scanning a category QR code.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showError('Error processing QR code. Please try again.');
+            });
+    }
+
+    function onScanFailure(error) {
+        // Handle scan failure - usually means no QR code was detected, which is expected
+        console.warn(`Code scan error = ${error}`);
+    }
+
+    function showError(message) {
+        const errorElement = document.getElementById('scanError');
+        errorElement.innerHTML = `<strong>❌ Error:</strong> ${message} <button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+        errorElement.style.display = 'block';
+
+        setTimeout(() => {
+            errorElement.style.display = 'none';
+        }, 5000);
+    }
+
+    // Clear result message when user clicks close
+    document.addEventListener('click', function (event) {
+        if (event.target.closest('#scanResult .btn-close')) {
+            document.getElementById('scanResult').style.display = 'none';
+        }
+        if (event.target.closest('#scanError .btn-close')) {
+            document.getElementById('scanError').style.display = 'none';
+        }
+    });
+</script>
+=======
 <style>
     .category-card {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -271,3 +423,4 @@
         })();
     </script>
 }
+>>>>>>> 27bf6302bd1005efb96a867d34b8748d95ddaabe:Views/Home/Index.cshtml
