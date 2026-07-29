@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhraseBookk.Data;
 
@@ -11,9 +12,11 @@ using PhraseBookk.Data;
 namespace PhraseBookk.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260729131226_AddTranslationVotes")]
+    partial class AddTranslationVotes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -213,7 +216,7 @@ namespace PhraseBookk.Data.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TotalApprovedTranslations")
+                    b.Property<int?>("TotalApprovedTranslations")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -418,36 +421,24 @@ namespace PhraseBookk.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Action")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LanguageCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LanguageSelected")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("PhraseId")
+                    b.Property<int>("LanguageSelected")
                         .HasColumnType("int");
 
                     b.Property<string>("SearchKeyword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("ViewedAt")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PhraseId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
 
@@ -580,15 +571,17 @@ namespace PhraseBookk.Data.Migrations
 
             modelBuilder.Entity("PhraseBookk.Models.UsageStat", b =>
                 {
-                    b.HasOne("PhraseBookk.Models.Phrase", "Phrase")
+                    b.HasOne("PhraseBookk.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("PhraseId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("PhraseBookk.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Phrase");
+                    b.Navigation("Category");
 
                     b.Navigation("User");
                 });
