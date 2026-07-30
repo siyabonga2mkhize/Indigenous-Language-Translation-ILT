@@ -68,7 +68,6 @@ namespace PhraseBookk.Controllers
         // GET: PhrasesAdmin/Create
         public IActionResult Create()
         {
-            // ✅ FIXED: Use SelectList instead of raw list
             ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
             return View();
         }
@@ -76,7 +75,7 @@ namespace PhraseBookk.Controllers
         // POST: PhrasesAdmin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,EnglishText,CategoryId,IsActive")] Phrase phrase)
+        public async Task<IActionResult> Create([Bind("Id,EnglishText,CategoryId,IsActive,IsSurvival")] Phrase phrase)
         {
             if (ModelState.IsValid)
             {
@@ -103,7 +102,6 @@ namespace PhraseBookk.Controllers
             {
                 return NotFound();
             }
-            // ✅ FIXED: Use SelectList with the current selected value
             ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name", phrase.CategoryId);
             return View(phrase);
         }
@@ -111,7 +109,7 @@ namespace PhraseBookk.Controllers
         // POST: PhrasesAdmin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,EnglishText,CategoryId,IsActive,CreatedDate")] Phrase phrase)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,EnglishText,CategoryId,IsActive,IsSurvival,CreatedDate")] Phrase phrase)
         {
             if (id != phrase.Id)
             {

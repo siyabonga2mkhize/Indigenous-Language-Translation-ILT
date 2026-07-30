@@ -1,0 +1,80 @@
+﻿@page
+@model PhraseBookk.Areas.Identity.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<div class="auth-bg">
+    <div class="auth-blob auth-blob-1"></div>
+    <div class="auth-blob auth-blob-2"></div>
+</div>
+
+<div class="auth-shell">
+    <div class="auth-card">
+        <h3 class="auth-title">Create your account</h3>
+        <p class="auth-subtitle">Sign up to get started</p>
+
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+            <div class="auth-field">
+                <label asp-for="Input.FullName">Full name</label>
+                <input asp-for="Input.FullName" class="form-control" placeholder="e.g. Thabo Nkosi" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Email">Email address</label>
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" placeholder="e.g. thabo@example.com" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.Password">Password</label>
+                <div class="input-group">
+                    <input asp-for="Input.Password" id="passwordInput" class="form-control" autocomplete="new-password" placeholder="At least 8 characters" />
+                    <button type="button" class="btn toggle-password" data-target="passwordInput" tabindex="-1">
+                        <i class="bi bi-eye-fill"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label asp-for="Input.ConfirmPassword">Confirm password</label>
+                <div class="input-group">
+                    <input asp-for="Input.ConfirmPassword" id="confirmPasswordInput" class="form-control" autocomplete="new-password" placeholder="Re-type your password" />
+                    <button type="button" class="btn toggle-password" data-target="confirmPasswordInput" tabindex="-1">
+                        <i class="bi bi-eye-fill"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button id="registerSubmit" type="submit" class="auth-submit">Sign up</button>
+
+            <div class="auth-links">
+                Already have an account? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Log in</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var input = document.getElementById(btn.getAttribute('data-target'));
+                var icon = btn.querySelector('i');
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.replace('bi-eye-fill', 'bi-eye-slash-fill');
+                } else {
+                    input.type = 'password';
+                    icon.classList.replace('bi-eye-slash-fill', 'bi-eye-fill');
+                }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,114 @@
+﻿@model PhraseBookk.Models.Phrase
+@{
+    ViewData["Title"] = Model.EnglishText;
+}
+
+<div class="container" style="max-width: 720px;">
+
+    <!-- Back Link -->
+    <div class="py-3">
+        <a asp-controller="Survival" asp-action="Index" style="color: #6c757d; text-decoration: none; font-size: 0.9rem;">
+            ← Back to Survival Phrases
+        </a>
+    </div>
+
+    <!-- Phrase Card -->
+    <div class="card border-0 shadow-sm" style="border-radius: 16px;">
+        <div class="card-body p-4 p-md-5">
+
+            <!-- Badges -->
+            <div class="mb-3">
+                <span style="background: #dc3545; color: white; padding: 2px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
+                    🆘 SURVIVAL
+                </span>
+                @if (Model.Category != null)
+                {
+                    <span style="background: #f8f9fa; color: #6c757d; padding: 2px 14px; border-radius: 20px; font-size: 0.75rem; margin-left: 6px;">
+                        @Model.Category.Name
+                    </span>
+                }
+            </div>
+
+            <!-- Phrase -->
+            <h2 style="font-weight: 700; color: #1a1a2e; font-size: 1.8rem; margin-bottom: 4px;">
+                @Model.EnglishText
+            </h2>
+            <p style="color: #6c757d; font-size: 0.9rem; margin-bottom: 24px;">
+                @if (Model.Category != null)
+                {
+                    <span>📂 @Model.Category.Name</span>
+                }
+            </p>
+
+            <!-- Translations -->
+            <h6 style="font-weight: 600; color: #1a1a2e; margin-bottom: 12px;">
+                🌍 Translations
+            </h6>
+
+            @if (Model.Translations != null && Model.Translations.Any(t => t.Status == PhraseBookk.Models.ContentStatus.Approved))
+            {
+                <div class="list-group" style="border-radius: 10px; overflow: hidden;">
+                    @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Approved))
+                    {
+                        <div class="list-group-item d-flex justify-content-between align-items-center"
+                             style="border: 1px solid #f0f0f0; border-top: none;">
+                            <div>
+                                <span style="font-weight: 500; font-size: 0.75rem; color: #6c757d; display: block;">
+                                    @trans.Language.ToString()
+                                </span>
+                                <span style="font-size: 1rem; color: #1a1a2e;">
+                                    @trans.TranslatedText
+                                </span>
+                            </div>
+                            <span style="color: #28a745; font-size: 0.75rem;">
+                                ✅ Approved
+                            </span>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center; color: #6c757d;">
+                    <p style="margin: 0; font-size: 0.9rem;">
+                        No approved translations yet.
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="Phrases" asp-action="SubmitTranslation" asp-route-id="@Model.Id"
+                               style="color: #003057; text-decoration: none; font-weight: 500;">
+                                Be the first to suggest one →
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Login"
+                               style="color: #003057; text-decoration: none; font-weight: 500;">
+                                Login to suggest one →
+                            </a>
+                        }
+                    </p>
+                </div>
+            }
+
+            <!-- Suggest Translation -->
+            <div class="mt-4 pt-3" style="border-top: 1px solid #f0f0f0;">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a asp-controller="Phrases" asp-action="SubmitTranslation" asp-route-id="@Model.Id"
+                       class="btn" style="background: #003057; color: white; padding: 8px 24px; border-radius: 8px; text-decoration: none;">
+                        ✍️ Suggest a translation
+                    </a>
+                }
+                else
+                {
+                    <a asp-area="Identity" asp-page="/Account/Login"
+                       class="btn" style="background: #6c757d; color: white; padding: 8px 24px; border-radius: 8px; text-decoration: none;">
+                        🔒 Login to suggest
+                    </a>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>

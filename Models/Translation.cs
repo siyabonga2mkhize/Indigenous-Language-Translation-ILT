@@ -1,5 +1,5 @@
-﻿using PhraseBookk.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhraseBookk.Models
 {
@@ -25,6 +25,24 @@ namespace PhraseBookk.Models
         public int PhraseId { get; set; }
         public string? SubmittedById { get; set; }
 
+        // Audio URL property
+        [Display(Name = "Audio URL")]
+        public string? AudioUrl { get; set; }
+
+        // ✅ Navigation property for votes
+        public virtual ICollection<TranslationVote>? Votes { get; set; }
+
+        // ✅ Computed properties (not stored in DB)
+        [NotMapped]
+        public int UpvoteCount => Votes?.Count(v => v.IsUpvote) ?? 0;
+
+        [NotMapped]
+        public int DownvoteCount => Votes?.Count(v => !v.IsUpvote) ?? 0;
+
+        [NotMapped]
+        public int Score => UpvoteCount - DownvoteCount;
+
+        // Navigation properties
         public virtual Phrase? Phrase { get; set; }
         public virtual ApplicationUser? SubmittedBy { get; set; }
     }

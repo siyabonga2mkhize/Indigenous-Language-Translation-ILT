@@ -23,6 +23,26 @@
         </div>
     }
 
+    <!-- ✅ MODERATOR / ADMIN VIEW BANNER -->
+    @if (ViewBag.IsModerator)
+    {
+        <div class="alert alert-success">
+            <strong>🔍 Moderator View:</strong> You are reviewing translations for <strong>@ViewBag.ModeratorLanguage</strong>.
+        </div>
+    }
+    else if (User.IsInRole("Administrator"))
+    {
+        <div class="alert alert-info">
+            <strong>👑 Admin View:</strong> You can see all pending translations.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger">
+            <strong>⛔ Access Denied:</strong> You do not have permission to view this page.
+        </div>
+    }
+
     @if (!Model.Any())
     {
         <div class="alert alert-info">
@@ -46,6 +66,7 @@
                             <th style="width: 40px;">
                                 <input type="checkbox" id="selectAll" onchange="toggleCheckboxes(this)" />
                             </th>
+                            <th>Priority</th>
                             <th>Phrase</th>
                             <th>Language</th>
                             <th>Translation</th>
@@ -57,9 +78,20 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
+                            var isPriority = int.TryParse(item.AdminReviewComment, out var priority) && priority > 0;
                             <tr>
                                 <td>
                                     <input type="checkbox" name="selectedIds" value="@item.Id" class="translation-checkbox" />
+                                </td>
+                                <td>
+                                    @if (isPriority)
+                                    {
+                                        <span class="badge bg-danger">🔥 Priority</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">Normal</span>
+                                    }
                                 </td>
                                 <td>
                                     <strong>@item.Phrase?.EnglishText</strong>

@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using PhraseBookk.Models;
 
-
 namespace PhraseBookk.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -17,6 +16,7 @@ namespace PhraseBookk.Data
         public DbSet<Translation> Translations { get; set; }
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<UsageStat> UsageStats { get; set; }
+        public DbSet<TranslationVote> TranslationVotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +45,26 @@ namespace PhraseBookk.Data
                 .HasOne(f => f.Phrase)
                 .WithMany(p => p.FavoritedByUsers)
                 .HasForeignKey(f => f.PhraseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // ✅ Unique constraint for TranslationVotes
+            // One vote per user per translation
+            modelBuilder.Entity<TranslationVote>()
+                .HasIndex(v => new { v.TranslationId, v.UserId })
+                .IsUnique()
+                .HasDatabaseName("IX_TranslationVotes_Unique");
+
+            // Configure TranslationVote relationships
+            modelBuilder.Entity<TranslationVote>()
+                .HasOne(v => v.Translation)
+                .WithMany(t => t.Votes)
+                .HasForeignKey(v => v.TranslationId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<TranslationVote>()
+                .HasOne(v => v.User)
+                .WithMany(u => u.TranslationVotes)
+                .HasForeignKey(v => v.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
