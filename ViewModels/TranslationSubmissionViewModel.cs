@@ -16,5 +16,6 @@ namespace PhraseBookk.ViewModels
 
         public string? PhraseEnglishText { get; set; }
         public string? PhraseCategoryName { get; set; }
+        public List<dynamic>? AvailableLanguages { get; set; }
     }
 }

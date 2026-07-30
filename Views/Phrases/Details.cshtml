@@ -1,4 +1,9 @@
-﻿@model PhraseBookk.Models.Phrase
+﻿@using PhraseBookk.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@model PhraseBookk.Models.Phrase
 @{
     ViewBag.Title = "Phrase Details";
     var isFavourited = ViewBag.IsFavourited ?? false;
@@ -20,9 +25,8 @@
             <h3 class="card-title mb-0">@Model.EnglishText</h3>
         </div>
         <div class="card-body">
-            <p><strong>Category:</strong> @Model.Category?.Name</p>
+            <p><strong>Category:</strong> @(Model.Category?.Name ?? "Uncategorized")</p>
 
-            <!-- Map Button (if coordinates exist) -->
             @if (!string.IsNullOrEmpty(Model.Category?.Latitude) && !string.IsNullOrEmpty(Model.Category?.Longitude))
             {
                 <p>
@@ -51,16 +55,73 @@
                     <th>Language</th>
                     <th>Translation</th>
                     <th>Status</th>
+                    <th>Votes</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Approved))
+                @foreach (var trans in Model.Translations.Where(t => t.Status == ContentStatus.Approved).OrderByDescending(t => t.Score))
                 {
+                    var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                    var userVote = trans.Votes?.FirstOrDefault(v => v.UserId == userId);
+                    var isUpvoted = userVote?.IsUpvote == true;
+                    var isDownvoted = userVote?.IsUpvote == false;
+
                     <tr>
                         <td><span class="badge" data-lang="@trans.Language.ToString()">@trans.Language.ToString()</span></td>
                         <td>@trans.TranslatedText</td>
                         <td><span class="badge bg-success">Approved</span></td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <!-- 👍 UP VOTE -->
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <form asp-controller="Votes" asp-action="Toggle" method="post" class="d-inline" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="translationId" value="@trans.Id" />
+                                        <input type="hidden" name="isUpvote" value="true" />
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                        <button type="submit" class="btn btn-sm @(isUpvoted ? "btn-success" : "btn-outline-secondary")"
+                                                style="border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; min-width: 50px;">
+                                            👍 @trans.UpvoteCount
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-dark" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        👍 @trans.UpvoteCount
+                                    </span>
+                                }
+
+                                <!-- 👎 DOWN VOTE -->
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <form asp-controller="Votes" asp-action="Toggle" method="post" class="d-inline" style="display: inline;">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="translationId" value="@trans.Id" />
+                                        <input type="hidden" name="isUpvote" value="false" />
+                                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                                        <button type="submit" class="btn btn-sm @(isDownvoted ? "btn-danger" : "btn-outline-secondary")"
+                                                style="border-radius: 20px; padding: 2px 10px; font-size: 0.75rem; min-width: 50px;">
+                                            👎 @trans.DownvoteCount
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-light text-dark" style="font-size: 0.75rem; padding: 4px 10px;">
+                                        👎 @trans.DownvoteCount
+                                    </span>
+                                }
+
+                                <!-- Score -->
+                                <span class="badge @(trans.Score > 0 ? "bg-success" : (trans.Score < 0 ? "bg-danger" : "bg-secondary"))"
+                                      style="font-size: 0.7rem; padding: 4px 10px;">
+                                    Score: @trans.Score
+                                </span>
+                            </div>
+                        </td>
                         <td>
                             <button class="btn btn-sm btn-outline-secondary"
                                     onclick="speakText('@trans.TranslatedText', '@trans.Language.ToString()')"
@@ -75,21 +136,23 @@
                         </td>
                     </tr>
                 }
-                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Pending))
+                @foreach (var trans in Model.Translations.Where(t => t.Status == ContentStatus.Pending))
                 {
                     <tr>
                         <td><span class="badge bg-warning">@trans.Language.ToString()</span></td>
                         <td>@trans.TranslatedText</td>
                         <td><span class="badge bg-warning">Pending</span></td>
+                        <td><span class="text-muted" style="font-size: 0.75rem;">⏳ Awaiting approval</span></td>
                         <td></td>
                     </tr>
                 }
-                @foreach (var trans in Model.Translations.Where(t => t.Status == PhraseBookk.Models.ContentStatus.Rejected))
+                @foreach (var trans in Model.Translations.Where(t => t.Status == ContentStatus.Rejected))
                 {
                     <tr>
                         <td><span class="badge bg-danger">@trans.Language.ToString()</span></td>
                         <td>@trans.TranslatedText</td>
                         <td><span class="badge bg-danger">Rejected</span></td>
+                        <td><span class="text-muted" style="font-size: 0.75rem;">❌ Rejected</span></td>
                         <td></td>
                     </tr>
                 }
@@ -225,50 +288,12 @@
             }, 4000);
         }
 
-        // ========== HYBRID TTS: Azure + Browser Fallback ==========
+        // ========== BROWSER TTS ==========
         function speakText(text, language) {
-            var langMap = {
-                'en': 'en-US', 'af': 'af-ZA', 'zu': 'zu-ZA', 'xh': 'xh-ZA',
-                'st': 'st-ZA', 'nso': 'nso-ZA', 'tn': 'tn-ZA', 'ts': 'ts-ZA',
-                'ss': 'ss-ZA', 've': 've-ZA', 'nr': 'nr-ZA'
-            };
-
-            var azureLang = langMap[language] || 'en-US';
             var btn = event?.target || document.activeElement;
             var originalText = btn.innerText;
-            btn.innerText = '⏳ Loading...';
-            btn.disabled = true;
 
-            // Try Azure TTS first
-            fetch('/Audio/GetAudio', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `text=${encodeURIComponent(text)}&language=${azureLang}`
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Azure TTS failed');
-                return response.blob();
-            })
-            .then(blob => {
-                var url = URL.createObjectURL(blob);
-                var audio = new Audio(url);
-                audio.play();
-                audio.onended = function() { URL.revokeObjectURL(url); };
-                btn.innerText = originalText;
-                btn.disabled = false;
-            })
-            .catch(function(error) {
-                console.warn('Azure TTS failed, falling back to browser TTS:', error);
-                // Fallback to browser TTS
-                fallbackSpeakText(text, language, btn, originalText);
-            });
-        }
-
-        // ========== BROWSER TTS FALLBACK ==========
-        function fallbackSpeakText(text, language, btn, originalText) {
             if (!('speechSynthesis' in window)) {
-                btn.innerText = originalText;
-                btn.disabled = false;
                 showToast('warning', 'Your browser does not support text-to-speech.');
                 return;
             }
@@ -280,6 +305,7 @@
                 'st': 'st-ZA', 'nso': 'nso-ZA', 'tn': 'tn-ZA', 'ts': 'ts-ZA',
                 'ss': 'ss-ZA', 've': 've-ZA', 'nr': 'nr-ZA'
             };
+
             var targetLang = langMap[language] || 'en-US';
 
             var utterance = new SpeechSynthesisUtterance(text);
@@ -292,20 +318,30 @@
             var matchingVoices = voices.filter(function(voice) {
                 return voice.lang.startsWith(targetLang.split('-')[0]);
             });
-            var preferredVoices = matchingVoices.filter(function(voice) {
-                return voice.lang === targetLang && voice.localService === true;
-            });
 
-            if (preferredVoices.length > 0) {
-                utterance.voice = preferredVoices[0];
-            } else if (matchingVoices.length > 0) {
+            if (matchingVoices.length > 0) {
                 utterance.voice = matchingVoices[0];
             }
 
+            btn.textContent = '🔊 Playing...';
             window.speechSynthesis.speak(utterance);
 
-            btn.innerText = originalText;
-            btn.disabled = false;
+            utterance.onend = function() {
+                btn.textContent = originalText;
+            };
+
+            utterance.onerror = function() {
+                btn.textContent = originalText;
+                showToast('warning', 'Could not play audio. Please try again.');
+            };
+        }
+
+        // Load voices when page loads
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.getVoices();
+            window.speechSynthesis.onvoiceschanged = function() {
+                window.speechSynthesis.getVoices();
+            };
         }
     </script>
 }

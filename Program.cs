@@ -27,7 +27,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IAudioService, AzureTtsService>();
-builder.Services.AddScoped<IQRCodeService, QRCodeService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -36,7 +35,18 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-builder.Services.AddScoped<Chatboard>();
+// Keep Chatboard commented out (your collaborator's feature)
+// builder.Services.AddScoped<Chatboard>();
+
+// ? SWITCHED: Use Azure Translator instead of Gemini
+// Commented out Gemini
+// builder.Services.AddScoped<IAiTranslationService, GeminiAiService>();
+// builder.Services.AddHttpClient<GeminiAiService>();
+
+// ? ADDED: Azure Translator Service
+builder.Services.AddScoped<IAiTranslationService, AzureTranslationService>();
+builder.Services.AddHttpClient<AzureTranslationService>();
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -66,11 +76,6 @@ app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-// ============================================================
-// REMOVED: Unauthenticated redirect to Login
-// Students can now browse the Home page and Search without logging in.
-// ============================================================
 
 // Redirect admin users to dashboard
 app.Use(async (context, next) =>

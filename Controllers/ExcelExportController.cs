@@ -33,7 +33,7 @@ namespace PhraseBookk.Controllers
                 .Include(p => p.Category)
                 .Include(p => p.Translations)
                 .Where(p => p.IsActive)
-                .OrderBy(p => p.Category.Name)
+                .OrderBy(p => p.Category != null ? p.Category.Name : "")
                 .ToListAsync();
 
             using (var package = new ExcelPackage())
@@ -60,7 +60,7 @@ namespace PhraseBookk.Controllers
                 foreach (var phrase in phrases)
                 {
                     worksheet.Cells[row, 1].Value = phrase.EnglishText;
-                    worksheet.Cells[row, 2].Value = phrase.Category?.Name;
+                    worksheet.Cells[row, 2].Value = phrase.Category?.Name ?? "Uncategorized";
                     worksheet.Cells[row, 3].Value = phrase.IsActive ? "Active" : "Inactive";
                     worksheet.Cells[row, 4].Value = phrase.Translations?.Count ?? 0;
                     worksheet.Cells[row, 5].Value = phrase.CreatedDate.ToString("dd MMM yyyy");
@@ -92,7 +92,7 @@ namespace PhraseBookk.Controllers
                 row = 2;
                 foreach (var trans in translations)
                 {
-                    sheet2.Cells[row, 1].Value = trans.Phrase?.EnglishText;
+                    sheet2.Cells[row, 1].Value = trans.Phrase?.EnglishText ?? "Unknown Phrase";
                     sheet2.Cells[row, 2].Value = trans.Language.ToString();
                     sheet2.Cells[row, 3].Value = trans.TranslatedText;
                     sheet2.Cells[row, 4].Value = trans.Status.ToString();
@@ -143,26 +143,27 @@ namespace PhraseBookk.Controllers
         [HttpPost]
         public async Task<IActionResult> ExportStats()
         {
+            // ✅ FIX: Use LanguageCode instead of LanguageSelected
             var languageStats = await _context.UsageStats
-                .GroupBy(s => s.LanguageSelected)
+                .Where(u => u.LanguageCode != null)
+                .GroupBy(u => u.LanguageCode ?? "Unknown")
                 .Select(g => new { Language = g.Key, Count = g.Count() })
                 .OrderByDescending(g => g.Count)
                 .ToListAsync();
 
+            // ✅ FIX: Use Category string instead of CategoryId
             var categoryStats = await _context.UsageStats
-                .Include(s => s.Category)
-                .GroupBy(s => s.CategoryId)
-                .Select(g => new { CategoryId = g.Key, Count = g.Count() })
+                .Where(u => u.Category != null)
+                .GroupBy(u => u.Category ?? "Uncategorized")
+                .Select(g => new { Category = g.Key, Count = g.Count() })
                 .OrderByDescending(g => g.Count)
                 .ToListAsync();
-
-            var categoryDict = await _context.Categories.ToDictionaryAsync(c => c.Id, c => c.Name);
 
             using (var package = new ExcelPackage())
             {
                 var sheet = package.Workbook.Worksheets.Add("Usage Statistics");
 
-                // Headers
+                // Headers - Language Stats
                 sheet.Cells[1, 1].Value = "Language";
                 sheet.Cells[1, 2].Value = "Search Count";
 
@@ -176,12 +177,15 @@ namespace PhraseBookk.Controllers
                 int row = 2;
                 foreach (var item in languageStats)
                 {
-                    sheet.Cells[row, 1].Value = item.Language.ToString();
+                    sheet.Cells[row, 1].Value = item.Language;
                     sheet.Cells[row, 2].Value = item.Count;
                     row++;
                 }
 
+                // Spacer row
                 row++;
+
+                // Headers - Category Stats
                 sheet.Cells[row, 1].Value = "Category";
                 sheet.Cells[row, 2].Value = "Search Count";
 
@@ -195,8 +199,7 @@ namespace PhraseBookk.Controllers
                 row++;
                 foreach (var item in categoryStats)
                 {
-                    var catName = categoryDict.ContainsKey(item.CategoryId) ? categoryDict[item.CategoryId] : "Unknown";
-                    sheet.Cells[row, 1].Value = catName;
+                    sheet.Cells[row, 1].Value = item.Category;
                     sheet.Cells[row, 2].Value = item.Count;
                     row++;
                 }
@@ -212,4 +215,3 @@ namespace PhraseBookk.Controllers
         }
     }
 }
-
