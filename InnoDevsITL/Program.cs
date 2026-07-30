@@ -1,4 +1,4 @@
-﻿using InnoDevsITL.Data;
+using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.Services.Implementations;
 using InnoDevsITL.Services.Interfaces;
@@ -7,10 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();  // ← Add this line
-builder.Services.AddRazorPages();  // ← Add this line
+builder.Services.AddRazorPages();  // ← Only add ONCE
 
 // Configure DbContext
 builder.Services.AddDbContext<InnoDbContext>(options =>
@@ -39,7 +38,7 @@ builder.Services.AddScoped<ISubmissionService, SubmissionService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -59,20 +58,17 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-// Initialize database with seed data
-using (var scope = app.Services.CreateScope())
+// ============ DATABASE INITIALIZATION ============
+try
 {
+    using var scope = app.Services.CreateScope();
     var services = scope.ServiceProvider;
-    try
-    {
-        await DbInitializer.InitializeAsync(services);
-        Console.WriteLine("Database seeded successfully!");
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while seeding the database.");
-    }
+    await DbInitializer.InitializeAsync(services);
+}
+catch (Exception ex)
+{
+    var logger = app.Services.GetRequiredService<ILogger<Program>>();
+    logger.LogError(ex, "❌ An error occurred while initializing the database");
 }
 
 app.Run();

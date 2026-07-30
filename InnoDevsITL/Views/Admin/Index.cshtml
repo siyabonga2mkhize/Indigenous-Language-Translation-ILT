@@ -1,2 +1,139 @@
-﻿<h2>Admin Dashboard</h2>
-<p>Welcome, Admin!</p>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var currentUser = ViewBag.CurrentUser;
+    var totalUsers = ViewBag.TotalUsers ?? 0;
+    var pendingSubmissions = ViewBag.PendingSubmissions ?? 0;
+    var totalPhrases = ViewBag.TotalPhrases ?? 0;
+    var totalCategories = ViewBag.TotalCategories ?? 0;
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Welcome, @currentUser?.FirstName @currentUser?.LastName</h1>
+            <p class="text-muted">Admin Dashboard</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <h2>@totalUsers</h2>
+                    <p class="card-text small">Registered users in system</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Pending Submissions</h5>
+                    <h2>@pendingSubmissions</h2>
+                    <p class="card-text small">Awaiting review</p>
+                    <a href="@Url.Action("ReviewSubmissions", "Admin")" class="btn btn-light btn-sm mt-2">
+                        Review Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Total Phrases</h5>
+                    <h2>@totalPhrases</h2>
+                    <p class="card-text small">In the database</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Categories</h5>
+                    <h2>@totalCategories</h2>
+                    <p class="card-text small">Available categories</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Actions -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="@Url.Action("ReviewSubmissions", "Admin")" class="list-group-item list-group-item-action">
+                            📝 Review User Submissions
+                        </a>
+                        <a href="@Url.Action("ManageUsers", "Admin")" class="list-group-item list-group-item-action">
+                            👥 Manage Users & Roles
+                        </a>
+                        <a href="@Url.Action("Index", "Categories")" class="list-group-item list-group-item-action">
+                            📂 Manage Categories
+                        </a>
+                        <a href="@Url.Action("Index", "Faculties")" class="list-group-item list-group-item-action">
+                            🏫 Manage Faculties
+                        </a>
+                        <a href="@Url.Action("Index", "Campuses")" class="list-group-item list-group-item-action">
+                            📍 Manage Campuses
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">System Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Admin User:</strong> @currentUser?.Email</p>
+                    <p><strong>Faculty:</strong> @currentUser?.Faculty?.Name ?? "Not assigned"</p>
+                    <p><strong>Campus:</strong> @currentUser?.Campus?.Name ?? "Not assigned"</p>
+                    <p><strong>Member Since:</strong> @(DateTime.Now.ToString("MMMM dd, yyyy"))</p>
+                    
+                    <hr />
+                    
+                    <div class="btn-group d-block w-100" role="group">
+                        <a href="@Url.Action("Index", "Profile")" class="btn btn-outline-primary btn-sm">
+                            View Profile
+                        </a>
+                        <a href="@Url.Action("Logout", "Account")" class="btn btn-outline-danger btn-sm">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border: none;
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .list-group-item {
+        border: 1px solid #f0f0f0;
+        padding: 12px 15px;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>

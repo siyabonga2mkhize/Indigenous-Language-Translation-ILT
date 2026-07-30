@@ -1,2 +1,151 @@
-﻿<h2>Student Dashboard</h2>
-<p>Welcome, Student!</p>
+@using InnoDevsITL.Models;
+
+@{
+    ViewData["Title"] = "Student Dashboard";
+    var currentUser = ViewBag.CurrentUser as Users;
+    var totalSubmissions = ViewBag.TotalSubmissions ?? 0;
+    var approvedSubmissions = ViewBag.ApprovedSubmissions ?? 0;
+    var totalFavourites = ViewBag.TotalFavourites ?? 0;
+    var recentPhrases = ViewBag.RecentPhrases as List<Phrase> ?? new List<Phrase>();
+}
+
+<div class="container mt-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>Welcome, @currentUser?.FirstName @currentUser?.LastName</h1>
+            <p class="text-muted">Student Dashboard - Learn Indigenous Languages</p>
+        </div>
+    </div>
+
+    <!-- Learning Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5 class="card-title">My Submissions</h5>
+                    <h2>@totalSubmissions</h2>
+                    <p class="card-text small">Total translations submitted</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Approved</h5>
+                    <h2>@approvedSubmissions</h2>
+                    <p class="card-text small">Accepted translations</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5 class="card-title">Favorites</h5>
+                    <h2>@totalFavourites</h2>
+                    <p class="card-text small">Saved phrases</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Actions -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Learning Activities</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group">
+                        <a href="@Url.Action("Create", "Suggestion")" class="list-group-item list-group-item-action">
+                            ✏️ Submit Translation
+                        </a>
+                        <a href="@Url.Action("Index", "Suggestion")" class="list-group-item list-group-item-action">
+                            📋 My Submissions
+                        </a>
+                        <a href="@Url.Action("MyFavourites", "Student")" class="list-group-item list-group-item-action">
+                            ⭐ My Favorites
+                        </a>
+                        <a href="@Url.Action("Index", "Phrases")" class="list-group-item list-group-item-action">
+                            📚 Browse Phrases
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Your Profile</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> @currentUser?.FirstName @currentUser?.LastName</p>
+                    <p><strong>Email:</strong> @currentUser?.Email</p>
+                    <p><strong>Faculty:</strong> @currentUser?.Faculty?.Name ?? "Not assigned"</p>
+                    <p><strong>Campus:</strong> @currentUser?.Campus?.Name ?? "Not assigned"</p>
+                    
+                    <hr />
+                    
+                    <div class="btn-group d-block w-100" role="group">
+                        <a href="@Url.Action("Index", "Profile")" class="btn btn-outline-primary btn-sm">
+                            Edit Profile
+                        </a>
+                        <a href="@Url.Action("Logout", "Account")" class="btn btn-outline-danger btn-sm">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Phrases -->
+    @if (recentPhrases.Count > 0)
+    {
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Recently Added Phrases</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            @foreach (var phrase in recentPhrases)
+                            {
+                                <div class="list-group-item">
+                                    <h6>@phrase.EnglishText</h6>
+                                    <p class="mb-1"><strong>Language:</strong> @phrase.Language</p>
+                                    <p class="mb-0"><small class="text-muted">@phrase.Category?.Name</small></p>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        border: none;
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .list-group-item {
+        border: 1px solid #f0f0f0;
+        padding: 12px 15px;
+    }
+
+    .list-group-item:hover {
+        background-color: #f8f9fa;
+    }
+</style>

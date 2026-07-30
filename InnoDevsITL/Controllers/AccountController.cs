@@ -1,10 +1,10 @@
-﻿//using static System.Runtime.InteropServices.JavaScript.JSType;
 using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace InnoDevsITL.Controllers
 {
@@ -13,12 +13,18 @@ namespace InnoDevsITL.Controllers
         private readonly SignInManager<Users> signInManager;
         private readonly UserManager<Users> userManager;
         private readonly InnoDbContext dbContext;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(SignInManager<Users> signInManager, UserManager<Users> userManager, InnoDbContext dbContext)
+        public AccountController(
+            SignInManager<Users> signInManager, 
+            UserManager<Users> userManager, 
+            InnoDbContext dbContext,
+            ILogger<AccountController> logger)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
             this.dbContext = dbContext;
+            this.logger = logger;
         }
 
         public IActionResult Login()
@@ -36,22 +42,43 @@ namespace InnoDevsITL.Controllers
                 if (result.Succeeded)
                 {
                     var user = await userManager.FindByEmailAsync(model.Email);
-                    if (user != null) // Add null check
+                    if (user != null)
                     {
-                        if (await userManager.IsInRoleAsync(user, "Admin"))
+                        logger.LogInformation($"User {user.Email} logged in successfully. Getting roles...");
+                        
+                        // Get all roles for this user
+                        var roles = await userManager.GetRolesAsync(user);
+                        logger.LogInformation($"User {user.Email} has roles: {string.Join(", ", roles)}");
+
+                        // Redirect based on role
+                        if (roles.Contains("Admin"))
                         {
+                            logger.LogInformation($"Redirecting {user.Email} to Admin dashboard");
                             return RedirectToAction("Index", "Admin");
                         }
-                        else if (await userManager.IsInRoleAsync(user, "Student"))
+                        else if (roles.Contains("Teacher"))
                         {
+                            logger.LogInformation($"Redirecting {user.Email} to Teacher dashboard");
+                            return RedirectToAction("Index", "Teacher");
+                        }
+                        else if (roles.Contains("Student"))
+                        {
+                            logger.LogInformation($"Redirecting {user.Email} to Student dashboard");
                             return RedirectToAction("Index", "Student");
                         }
                     }
+                    else
+                    {
+                        logger.LogWarning($"Login succeeded but user {model.Email} not found!");
+                    }
 
+                    // Fallback if no role assigned
+                    logger.LogWarning($"User {model.Email} logged in but has no role assigned. Redirecting to Home.");
                     return RedirectToAction("Index", "Home");
                 }
                 else
                 {
+                    logger.LogWarning($"Login failed for {model.Email}");
                     ModelState.AddModelError("", "Email or password is incorrect");
                     return View(model);
                 }
@@ -89,7 +116,8 @@ namespace InnoDevsITL.Controllers
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(users, "Student");
-                    return RedirectToAction("Login", "Account");//View, Controller
+                    logger.LogInformation($"New user {users.Email} registered as Student");
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
@@ -99,8 +127,10 @@ namespace InnoDevsITL.Controllers
                     }
                     return View(model);
                 }
-
             }
+
+            ViewBag.Faculties = new SelectList(dbContext.Faculties, "Id", "Name");
+            ViewBag.Campuses = new SelectList(dbContext.Campuses, "Id", "Name");
             return View(model);
         }
 
@@ -108,7 +138,6 @@ namespace InnoDevsITL.Controllers
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> VerifyEmail(VerifyEmailViewModel model)
@@ -152,14 +181,12 @@ namespace InnoDevsITL.Controllers
                         result = await userManager.AddPasswordAsync(user, model.NewPassword);
                         return RedirectToAction("Login", "Account");
                     }
-
                     else
                     {
                         foreach (var error in result.Errors)
                         {
                             ModelState.AddModelError("", error.Description);
                         }
-
                         return View(model);
                     }
                 }
@@ -181,6 +208,5 @@ namespace InnoDevsITL.Controllers
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

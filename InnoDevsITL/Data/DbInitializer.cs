@@ -1,6 +1,7 @@
-﻿using InnoDevsITL.Models;
+using InnoDevsITL.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InnoDevsITL.Data
 {
@@ -9,269 +10,264 @@ namespace InnoDevsITL.Data
         public static async Task InitializeAsync(IServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<InnoDbContext>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var services = scope.ServiceProvider;
+            
+            var context = services.GetRequiredService<InnoDbContext>();
+            var userManager = services.GetRequiredService<UserManager<Users>>();
+            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var logger = services.GetRequiredService<ILogger<Program>>();
 
-            // Ensure database is created
-            await context.Database.EnsureCreatedAsync();
-
-            // Seed Roles
-            string[] roleNames = { "Admin", "Student", "Teacher" };
-            foreach (var roleName in roleNames)
+            try
             {
-                if (!await roleManager.RoleExistsAsync(roleName))
-                {
-                    await roleManager.CreateAsync(new IdentityRole(roleName));
-                }
-            }
+                // Apply pending migrations
+                logger.LogInformation("🔄 Applying database migrations...");
+                await context.Database.MigrateAsync();
+                logger.LogInformation("✅ Migrations applied successfully");
 
-            // Seed Admin User
-            string adminEmail = "admin@innodevs.com";
-            string adminPassword = "Admin@123456";
-            var adminUser = await userManager.FindByEmailAsync(adminEmail);
-            if (adminUser == null)
-            {
-                var user = new Users
+                // ===== SEED ROLES =====
+                logger.LogInformation("🔄 Seeding roles...");
+                string[] roleNames = { "Admin", "Student", "Teacher" };
+                foreach (var roleName in roleNames)
                 {
-                    UserName = adminEmail,
-                    Email = adminEmail,
-                    FirstName = "System",
-                    LastName = "Administrator",
-                    PhysicalAddress = "123 Admin Street",
-                    DateOfBirth = new DateTime(1980, 1, 1),
-                    FacultyId = 1,
-                    CampusId = 1,
-                    EmailConfirmed = true
-                };
-                var result = await userManager.CreateAsync(user, adminPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Admin");
-                }
-            }
-
-            // Seed Test Student User
-            string studentEmail = "student@test.com";
-            string studentPassword = "Student@123";
-            var studentUser = await userManager.FindByEmailAsync(studentEmail);
-            if (studentUser == null)
-            {
-                var user = new Users
-                {
-                    UserName = studentEmail,
-                    Email = studentEmail,
-                    FirstName = "Test",
-                    LastName = "Student",
-                    PhysicalAddress = "456 Student Avenue",
-                    DateOfBirth = new DateTime(2000, 5, 15),
-                    FacultyId = 1,
-                    CampusId = 1,
-                    EmailConfirmed = true
-                };
-                var result = await userManager.CreateAsync(user, studentPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Student");
-                }
-            }
-
-            // Seed Test Teacher User
-            string teacherEmail = "teacher@test.com";
-            string teacherPassword = "Teacher@123";
-            var teacherUser = await userManager.FindByEmailAsync(teacherEmail);
-            if (teacherUser == null)
-            {
-                var user = new Users
-                {
-                    UserName = teacherEmail,
-                    Email = teacherEmail,
-                    FirstName = "Test",
-                    LastName = "Teacher",
-                    PhysicalAddress = "789 Teacher Lane",
-                    DateOfBirth = new DateTime(1985, 8, 20),
-                    FacultyId = 1,
-                    CampusId = 1,
-                    EmailConfirmed = true
-                };
-                var result = await userManager.CreateAsync(user, teacherPassword);
-                if (result.Succeeded)
-                {
-                    await userManager.AddToRoleAsync(user, "Teacher");
-                }
-            }
-
-            // Seed Faculties
-            if (!context.Faculties.Any())
-            {
-                context.Faculties.AddRange(
-                    new Faculty { Name = "Faculty of Engineering" },
-                    new Faculty { Name = "Faculty of Sciences" },
-                    new Faculty { Name = "Faculty of Humanities" },
-                    new Faculty { Name = "Faculty of Commerce" },
-                    new Faculty { Name = "Faculty of Education" }
-                );
-                await context.SaveChangesAsync();
-            }
-
-            // Seed Campuses
-            if (!context.Campuses.Any())
-            {
-                context.Campuses.AddRange(
-                    new Campus { Name = "Main Campus" },
-                    new Campus { Name = "City Campus" },
-                    new Campus { Name = "South Campus" },
-                    new Campus { Name = "North Campus" },
-                    new Campus { Name = "Online Campus" }
-                );
-                await context.SaveChangesAsync();
-            }
-
-            // Seed Categories
-            if (!context.Categories.Any())
-            {
-                context.Categories.AddRange(
-                    new Category { Name = "Greetings" },
-                    new Category { Name = "Everyday Phrases" },
-                    new Category { Name = "Academic" },
-                    new Category { Name = "Business" },
-                    new Category { Name = "Travel" },
-                    new Category { Name = "Emergency" },
-                    new Category { Name = "Food & Dining" },
-                    new Category { Name = "Family & Relationships" }
-                );
-                await context.SaveChangesAsync();
-            }
-
-            // Seed Sample Phrases with Translations
-            if (!context.Phrases.Any())
-            {
-                var greetingsCategory = await context.Categories.FirstAsync(c => c.Name == "Greetings");
-                var everydayCategory = await context.Categories.FirstAsync(c => c.Name == "Everyday Phrases");
-
-                var phrases = new List<Phrase>
-                {
-                    new Phrase
+                    if (!await roleManager.RoleExistsAsync(roleName))
                     {
-                        EnglishText = "Hello",
-                        Language = "Zulu",
-                        Transcription = "Sawubona",
-                        IsActive = true,
-                        CategoryId = greetingsCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Sawubona", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Molo", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Hallo", Language = "Afrikaans", IsApproved = true }
-                        }
-                    },
-                    new Phrase
-                    {
-                        EnglishText = "How are you?",
-                        Language = "Zulu",
-                        Transcription = "Unjani?",
-                        IsActive = true,
-                        CategoryId = greetingsCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Unjani?", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Uphi?", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Hoe gaan dit?", Language = "Afrikaans", IsApproved = true }
-                        }
-                    },
-                    new Phrase
-                    {
-                        EnglishText = "Good morning",
-                        Language = "Zulu",
-                        Transcription = "Sawubona ekuseni",
-                        IsActive = true,
-                        CategoryId = greetingsCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Sawubona ekuseni", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Molo kusasa", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Goeie more", Language = "Afrikaans", IsApproved = true }
-                        }
-                    },
-                    new Phrase
-                    {
-                        EnglishText = "Thank you",
-                        Language = "Zulu",
-                        Transcription = "Ngiyabonga",
-                        IsActive = true,
-                        CategoryId = everydayCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Ngiyabonga", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Enkosi", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Dankie", Language = "Afrikaans", IsApproved = true }
-                        }
-                    },
-                    new Phrase
-                    {
-                        EnglishText = "Yes",
-                        Language = "Zulu",
-                        Transcription = "Yebo",
-                        IsActive = true,
-                        CategoryId = everydayCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Yebo", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Ewe", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Ja", Language = "Afrikaans", IsApproved = true }
-                        }
-                    },
-                    new Phrase
-                    {
-                        EnglishText = "No",
-                        Language = "Zulu",
-                        Transcription = "Cha",
-                        IsActive = true,
-                        CategoryId = everydayCategory.Id,
-                        Translations = new List<Translation>
-                        {
-                            new Translation { Text = "Cha", Language = "Zulu", IsApproved = true },
-                            new Translation { Text = "Hayi", Language = "Xhosa", IsApproved = true },
-                            new Translation { Text = "Nee", Language = "Afrikaans", IsApproved = true }
-                        }
+                        await roleManager.CreateAsync(new IdentityRole(roleName));
+                        logger.LogInformation($"   ✅ Created role: {roleName}");
                     }
-                };
-
-                context.Phrases.AddRange(phrases);
-                await context.SaveChangesAsync();
-            }
-
-            // Seed some pending submissions for testing
-            if (!context.Submissions.Any())
-            {
-                var student = await userManager.FindByEmailAsync("student@test.com");
-                var phrase = await context.Phrases.FirstOrDefaultAsync();
-
-                if (student != null && phrase != null)
-                {
-                    var submissions = new List<Submission>
-                    {
-                        new Submission
-                        {
-                            UserId = student.Id,
-                            SubmittedText = "Ngiyaxolisa",
-                            SubmittedAt = DateTime.UtcNow.AddDays(-2),
-                            IsApproved = false,
-                            PhraseId = phrase.Id
-                        },
-                        new Submission
-                        {
-                            UserId = student.Id,
-                            SubmittedText = "Ngicela usizo",
-                            SubmittedAt = DateTime.UtcNow.AddDays(-1),
-                            IsApproved = false,
-                            PhraseId = phrase.Id
-                        }
-                    };
-
-                    context.Submissions.AddRange(submissions);
-                    await context.SaveChangesAsync();
                 }
+
+                // ===== SEED FACULTIES =====
+                logger.LogInformation("🔄 Seeding faculties...");
+                if (!context.Faculties.Any())
+                {
+                    context.Faculties.AddRange(
+                        new Faculty { Name = "Faculty of Engineering" },
+                        new Faculty { Name = "Faculty of Sciences" },
+                        new Faculty { Name = "Faculty of Humanities" },
+                        new Faculty { Name = "Faculty of Commerce" },
+                        new Faculty { Name = "Faculty of Education" }
+                    );
+                    await context.SaveChangesAsync();
+                    logger.LogInformation("   ✅ Added 5 faculties");
+                }
+
+                // ===== SEED CAMPUSES =====
+                logger.LogInformation("🔄 Seeding campuses...");
+                if (!context.Campuses.Any())
+                {
+                    context.Campuses.AddRange(
+                        new Campus { Name = "Main Campus" },
+                        new Campus { Name = "City Campus" },
+                        new Campus { Name = "South Campus" },
+                        new Campus { Name = "North Campus" },
+                        new Campus { Name = "Online Campus" }
+                    );
+                    await context.SaveChangesAsync();
+                    logger.LogInformation("   ✅ Added 5 campuses");
+                }
+
+                // Get Faculty and Campus for users
+                var faculty = await context.Faculties.FirstOrDefaultAsync();
+                var campus = await context.Campuses.FirstOrDefaultAsync();
+
+                if (faculty == null || campus == null)
+                {
+                    logger.LogError("❌ Cannot create users - Faculty or Campus not found");
+                    return;
+                }
+
+                // ===== SEED USERS WITH PROPERLY HASHED PASSWORDS =====
+                logger.LogInformation("🔄 Seeding users...");
+
+                // Admin User
+                var adminEmail = "admin@innodevs.com";
+                var adminPassword = "Admin@123456";
+                var adminUser = await userManager.FindByEmailAsync(adminEmail);
+                
+                if (adminUser == null)
+                {
+                    var admin = new Users
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        FirstName = "System",
+                        LastName = "Administrator",
+                        PhysicalAddress = "123 Admin Street",
+                        DateOfBirth = new DateTime(1980, 1, 1),
+                        FacultyId = faculty.Id,
+                        CampusId = campus.Id,
+                        EmailConfirmed = true
+                    };
+                    
+                    var result = await userManager.CreateAsync(admin, adminPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(admin, "Admin");
+                        logger.LogInformation($"   ✅ Created admin: {adminEmail}");
+                    }
+                    else
+                    {
+                        logger.LogError($"   ❌ Failed to create admin: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+                }
+                else
+                {
+                    logger.LogInformation($"   ℹ️  Admin user already exists: {adminEmail}");
+                }
+
+                // Student User
+                var studentEmail = "student@test.com";
+                var studentPassword = "Student@123456";
+                var studentUser = await userManager.FindByEmailAsync(studentEmail);
+                
+                if (studentUser == null)
+                {
+                    var student = new Users
+                    {
+                        UserName = studentEmail,
+                        Email = studentEmail,
+                        FirstName = "Test",
+                        LastName = "Student",
+                        PhysicalAddress = "456 Student Avenue",
+                        DateOfBirth = new DateTime(2000, 5, 15),
+                        FacultyId = faculty.Id,
+                        CampusId = campus.Id,
+                        EmailConfirmed = true
+                    };
+                    
+                    var result = await userManager.CreateAsync(student, studentPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(student, "Student");
+                        logger.LogInformation($"   ✅ Created student: {studentEmail}");
+                    }
+                    else
+                    {
+                        logger.LogError($"   ❌ Failed to create student: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+                }
+                else
+                {
+                    logger.LogInformation($"   ℹ️  Student user already exists: {studentEmail}");
+                }
+
+                // Teacher User
+                var teacherEmail = "teacher@test.com";
+                var teacherPassword = "Teacher@123456";
+                var teacherUser = await userManager.FindByEmailAsync(teacherEmail);
+                
+                if (teacherUser == null)
+                {
+                    var teacher = new Users
+                    {
+                        UserName = teacherEmail,
+                        Email = teacherEmail,
+                        FirstName = "Test",
+                        LastName = "Teacher",
+                        PhysicalAddress = "789 Teacher Lane",
+                        DateOfBirth = new DateTime(1985, 8, 20),
+                        FacultyId = faculty.Id,
+                        CampusId = campus.Id,
+                        EmailConfirmed = true
+                    };
+                    
+                    var result = await userManager.CreateAsync(teacher, teacherPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(teacher, "Teacher");
+                        logger.LogInformation($"   ✅ Created teacher: {teacherEmail}");
+                    }
+                    else
+                    {
+                        logger.LogError($"   ❌ Failed to create teacher: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+                    }
+                }
+                else
+                {
+                    logger.LogInformation($"   ℹ️  Teacher user already exists: {teacherEmail}");
+                }
+
+                // ===== SEED CATEGORIES =====
+                logger.LogInformation("🔄 Seeding categories...");
+                if (!context.Categories.Any())
+                {
+                    context.Categories.AddRange(
+                        new Category { Name = "Greetings" },
+                        new Category { Name = "Everyday Phrases" },
+                        new Category { Name = "Academic" },
+                        new Category { Name = "Business" },
+                        new Category { Name = "Travel" },
+                        new Category { Name = "Emergency" },
+                        new Category { Name = "Food & Dining" },
+                        new Category { Name = "Family & Relationships" }
+                    );
+                    await context.SaveChangesAsync();
+                    logger.LogInformation("   ✅ Added 8 categories");
+                }
+
+                // ===== SEED PHRASES =====
+                logger.LogInformation("🔄 Seeding phrases...");
+                if (!context.Phrases.Any())
+                {
+                    var greetingsCategory = await context.Categories
+                        .FirstOrDefaultAsync(c => c.Name == "Greetings");
+                    var everydayCategory = await context.Categories
+                        .FirstOrDefaultAsync(c => c.Name == "Everyday Phrases");
+
+                    if (greetingsCategory != null && everydayCategory != null)
+                    {
+                        var phrases = new List<Phrase>
+                        {
+                            new Phrase
+                            {
+                                EnglishText = "Hello",
+                                Language = "Zulu",
+                                Transcription = "Sawubona",
+                                IsActive = true,
+                                CategoryId = greetingsCategory.Id
+                            },
+                            new Phrase
+                            {
+                                EnglishText = "How are you?",
+                                Language = "Zulu",
+                                Transcription = "Unjani?",
+                                IsActive = true,
+                                CategoryId = greetingsCategory.Id
+                            },
+                            new Phrase
+                            {
+                                EnglishText = "Good morning",
+                                Language = "Zulu",
+                                Transcription = "Sawubona ekuseni",
+                                IsActive = true,
+                                CategoryId = greetingsCategory.Id
+                            },
+                            new Phrase
+                            {
+                                EnglishText = "Thank you",
+                                Language = "Zulu",
+                                Transcription = "Ngiyabonga",
+                                IsActive = true,
+                                CategoryId = everydayCategory.Id
+                            }
+                        };
+
+                        context.Phrases.AddRange(phrases);
+                        await context.SaveChangesAsync();
+                        logger.LogInformation($"   ✅ Added {phrases.Count} phrases");
+                    }
+                }
+
+                logger.LogInformation("✅ Database initialization completed successfully!");
+                logger.LogInformation("\n📋 Test Users Created:");
+                logger.LogInformation("   Admin:   admin@innodevs.com / Admin@123456");
+                logger.LogInformation("   Student: student@test.com / Student@123456");
+                logger.LogInformation("   Teacher: teacher@test.com / Teacher@123456");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "❌ An error occurred while seeding the database");
+                throw;
             }
         }
     }

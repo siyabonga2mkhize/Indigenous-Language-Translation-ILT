@@ -1,4 +1,3 @@
-﻿// Controllers/AdminController.cs (Updated)
 using InnoDevsITL.Data;
 using InnoDevsITL.Models;
 using InnoDevsITL.ViewModels;
@@ -14,15 +13,37 @@ namespace InnoDevsITL.Controllers
     {
         private readonly InnoDbContext _context;
         private readonly UserManager<Users> _userManager;
+        private readonly ILogger<AdminController> _logger;
 
-        public AdminController(InnoDbContext context, UserManager<Users> userManager)
+        public AdminController(
+            InnoDbContext context, 
+            UserManager<Users> userManager,
+            ILogger<AdminController> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var currentUser = await _userManager.GetUserAsync(User);
+            _logger.LogInformation($"Admin {currentUser?.Email} accessed dashboard");
+
+            // Get dashboard statistics
+            var totalUsers = await _userManager.Users.CountAsync();
+            var pendingSubmissions = await _context.Submissions
+                .Where(s => !s.IsApproved)
+                .CountAsync();
+            var totalPhrases = await _context.Phrases.CountAsync();
+            var totalCategories = await _context.Categories.CountAsync();
+
+            ViewBag.TotalUsers = totalUsers;
+            ViewBag.PendingSubmissions = pendingSubmissions;
+            ViewBag.TotalPhrases = totalPhrases;
+            ViewBag.TotalCategories = totalCategories;
+            ViewBag.CurrentUser = currentUser;
+
             return View();
         }
 
@@ -76,7 +97,7 @@ namespace InnoDevsITL.Controllers
 
             // Approve the submission
             submission.IsApproved = true;
-            submission.ReviewedBy = reviewer.UserName;
+            submission.ReviewedBy = reviewer?.UserName ?? "Unknown";
 
             // Activate the phrase
             submission.Phrase.IsActive = true;
@@ -93,6 +114,7 @@ namespace InnoDevsITL.Controllers
             _context.Translations.Add(translation);
             await _context.SaveChangesAsync();
 
+            _logger.LogInformation($"Submission {id} approved by {reviewer?.Email}");
             TempData["Success"] = "Submission approved successfully!";
             return RedirectToAction(nameof(ReviewSubmissions));
         }
@@ -121,6 +143,7 @@ namespace InnoDevsITL.Controllers
             _context.Submissions.Remove(submission);
             await _context.SaveChangesAsync();
 
+            _logger.LogInformation($"Submission {id} rejected by {reviewer?.Email}");
             TempData["Info"] = "Submission rejected and removed.";
             return RedirectToAction(nameof(ReviewSubmissions));
         }
@@ -155,6 +178,7 @@ namespace InnoDevsITL.Controllers
 
             // Add to Teacher role
             await _userManager.AddToRoleAsync(user, "Teacher");
+            _logger.LogInformation($"User {user.Email} promoted to Teacher by admin");
             TempData["Success"] = "Teacher verified successfully!";
             return RedirectToAction(nameof(ManageUsers));
         }

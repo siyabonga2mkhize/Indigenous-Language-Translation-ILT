@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InnoDevsITL.Migrations
 {
     [DbContext(typeof(InnoDbContext))]
-    [Migration("20260729102124_InitialCreate")]
+    [Migration("20260729235950_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
