@@ -29,7 +29,7 @@ namespace PhraseBookk.Controllers
                 .Include(f => f.Phrase)
                 .ThenInclude(p => p.Category)
                 .Where(f => f.UserId == userId)
-                .OrderByDescending(f => f.SavedDate)
+                .OrderByDescending(f => f.CreatedDate)  // ✅ CreatedDate
                 .ToListAsync();
 
             return View(favourites);
@@ -71,7 +71,7 @@ namespace PhraseBookk.Controllers
                 {
                     UserId = userId,
                     PhraseId = phraseId,
-                    SavedDate = DateTime.Now
+                    CreatedDate = DateTime.Now  // ✅ CreatedDate
                 };
                 _context.Favorites.Add(favorite);
                 await _context.SaveChangesAsync();

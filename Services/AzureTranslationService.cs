@@ -23,7 +23,7 @@ namespace PhraseBookk.Services
         {
             if (string.IsNullOrEmpty(_apiKey) || _apiKey == "YOUR_AZURE_TRANSLATOR_KEY_HERE")
             {
-                return $"⚠️ Azure Translator unavailable. Please add your API key to appsettings.json. Suggested translation: [AI would translate: {englishText}]";
+                return GetFallbackMessage(englishText, targetLanguage);
             }
 
             try
@@ -49,7 +49,8 @@ namespace PhraseBookk.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Azure Translator error: {response.StatusCode} - {error}");
+                    Console.WriteLine($"Azure Translator error: {error}");
+                    return GetFallbackMessage(englishText, targetLanguage);
                 }
 
                 var responseJson = await response.Content.ReadAsStringAsync();
@@ -61,17 +62,18 @@ namespace PhraseBookk.Services
                     .GetProperty("text")
                     .GetString();
 
-                return translation ?? string.Empty;
+                return translation ?? GetFallbackMessage(englishText, targetLanguage);
             }
             catch (Exception ex)
             {
-                return $" Translation temporarily unavailable. Error: {ex.Message}";
+                Console.WriteLine($"Azure Translator exception: {ex.Message}");
+                return GetFallbackMessage(englishText, targetLanguage);
             }
         }
 
         public async Task<string> GeneratePhraseInActionAsync(string englishText, string categoryName)
         {
-            return $" When you need help with '{englishText}', visit the {categoryName} office on campus.";
+            return $"💡 When you need help with '{englishText}', visit the {categoryName} office on campus.";
         }
 
         private string GetLanguageCode(LanguageCode code)
@@ -92,5 +94,30 @@ namespace PhraseBookk.Services
                 _ => code.ToString()
             };
         }
+
+        private string GetLanguageDisplayName(LanguageCode code)
+        {
+            return code switch
+            {
+                LanguageCode.en => "English",
+                LanguageCode.af => "Afrikaans",
+                LanguageCode.zu => "isiZulu",
+                LanguageCode.xh => "isiXhosa",
+                LanguageCode.st => "Sesotho",
+                LanguageCode.nso => "Sepedi",
+                LanguageCode.tn => "Setswana",
+                LanguageCode.ts => "Xitsonga",
+                LanguageCode.ss => "siSwati",
+                LanguageCode.ve => "Tshivenda",
+                LanguageCode.nr => "isiNdebele",
+                _ => code.ToString()
+            };
+        }
+
+        private string GetFallbackMessage(string englishText, LanguageCode targetLanguage)
+        {
+            var langName = GetLanguageDisplayName(targetLanguage);
+            return $"⚠️ AI translation temporarily unavailable for {langName}. Please type your own translation below.";
+        }
     }
-}
+} 

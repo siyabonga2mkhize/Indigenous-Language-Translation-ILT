@@ -38,7 +38,6 @@
                     <tbody>
                         @foreach (var user in Model)
                         {
-                            var languages = new[] { "zu", "xh", "st", "nso", "tn", "ts", "ss", "ve", "nr", "af", "en" };
                             <tr>
                                 <td>
                                     <strong>@(user.FullName ?? "No Name")</strong>
@@ -55,9 +54,46 @@
                                     }
                                 </td>
                                 <td>
-                                    @if (!string.IsNullOrEmpty(user.ModeratorLanguage))
+                                    @if (user.IsModerator && !string.IsNullOrEmpty(user.ModeratorLanguage))
                                     {
-                                        <span class="badge bg-info">@user.ModeratorLanguage</span>
+                                        var langName = user.ModeratorLanguage switch
+                                        {
+                                            "zu" => "isiZulu",
+                                            "xh" => "isiXhosa",
+                                            "af" => "Afrikaans",
+                                            "en" => "English",
+                                            "st" => "Sesotho",
+                                            "nso" => "Sepedi",
+                                            "tn" => "Setswana",
+                                            "ts" => "Xitsonga",
+                                            "ss" => "siSwati",
+                                            "ve" => "Tshivenda",
+                                            "nr" => "isiNdebele",
+                                            _ => user.ModeratorLanguage
+                                        };
+                                        <span class="badge bg-info">@langName</span>
+                                    }
+                                    else if (!user.IsModerator)
+                                    {
+                                        // ✅ DROPDOWN IN LANGUAGE COLUMN (only for non-moderators)
+                                        <form asp-action="Toggle" method="post" class="d-inline" id="langForm-@user.Id">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="userId" value="@user.Id" />
+                                            <select name="language" class="form-select form-select-sm" style="width:auto; min-width:120px;" onchange="document.getElementById('langForm-@user.Id').submit();">
+                                                <option value="">Select Language</option>
+                                                <option value="zu">isiZulu</option>
+                                                <option value="xh">isiXhosa</option>
+                                                <option value="af">Afrikaans</option>
+                                                <option value="en">English</option>
+                                                <option value="st">Sesotho</option>
+                                                <option value="nso">Sepedi</option>
+                                                <option value="tn">Setswana</option>
+                                                <option value="ts">Xitsonga</option>
+                                                <option value="ss">siSwati</option>
+                                                <option value="ve">Tshivenda</option>
+                                                <option value="nr">isiNdebele</option>
+                                            </select>
+                                        </form>
                                     }
                                     else
                                     {
@@ -65,22 +101,22 @@
                                     }
                                 </td>
                                 <td>
-                                    <form asp-action="Toggle" method="post" class="d-flex gap-2 align-items-center">
-                                        @Html.AntiForgeryToken()
-                                        <input type="hidden" name="userId" value="@user.Id" />
-                                        <select name="language" class="form-select form-select-sm" style="width:auto; min-width:80px;">
-                                            <option value="">—</option>
-                                            @foreach (var lang in languages)
-                                            {
-                                                <option value="@lang" selected="@(user.ModeratorLanguage == lang)">
-                                                    @lang
-                                                </option>
-                                            }
-                                        </select>
-                                        <button type="submit" class="btn btn-sm @(user.IsModerator ? "btn-danger" : "btn-success")">
-                                            @(user.IsModerator ? "Remove" : "Assign")
-                                        </button>
-                                    </form>
+                                    @if (user.IsModerator)
+                                    {
+                                        //  ACTION COLUMN ONLY HAS REMOVE BUTTON
+                                        <form asp-action="Toggle" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="userId" value="@user.Id" />
+                                            <input type="hidden" name="language" value="@user.ModeratorLanguage" />
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                Remove
+                                            </button>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted">—</span>
+                                    }
                                 </td>
                             </tr>
                         }
