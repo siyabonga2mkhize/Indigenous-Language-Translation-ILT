@@ -14,22 +14,29 @@ namespace PhraseBookk.Services
         public AzureTranslationService(IConfiguration configuration, HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _apiKey = configuration["AzureTranslator:ApiKey"] ?? throw new Exception("Azure Translator API key not found");
+            // ✅ READ FROM CONFIGURATION (NOT HARDCODED)
+            _apiKey = configuration["AzureTranslator:ApiKey"] ?? "";
             _endpoint = configuration["AzureTranslator:Endpoint"] ?? "https://api.cognitive.microsofttranslator.com";
             _region = configuration["AzureTranslator:Region"] ?? "southafricanorth";
+
+            Console.WriteLine($"=== Azure Translation Service Initialized ===");
+            Console.WriteLine($"Endpoint: {_endpoint}");
+            Console.WriteLine($"Region: {_region}");
+            Console.WriteLine($"API Key (first 5 chars): {_apiKey?.Substring(0, Math.Min(5, _apiKey.Length))}...");
         }
 
         public async Task<string> GenerateTranslationAsync(string englishText, LanguageCode targetLanguage)
         {
-            if (string.IsNullOrEmpty(_apiKey) || _apiKey == "YOUR_AZURE_TRANSLATOR_KEY_HERE")
-            {
-                return GetFallbackMessage(englishText, targetLanguage);
-            }
+            Console.WriteLine($"=== Azure Translation Called ===");
+            Console.WriteLine($"Text: '{englishText}'");
+            Console.WriteLine($"Target Language: {targetLanguage}");
 
             try
             {
                 var targetLang = GetLanguageCode(targetLanguage);
                 var url = $"{_endpoint}/translate?api-version=3.0&to={targetLang}";
+
+                Console.WriteLine($"URL: {url}");
 
                 var requestBody = new object[]
                 {
@@ -49,11 +56,13 @@ namespace PhraseBookk.Services
                 if (!response.IsSuccessStatusCode)
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Azure Translator error: {error}");
+                    Console.WriteLine($"❌ Azure Translator error: {error}");
                     return GetFallbackMessage(englishText, targetLanguage);
                 }
 
                 var responseJson = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"✅ Azure response: {responseJson}");
+
                 using var doc = JsonDocument.Parse(responseJson);
                 var root = doc.RootElement;
 
@@ -62,11 +71,12 @@ namespace PhraseBookk.Services
                     .GetProperty("text")
                     .GetString();
 
+                Console.WriteLine($"✅ Translation: {translation}");
                 return translation ?? GetFallbackMessage(englishText, targetLanguage);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Azure Translator exception: {ex.Message}");
+                Console.WriteLine($"❌ Azure Translator exception: {ex.Message}");
                 return GetFallbackMessage(englishText, targetLanguage);
             }
         }
@@ -120,4 +130,4 @@ namespace PhraseBookk.Services
             return $"⚠️ AI translation temporarily unavailable for {langName}. Please type your own translation below.";
         }
     }
-} 
+}
