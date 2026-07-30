@@ -181,11 +181,17 @@ namespace PhraseBookk.Data.Migrations
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsModerator")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ModeratorLanguage")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -206,6 +212,9 @@ namespace PhraseBookk.Data.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalApprovedTranslations")
+                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -312,6 +321,9 @@ namespace PhraseBookk.Data.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("IsSurvival")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -330,6 +342,9 @@ namespace PhraseBookk.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AdminReviewComment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AudioUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
@@ -363,6 +378,38 @@ namespace PhraseBookk.Data.Migrations
                     b.ToTable("Translations");
                 });
 
+            modelBuilder.Entity("PhraseBookk.Models.TranslationVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsUpvote")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TranslationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("TranslationId", "UserId")
+                        .IsUnique()
+                        .HasDatabaseName("IX_TranslationVotes_Unique");
+
+                    b.ToTable("TranslationVotes");
+                });
+
             modelBuilder.Entity("PhraseBookk.Models.UsageStat", b =>
                 {
                     b.Property<int>("Id")
@@ -371,24 +418,36 @@ namespace PhraseBookk.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
+                    b.Property<string>("Action")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LanguageSelected")
+                    b.Property<string>("LanguageCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LanguageSelected")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PhraseId")
                         .HasColumnType("int");
 
                     b.Property<string>("SearchKeyword")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ViewedAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("PhraseId");
 
                     b.HasIndex("UserId");
 
@@ -500,19 +559,36 @@ namespace PhraseBookk.Data.Migrations
                     b.Navigation("SubmittedBy");
                 });
 
+            modelBuilder.Entity("PhraseBookk.Models.TranslationVote", b =>
+                {
+                    b.HasOne("PhraseBookk.Models.Translation", "Translation")
+                        .WithMany("Votes")
+                        .HasForeignKey("TranslationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("PhraseBookk.Models.ApplicationUser", "User")
+                        .WithMany("TranslationVotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Translation");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PhraseBookk.Models.UsageStat", b =>
                 {
-                    b.HasOne("PhraseBookk.Models.Category", "Category")
+                    b.HasOne("PhraseBookk.Models.Phrase", "Phrase")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PhraseId");
 
                     b.HasOne("PhraseBookk.Models.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("Category");
+                    b.Navigation("Phrase");
 
                     b.Navigation("User");
                 });
@@ -522,6 +598,8 @@ namespace PhraseBookk.Data.Migrations
                     b.Navigation("Favorites");
 
                     b.Navigation("SubmittedTranslations");
+
+                    b.Navigation("TranslationVotes");
                 });
 
             modelBuilder.Entity("PhraseBookk.Models.Category", b =>
@@ -534,6 +612,11 @@ namespace PhraseBookk.Data.Migrations
                     b.Navigation("FavoritedByUsers");
 
                     b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("PhraseBookk.Models.Translation", b =>
+                {
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

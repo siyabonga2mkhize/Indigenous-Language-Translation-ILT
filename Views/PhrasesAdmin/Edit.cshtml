@@ -28,7 +28,17 @@
                 <input asp-for="IsActive" class="form-check-input" />
                 <label asp-for="IsActive" class="form-check-label"></label>
             </div>
-            <div class="form-group">
+
+            <!-- ✅ NEW: Survival Phrase Checkbox -->
+            <div class="form-group form-check mt-3">
+                <input asp-for="IsSurvival" class="form-check-input" id="isSurvival" />
+                <label asp-for="IsSurvival" class="form-check-label fw-bold text-danger" for="isSurvival">
+                    🆘 Mark as Survival Phrase
+                </label>
+                <small class="text-muted d-block">Survival phrases appear on the homepage for new students.</small>
+            </div>
+
+            <div class="form-group mt-3">
                 <input type="submit" value="Save" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">Back to List</a>
             </div>

@@ -18,9 +18,9 @@ namespace PhraseBookk.Controllers
         }
 
         public async Task<IActionResult> Index()
-
         {
-           ViewBag.Categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
+            ViewBag.Categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
+
             var approvedPhrases = await _context.Phrases
                 .Include(p => p.Category)
                 .Include(p => p.Translations)
