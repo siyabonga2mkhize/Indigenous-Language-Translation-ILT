@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.AI.Translation.Text" Version="2.0.0" />
     <PackageReference Include="EPPlus" Version="8.6.2" />
     <PackageReference Include="iTextSharp" Version="5.5.13.5" />
     <PackageReference Include="jQuery.UI.Combined" Version="1.14.1" />
@@ -29,12 +30,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.0" />
-<<<<<<< HEAD:PhraseBook/PhraseBookk/PhraseBookk.csproj
-    <PackageReference Include="QRCoder" Version="1.4.3" />
-    <PackageReference Include="ZXing.Net" Version="0.16.9" />
-=======
     <PackageReference Include="Mscc.GenerativeAI.Microsoft" Version="3.1.0" />
->>>>>>> 27bf6302bd1005efb96a867d34b8748d95ddaabe:PhraseBookk.csproj
   </ItemGroup>
 
 </Project>

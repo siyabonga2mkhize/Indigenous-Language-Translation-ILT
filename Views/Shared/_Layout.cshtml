@@ -20,50 +20,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PhraseBookk</title>
 
-    <!--Password icon-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
 
-    <!--Auth.css style Login and Register-->
-    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/theme.css" asp-append-version="true" />
-
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/PhraseBookk.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PhraseBookk</a>
+                <a class="navbar-brand text-white fw-bold" asp-area="" asp-controller="Home" asp-action="Index">PhraseBookk</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <!-- ===== LEFT SIDE: Navigation Links ===== -->
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">🏠 Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Phrases" asp-action="Index">Search</a>
+                            <a class="nav-link text-white" asp-controller="Survival" asp-action="Index">🆘 Survival</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        <!-- ✅ Phrase of Day is now on the homepage - removed from navbar -->
+                        <!-- ✅ Search is on homepage - removed from navbar -->
+                        <!-- ✅ Privacy moved to footer only -->
                     </ul>
 
+                    <!-- ===== RIGHT SIDE: User Actions ===== -->
                     <ul class="navbar-nav">
                         @if (User?.Identity?.IsAuthenticated == true && User.IsInRole("Administrator"))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Admin
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ⚙️ Admin
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminDropdown">
                                     <li><a class="dropdown-item" asp-controller="PhrasesAdmin" asp-action="Index">📊 Dashboard</a></li>
@@ -71,48 +66,61 @@
                                     <li><a class="dropdown-item" asp-controller="Export" asp-action="Index">📄 Export</a></li>
                                     <li><a class="dropdown-item" asp-controller="ExcelExport" asp-action="Index">📊 Excel Export</a></li>
                                     <li><hr class="dropdown-divider" /></li>
-                                    <li><a class="dropdown-item" asp-controller="Categories" asp-action="Index">Categories</a></li>
-                                    <li><a class="dropdown-item" asp-controller="PhrasesAdmin" asp-action="Create">Add Phrase</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categories" asp-action="Index">📂 Categories</a></li>
+                                    <li><a class="dropdown-item" asp-controller="PhrasesAdmin" asp-action="Create">➕ Add Phrase</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Moderators" asp-action="Index">👥 Manage Moderators</a></li>
                                     <li><hr class="dropdown-divider" /></li>
                                     <li>
                                         <a class="dropdown-item" asp-controller="TranslationsAdmin" asp-action="Pending">
                                             <span class="badge bg-warning text-dark me-1">@await GetPendingCount()</span>
-                                            Pending Translations
+                                            ⏳ Pending Translations
                                         </a>
                                     </li>
                                 </ul>
                             </li>
+                        }
+                        else if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            var currentUser = await UserManager.GetUserAsync(User);
+                            if (currentUser?.IsModerator == true)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-controller="TranslationsAdmin" asp-action="Pending">
+                                        ⏳ Pending
+                                    </a>
+                                </li>
+                            }
                         }
 
                         @if (SignInManager.IsSignedIn(User))
                         {
                             var user = await UserManager.GetUserAsync(User);
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Favourites" asp-action="Index">⭐ My Favourites</a>
+                                <a class="nav-link text-white" asp-controller="Favourites" asp-action="Index">⭐ Favourites</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Phrases" asp-action="MySubmissions">📝 My Submissions</a>
+                                <a class="nav-link text-white" asp-controller="Phrases" asp-action="MySubmissions">📝 My Submissions</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Phrases" asp-action="History">🕐 History</a>
+                                <a class="nav-link text-white" asp-controller="Phrases" asp-action="History">🕐 History</a>
                             </li>
                             <li class="nav-item">
-                                <span class="nav-link">Hello @(user?.FullName ?? user?.Email)!</span>
+                                <span class="nav-link text-white" style="font-size: 0.85rem;">👋 @(user?.FullName ?? user?.Email)</span>
                             </li>
                             <li class="nav-item">
                                 <form asp-area="Identity" asp-page="/Account/Logout" method="post" class="form-inline">
                                     @Html.AntiForgeryToken()
-                                    <button type="submit" class="nav-link btn btn-link">Logout</button>
+                                    <button type="submit" class="nav-link btn btn-link text-white" style="font-size: 0.85rem;">Logout</button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
                             </li>
                         }
                     </ul>
@@ -129,42 +137,14 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; @DateTime.Now.Year - PhraseBookk - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; @DateTime.Now.Year - PhraseBookk - DUT Campus Phrasebook
         </div>
     </footer>
-
-    <!--Successfully registered feedback-->
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1080;">
-            <div id="successToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="d-flex">
-                    <div class="toast-body">
-                        @TempData["SuccessMessage"]
-                    </div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
-    }
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
-    <!--Successfully Registered Toast Message-->
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var toastEl = document.getElementById('successToast');
-                var toast = new bootstrap.Toast(toastEl, { delay: 4000 });
-                toast.show();
-            });
-        </script>
-    }
-
 </body>
 </html>

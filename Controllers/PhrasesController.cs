@@ -1,289 +1,127 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PhraseBookk.Data;
 using PhraseBookk.Models;
 using PhraseBookk.ViewModels;
-using System.Text.Json;
+using PhraseBookk.Services;
 
 namespace PhraseBookk.Controllers
 {
     public class PhrasesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PhrasesController(ApplicationDbContext context)
+        public PhrasesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Phrases/Index
         public async Task<IActionResult> Index(string? keyword, int? categoryId)
         {
+            var query = _context.Phrases
+                .Include(p => p.Category)
+                .Include(p => p.Translations)
+                .Where(p => p.IsActive);
+
+            if (categoryId.HasValue && categoryId.Value > 0)
+            {
+                query = query.Where(p => p.CategoryId == categoryId.Value);
+            }
+
+            if (!string.IsNullOrWhiteSpace(keyword))
+            {
+                var searchTerm = keyword.ToLower();
+                query = query.Where(p =>
+                    p.EnglishText.ToLower().Contains(searchTerm) ||
+                    (p.Translations != null && p.Translations.Any(t => t.TranslatedText.ToLower().Contains(searchTerm) && t.Status == ContentStatus.Approved))
+                );
+            }
+
+            var phrases = await query.OrderBy(p => p.EnglishText).ToListAsync();
+            var categories = await _context.Categories.Where(c => c.IsActive).ToListAsync();
+
             var viewModel = new PhraseSearchViewModel
             {
                 SearchKeyword = keyword,
                 CategoryId = categoryId,
-                Categories = await _context.Categories.Where(c => c.IsActive).OrderBy(c => c.Name).ToListAsync(),
-                Results = new List<PhraseResultViewModel>()
+                Categories = categories,
+                Results = phrases.Select(p => new PhraseResultViewModel
+                {
+                    PhraseId = p.Id,
+                    EnglishText = p.EnglishText,
+                    CategoryName = p.Category?.Name ?? "Uncategorized",
+                    CategoryId = p.CategoryId,
+                    IsFavorited = false,
+                    MatchedTranslations = p.Translations?
+                        .Where(t => t.Status == ContentStatus.Approved &&
+                                   (string.IsNullOrWhiteSpace(keyword) ||
+                                    t.TranslatedText.ToLower().Contains(keyword.ToLower())))
+                        .Select(t => new MatchedTranslation
+                        {
+                            LanguageName = t.Language.ToString(),
+                            TranslatedText = t.TranslatedText,
+                            HighlightedText = HighlightMatch(t.TranslatedText, keyword)
+                        })
+                        .ToList() ?? new List<MatchedTranslation>()
+                }).ToList()
             };
-
-            // ===== NEW: Category selected but no keyword → show all phrases in that category =====
-            if (string.IsNullOrWhiteSpace(keyword) && categoryId.HasValue && categoryId.Value > 0)
-            {
-                var phrases = await _context.Phrases
-                    .Include(p => p.Category)
-                    .Include(p => p.Translations)
-                    .Where(p => p.IsActive && p.CategoryId == categoryId.Value)
-                    .ToListAsync();
-
-                foreach (var phrase in phrases)
-                {
-                    var result = new PhraseResultViewModel
-                    {
-                        PhraseId = phrase.Id,
-                        EnglishText = phrase.EnglishText,
-                        CategoryName = phrase.Category?.Name ?? "Uncategorized",
-                        CategoryId = phrase.CategoryId,
-                        MatchedTranslations = new List<MatchedTranslation>()
-                    };
-
-                    var approvedTranslations = phrase.Translations?.Where(t => t.Status == ContentStatus.Approved);
-                    if (approvedTranslations != null)
-                    {
-                        foreach (var trans in approvedTranslations)
-                        {
-                            result.MatchedTranslations.Add(new MatchedTranslation
-                            {
-                                LanguageName = trans.Language.ToString(),
-                                TranslatedText = trans.TranslatedText,
-                                HighlightedText = trans.TranslatedText
-                            });
-                        }
-                    }
-                    viewModel.Results.Add(result);
-                }
-
-                return View(viewModel);
-            }
-
-            // ===== Existing search logic =====
-            if (!string.IsNullOrWhiteSpace(keyword))
-            {
-                var translationMatches = await _context.Translations
-                    .Where(t => t.Status == ContentStatus.Approved && t.TranslatedText.ToLower().Contains(keyword.ToLower()))
-                    .Select(t => t.PhraseId)
-                    .Distinct()
-                    .ToListAsync();
-
-                var englishMatches = await _context.Phrases
-                    .Where(p => p.IsActive && p.EnglishText.ToLower().Contains(keyword.ToLower()))
-                    .Select(p => p.Id)
-                    .ToListAsync();
-
-                var allMatchedIds = translationMatches.Union(englishMatches).Distinct().ToList();
-
-                if (categoryId.HasValue && categoryId.Value > 0)
-                {
-                    var categoryPhraseIds = await _context.Phrases
-                        .Where(p => p.CategoryId == categoryId.Value && p.IsActive)
-                        .Select(p => p.Id)
-                        .ToListAsync();
-                    allMatchedIds = allMatchedIds.Intersect(categoryPhraseIds).ToList();
-                }
-
-                var phrases = await _context.Phrases
-                    .Include(p => p.Category)
-                    .Include(p => p.Translations)
-                    .Where(p => allMatchedIds.Contains(p.Id) && p.IsActive)
-                    .ToListAsync();
-
-                foreach (var phrase in phrases)
-                {
-                    var result = new PhraseResultViewModel
-                    {
-                        PhraseId = phrase.Id,
-                        EnglishText = phrase.EnglishText,
-                        CategoryName = phrase.Category?.Name ?? "Uncategorized",
-                        CategoryId = phrase.CategoryId,
-                        MatchedTranslations = new List<MatchedTranslation>()
-                    };
-
-                    if (phrase.EnglishText.ToLower().Contains(keyword.ToLower()))
-                    {
-                        result.MatchedTranslations.Add(new MatchedTranslation
-                        {
-                            LanguageName = "English",
-                            TranslatedText = phrase.EnglishText,
-                            HighlightedText = HighlightText(phrase.EnglishText, keyword)
-                        });
-                    }
-
-                    var approvedTranslations = phrase.Translations?.Where(t => t.Status == ContentStatus.Approved);
-                    if (approvedTranslations != null)
-                    {
-                        foreach (var trans in approvedTranslations)
-                        {
-                            result.MatchedTranslations.Add(new MatchedTranslation
-                            {
-                                LanguageName = trans.Language.ToString(),
-                                TranslatedText = trans.TranslatedText,
-                                HighlightedText = trans.TranslatedText.ToLower().Contains(keyword.ToLower())
-                                    ? HighlightText(trans.TranslatedText, keyword)
-                                    : trans.TranslatedText
-                            });
-                        }
-                    }
-
-                    viewModel.Results.Add(result);
-                }
-
-                if (categoryId.HasValue && categoryId.Value > 0)
-                {
-                    var stat = new UsageStat
-                    {
-                        LanguageSelected = LanguageCode.en,
-                        CategoryId = categoryId.Value,
-                        SearchKeyword = keyword,
-                        ViewedAt = DateTime.Now,
-                        UserId = User.Identity?.IsAuthenticated == true
-                            ? _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id
-                            : null
-                    };
-                    _context.UsageStats.Add(stat);
-                    await _context.SaveChangesAsync();
-                }
-            }
 
             return View(viewModel);
         }
 
-        private string HighlightText(string text, string keyword)
+        // Helper method to highlight matching text
+        private string HighlightMatch(string text, string? keyword)
         {
-            if (string.IsNullOrWhiteSpace(text) || string.IsNullOrWhiteSpace(keyword))
+            if (string.IsNullOrWhiteSpace(keyword) || string.IsNullOrWhiteSpace(text))
                 return text;
 
-            int index = text.IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
-            if (index < 0)
-                return text;
+            var index = text.IndexOf(keyword, StringComparison.OrdinalIgnoreCase);
+            if (index < 0) return text;
 
-            return text.Substring(0, index) +
-                   "<mark>" + text.Substring(index, keyword.Length) + "</mark>" +
-                   text.Substring(index + keyword.Length);
+            return $"{text.Substring(0, index)}<mark>{text.Substring(index, keyword.Length)}</mark>{text.Substring(index + keyword.Length)}";
         }
 
-        // ==================== AUTOCOMPLETE ====================
-        public async Task<IActionResult> Autocomplete(string term)
-        {
-            if (string.IsNullOrWhiteSpace(term))
-            {
-                return Json(new List<string>());
-            }
-
-            var phrases = await _context.Phrases
-                .Where(p => p.IsActive && p.EnglishText.ToLower().Contains(term.ToLower()))
-                .Select(p => p.EnglishText)
-                .Take(10)
-                .ToListAsync();
-
-            var translations = await _context.Translations
-                .Where(t => t.Status == ContentStatus.Approved && t.TranslatedText.ToLower().Contains(term.ToLower()))
-                .Select(t => t.Phrase.EnglishText)
-                .Take(10)
-                .ToListAsync();
-
-            var results = phrases.Union(translations).Distinct().Take(10).ToList();
-            return Json(results);
-        }
-
-        // GET: Phrases/Details/5 (UPDATED with History tracking)
+        // GET: Phrases/Details/5
         public async Task<IActionResult> Details(int id)
         {
             var phrase = await _context.Phrases
                 .Include(p => p.Category)
-                .Include(p => p.Translations)
-                .FirstOrDefaultAsync(p => p.Id == id && p.IsActive);
+                .Include(p => p.Translations)!
+                    .ThenInclude(t => t.Votes)
+                .Include(p => p.Translations)!
+                    .ThenInclude(t => t.SubmittedBy)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (phrase == null)
             {
                 return NotFound();
             }
 
-            // Log view statistics
-            var stat = new UsageStat
+            if (User.Identity != null && User.Identity.IsAuthenticated)
             {
-                LanguageSelected = LanguageCode.en,
-                CategoryId = phrase.CategoryId,
-                ViewedAt = DateTime.Now,
-                UserId = User.Identity?.IsAuthenticated == true
-                    ? _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id
-                    : null
-            };
-            _context.UsageStats.Add(stat);
-            await _context.SaveChangesAsync();
-
-            // Track recent views (for student history)
-            if (User.Identity?.IsAuthenticated == true)
-            {
-                var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    var recentList = HttpContext.Session.GetString("RecentViews");
-                    var recentIds = string.IsNullOrEmpty(recentList)
-                        ? new List<int>()
-                        : JsonSerializer.Deserialize<List<int>>(recentList);
-                    if (recentIds != null)
-                    {
-                        recentIds.Remove(id);
-                        recentIds.Insert(0, id);
-                        if (recentIds.Count > 10)
-                            recentIds.RemoveAt(recentIds.Count - 1);
-                        HttpContext.Session.SetString("RecentViews", JsonSerializer.Serialize(recentIds));
-                    }
-                }
-            }
-
-            // Check if phrase is favourited
-            if (User.Identity?.IsAuthenticated == true)
-            {
-                var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity.Name)?.Id;
-                if (!string.IsNullOrEmpty(userId))
+                var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                if (userId != null)
                 {
                     ViewBag.IsFavourited = await _context.Favorites
-                        .AnyAsync(f => f.UserId == userId && f.PhraseId == id);
+                        .AnyAsync(f => f.PhraseId == id && f.UserId == userId);
                 }
             }
 
             return View(phrase);
         }
 
-        // ==================== HISTORY (Recent Views) ====================
-        [Authorize]
-        public async Task<IActionResult> History()
-        {
-            var recentList = HttpContext.Session.GetString("RecentViews");
-            var recentIds = string.IsNullOrEmpty(recentList)
-                ? new List<int>()
-                : JsonSerializer.Deserialize<List<int>>(recentList);
-            var phrases = new List<Phrase>();
-            if (recentIds != null && recentIds.Any())
-            {
-                phrases = await _context.Phrases
-                    .Include(p => p.Category)
-                    .Include(p => p.Translations)
-                    .Where(p => recentIds.Contains(p.Id))
-                    .ToListAsync();
-            }
-            return View(phrases);
-        }
-
-        // ==================== SUBMIT TRANSLATION ====================
+        // GET: Phrases/SubmitTranslation/5
         [Authorize]
         public async Task<IActionResult> SubmitTranslation(int id)
         {
             var phrase = await _context.Phrases
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(p => p.Id == id && p.IsActive);
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (phrase == null)
             {
@@ -294,102 +132,195 @@ namespace PhraseBookk.Controllers
             {
                 PhraseId = phrase.Id,
                 PhraseEnglishText = phrase.EnglishText,
-                PhraseCategoryName = phrase.Category?.Name
+                PhraseCategoryName = phrase.Category?.Name,
+                AvailableLanguages = Enum.GetValues(typeof(LanguageCode))
+                    .Cast<LanguageCode>()
+                    .Select(l => new { Value = l, Name = l.ToString() })
+                    .ToList<dynamic>()
             };
 
             return View(model);
         }
 
-        [HttpPost]
+        // POST: Phrases/SubmitTranslation
         [Authorize]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitTranslation(TranslationSubmissionViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                var phrase = await _context.Phrases
-                    .Include(p => p.Category)
-                    .FirstOrDefaultAsync(p => p.Id == model.PhraseId && p.IsActive);
-                if (phrase != null)
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
                 {
-                    model.PhraseEnglishText = phrase.EnglishText;
-                    model.PhraseCategoryName = phrase.Category?.Name;
+                    return Unauthorized();
                 }
-                return View(model);
-            }
 
-            var existing = await _context.Translations
-                .FirstOrDefaultAsync(t => t.PhraseId == model.PhraseId && t.Language == model.Language);
+                // ✅ Check if user is a Trusted Contributor (10+ approved translations)
+                var autoApproveThreshold = 10;
+                var isTrustedContributor = IsTrustedContributor(user);
 
-            if (existing != null)
-            {
-                ModelState.AddModelError("", $"A translation for {model.Language} already exists.");
-                var phrase = await _context.Phrases
-                    .Include(p => p.Category)
-                    .FirstOrDefaultAsync(p => p.Id == model.PhraseId && p.IsActive);
-                if (phrase != null)
+                var translation = new Translation
                 {
-                    model.PhraseEnglishText = phrase.EnglishText;
-                    model.PhraseCategoryName = phrase.Category?.Name;
+                    PhraseId = model.PhraseId,
+                    Language = model.Language,
+                    TranslatedText = model.TranslatedText,
+                    Status = isTrustedContributor ? ContentStatus.Approved : ContentStatus.Pending,
+                    CreatedDate = DateTime.Now,
+                    SubmittedById = user.Id,
+                    ReviewedDate = isTrustedContributor ? DateTime.Now : null
+                };
+
+                _context.Translations.Add(translation);
+                await _context.SaveChangesAsync();
+
+                // ✅ If auto-approved, increment their count
+                if (isTrustedContributor)
+                {
+                    user.TotalApprovedTranslations += 1;
+                    await _userManager.UpdateAsync(user);
+
+                    TempData["SuccessMessage"] = "🎉 Translation auto-approved! You're a Trusted Contributor!";
                 }
-                return View(model);
+                else
+                {
+                    var remaining = autoApproveThreshold - user.TotalApprovedTranslations;
+                    TempData["SuccessMessage"] = $"Translation submitted! You need {remaining} more approved translations to become a Trusted Contributor and get auto-approval.";
+                }
+
+                return RedirectToAction(nameof(Details), new { id = model.PhraseId });
             }
 
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name)?.Id;
-            if (string.IsNullOrEmpty(userId))
+            var phrase = await _context.Phrases
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.Id == model.PhraseId);
+
+            if (phrase != null)
             {
-                ModelState.AddModelError("", "Unable to identify user.");
-                return View(model);
+                model.PhraseEnglishText = phrase.EnglishText;
+                model.PhraseCategoryName = phrase.Category?.Name;
             }
 
-            var translation = new Translation
-            {
-                PhraseId = model.PhraseId,
-                Language = model.Language,
-                TranslatedText = model.TranslatedText,
-                Status = ContentStatus.Pending,
-                SubmittedById = userId,
-                CreatedDate = DateTime.Now
-            };
+            model.AvailableLanguages = Enum.GetValues(typeof(LanguageCode))
+                .Cast<LanguageCode>()
+                .Select(l => new { Value = l, Name = l.ToString() })
+                .ToList<dynamic>();
 
-            _context.Translations.Add(translation);
-            await _context.SaveChangesAsync();
-
-            TempData["SuccessMessage"] = "Your translation suggestion has been submitted for review!";
-            return RedirectToAction("Details", new { id = model.PhraseId });
+            return View(model);
         }
 
-        // ==================== STUDENT SUBMISSIONS ====================
+        // ✅ Helper method to check if user is a Trusted Contributor
+        private bool IsTrustedContributor(ApplicationUser user)
+        {
+            return user.TotalApprovedTranslations >= 10;
+        }
+
+        // ✅ DTO for deserializing JSON requests
+        public class AiTranslationRequest
+        {
+            public int PhraseId { get; set; }
+            public string Language { get; set; } = string.Empty;
+        }
+
+        // ✅ AJAX: Get AI Translation Draft - FIXED
+        [HttpPost]
+        public async Task<IActionResult> GetAiTranslation([FromBody] AiTranslationRequest request)
+        {
+            if (request == null)
+            {
+                return Json(new { success = false, message = "Invalid request payload." });
+            }
+
+            // ✅ Log what we received for debugging
+            Console.WriteLine($"Received - phraseId: {request.PhraseId}, language: '{request.Language}'");
+
+            // ✅ Check if language is empty
+            if (string.IsNullOrEmpty(request.Language))
+            {
+                return Json(new { success = false, message = "Please select a language first." });
+            }
+
+            // ✅ Parse the language from string to LanguageCode enum
+            if (!Enum.TryParse<LanguageCode>(request.Language, true, out var languageCode))
+            {
+                return Json(new { success = false, message = $"Invalid language code: '{request.Language}'. Please select a valid language." });
+            }
+
+            var phrase = await _context.Phrases.FindAsync(request.PhraseId);
+            if (phrase == null)
+            {
+                return Json(new { success = false, message = $"Phrase not found (ID: {request.PhraseId})" });
+            }
+
+            try
+            {
+                var aiService = HttpContext.RequestServices.GetRequiredService<IAiTranslationService>();
+                var translation = await aiService.GenerateTranslationAsync(phrase.EnglishText, languageCode);
+                return Json(new { success = true, translation });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // GET: Phrases/MySubmissions
         [Authorize]
         public async Task<IActionResult> MySubmissions(string? statusFilter)
         {
-            var userId = _context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name)?.Id;
-            if (string.IsNullOrEmpty(userId))
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
             {
-                return RedirectToAction("Login", "Account");
+                return Unauthorized();
             }
 
             var query = _context.Translations
-                .Include(t => t.Phrase)
-                .ThenInclude(p => p.Category)
-                .Where(t => t.SubmittedById == userId);
+                .Include(t => t.Phrase)!
+                    .ThenInclude(p => p.Category)
+                .Where(t => t.SubmittedById == user.Id);
 
-            if (!string.IsNullOrEmpty(statusFilter) && Enum.TryParse<ContentStatus>(statusFilter, out var status))
+            // ✅ Apply status filter
+            if (!string.IsNullOrEmpty(statusFilter))
             {
-                query = query.Where(t => t.Status == status);
+                var statusEnum = Enum.Parse<ContentStatus>(statusFilter);
+                query = query.Where(t => t.Status == statusEnum);
             }
 
-            query = query.OrderByDescending(t => t.CreatedDate);
+            var translations = await query
+                .OrderByDescending(t => t.CreatedDate)
+                .ToListAsync();
 
-            var submissions = await query.ToListAsync();
+            // ✅ Count by status for ViewBag
+            var allTranslations = await _context.Translations
+                .Where(t => t.SubmittedById == user.Id)
+                .ToListAsync();
 
-            ViewBag.PendingCount = await _context.Translations.CountAsync(t => t.SubmittedById == userId && t.Status == ContentStatus.Pending);
-            ViewBag.ApprovedCount = await _context.Translations.CountAsync(t => t.SubmittedById == userId && t.Status == ContentStatus.Approved);
-            ViewBag.RejectedCount = await _context.Translations.CountAsync(t => t.SubmittedById == userId && t.Status == ContentStatus.Rejected);
-            ViewBag.TotalCount = submissions.Count;
+            ViewBag.PendingCount = allTranslations.Count(t => t.Status == ContentStatus.Pending);
+            ViewBag.ApprovedCount = allTranslations.Count(t => t.Status == ContentStatus.Approved);
+            ViewBag.RejectedCount = allTranslations.Count(t => t.Status == ContentStatus.Rejected);
+            ViewBag.TotalCount = allTranslations.Count;
             ViewBag.CurrentFilter = statusFilter;
 
-            return View(submissions);
+            return View(translations);
+        }
+
+        // GET: Phrases/History
+        [Authorize]
+        public async Task<IActionResult> History()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var history = await _context.UsageStats
+                .Where(u => u.UserId == user.Id)
+                .OrderByDescending(u => u.Timestamp)
+                .Take(50)
+                .ToListAsync();
+
+            return View(history);
         }
     }
 }

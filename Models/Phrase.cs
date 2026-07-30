@@ -18,6 +18,10 @@ namespace PhraseBookk.Models
         public int CategoryId { get; set; }
         public string? CreatedById { get; set; }
 
+        // ✅ NEW: Survival Phrase property
+        [Display(Name = "Survival Phrase")]
+        public bool IsSurvival { get; set; } = false;
+
         public virtual Category? Category { get; set; }
         public virtual ApplicationUser? CreatedBy { get; set; }
         public virtual ICollection<Translation>? Translations { get; set; }

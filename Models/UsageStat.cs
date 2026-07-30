@@ -1,6 +1,5 @@
-﻿
-using PhraseBookk.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PhraseBookk.Models
 {
@@ -8,17 +7,23 @@ namespace PhraseBookk.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public LanguageCode LanguageSelected { get; set; }
-
-        [Required]
-        public int CategoryId { get; set; }
-
-        public string? SearchKeyword { get; set; }
         public string? UserId { get; set; }
-        public DateTime ViewedAt { get; set; } = DateTime.Now;
+        public int? PhraseId { get; set; }
+        public string? SearchKeyword { get; set; }
+        public string? LanguageCode { get; set; }
 
-        public virtual Category? Category { get; set; }
+        // ✅ Properties for statistics
+        public string? LanguageSelected { get; set; }
+        public int? CategoryId { get; set; }
+        public string? Category { get; set; }
+
+        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public string? Action { get; set; }
+
+        [ForeignKey("UserId")]
         public virtual ApplicationUser? User { get; set; }
+
+        [ForeignKey("PhraseId")]
+        public virtual Phrase? Phrase { get; set; }
     }
 }

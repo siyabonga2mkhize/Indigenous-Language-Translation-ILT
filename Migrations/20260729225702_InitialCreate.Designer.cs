@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhraseBookk.Data;
 
 #nullable disable
 
-namespace PhraseBookk.Data.Migrations
+namespace PhraseBookk.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260729225702_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -401,11 +404,9 @@ namespace PhraseBookk.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TranslationId");
 
-                    b.HasIndex("TranslationId", "UserId")
-                        .IsUnique()
-                        .HasDatabaseName("IX_TranslationVotes_Unique");
+                    b.HasIndex("UserId");
 
                     b.ToTable("TranslationVotes");
                 });
@@ -564,13 +565,13 @@ namespace PhraseBookk.Data.Migrations
                     b.HasOne("PhraseBookk.Models.Translation", "Translation")
                         .WithMany("Votes")
                         .HasForeignKey("TranslationId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PhraseBookk.Models.ApplicationUser", "User")
                         .WithMany("TranslationVotes")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Translation");
