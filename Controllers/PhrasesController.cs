@@ -71,6 +71,25 @@ namespace PhraseBookk.Controllers
                 }).ToList()
             };
 
+            // ✅ Save search to history
+            if (!string.IsNullOrWhiteSpace(keyword) && User.Identity?.IsAuthenticated == true)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    var stat = new UsageStat
+                    {
+                        UserId = user.Id,
+                        SearchKeyword = keyword,
+                        LanguageSelected = "en",
+                        Timestamp = DateTime.Now,
+                        Action = "Search"
+                    };
+                    _context.UsageStats.Add(stat);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
             return View(viewModel);
         }
 
@@ -100,6 +119,25 @@ namespace PhraseBookk.Controllers
             if (phrase == null)
             {
                 return NotFound();
+            }
+
+            // ✅ Save view to history
+            if (User.Identity?.IsAuthenticated == true)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    var stat = new UsageStat
+                    {
+                        UserId = user.Id,
+                        PhraseId = phrase.Id,
+                        Category = phrase.Category?.Name,
+                        Timestamp = DateTime.Now,
+                        Action = "View"
+                    };
+                    _context.UsageStats.Add(stat);
+                    await _context.SaveChangesAsync();
+                }
             }
 
             if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -304,7 +342,7 @@ namespace PhraseBookk.Controllers
             return View(translations);
         }
 
-        // GET: Phrases/History
+        // GET: Phrases/History - SHOW LAST 30 MINUTES ONLY
         [Authorize]
         public async Task<IActionResult> History()
         {
@@ -314,10 +352,12 @@ namespace PhraseBookk.Controllers
                 return Unauthorized();
             }
 
+            var thirtyMinutesAgo = DateTime.Now.AddMinutes(-30);
+
             var history = await _context.UsageStats
-                .Where(u => u.UserId == user.Id)
+                .Where(u => u.UserId == user.Id && u.Timestamp >= thirtyMinutesAgo)
+                .Include(u => u.Phrase)
                 .OrderByDescending(u => u.Timestamp)
-                .Take(50)
                 .ToListAsync();
 
             return View(history);
